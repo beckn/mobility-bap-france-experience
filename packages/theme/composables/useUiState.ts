@@ -22,7 +22,7 @@ const state = reactive({
   enableLoadindBar: false,
   explorePageData: null,
   cartData: '',
-  TC_modal:true
+  TC_modal:false
 });
 
 const useUiState = () => {

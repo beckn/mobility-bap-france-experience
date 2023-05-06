@@ -3,20 +3,35 @@
     <div>
       <div class="open-search"></div>
       <div>
-        <CurrentLocationMap :enable="true" :disablepulse="true" :upadateMap="upadateMap"
-          @Currentlocation="Currentlocation" />
+        <CurrentLocationMap
+          :enable="true"
+          :disablepulse="true"
+          :upadateMap="upadateMap"
+          @Currentlocation="Currentlocation"
+        />
       </div>
       <div v-if="!enableLoader" class="open-search header-top-space">
         <div class="open-search-input">
           <div class="inputBox">
             <div class="input1 input-opensearch">
-              <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
+              <SfImage
+                id="icon"
+                src="/icons/Vector.png"
+                alt="Vue Storefront Next"
+              />
 
               <label>Pickup: </label>
 
               <!-- v-on:keyup.enter="openSearch" -->
-              <input @click="pickupLocation" v-model="pickup" :valid="false" errorMessage="errer" type="text"
-                placeholder="Enter Pickup" v-e2e="'home-search-input'" />
+              <input
+                @click="pickupLocation"
+                v-model="pickup"
+                :valid="false"
+                errorMessage="errer"
+                type="text"
+                placeholder="Enter Pickup"
+                v-e2e="'home-search-input'"
+              />
             </div>
             <!-- <div class="hr">  <hr style="width:100%;" />
         <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /></div> -->
@@ -28,16 +43,34 @@
             </div>
 
             <div class="input">
-              <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
+              <SfImage
+                id="icon"
+                src="/icons/Vector.png"
+                alt="Vue Storefront Next"
+              />
               <label for=""> Dropoff: </label>
 
-              <input @click="dropLocation" v-model="message" v-on:keyup.enter="openSearch" :valid="false"
-                errorMessage="errer" type="text" placeholder="Enter Destination" v-e2e="'home-search-input'" />
+              <input
+                @click="dropLocation"
+                v-model="message"
+                v-on:keyup.enter="openSearch"
+                :valid="false"
+                errorMessage="errer"
+                type="text"
+                placeholder="Enter Destination"
+                v-e2e="'home-search-input'"
+              />
             </div>
 
-            <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck" :disabled="
-              !selectedLocation.latitude || !selectedLocation.longitude
-            " v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
+            <SfButton
+              id="btn"
+              class="button-pos sf-button--pure color-primary"
+              @click="voilationcheck"
+              :disabled="
+                !selectedLocation.latitude || !selectedLocation.longitude
+              "
+              v-e2e="'home-search-button'"
+              ><label for="btn">Search Rides</label>
               <!-- <span class="sf-search-bar__icon"> contactSupport
             <SfIcon color="var(--c-text)" size="18px" icon="search" />
           </span> -->
@@ -59,12 +92,22 @@
         <div class="location-blk d-flex w-100">
           <div class="layout-container">
             <div id="location" class="location-content">
-              <SfSidebar :visible="!!isLocationdropOpen" :button="false" title="Set Location" @close="toggleLocationDrop"
-                class="sidebar sf-sidebar--right">
+              <SfSidebar
+                :visible="!!isLocationdropOpen"
+                :button="false"
+                title="Set Location"
+                @close="toggleLocationDrop"
+                class="sidebar sf-sidebar--right"
+              >
                 <transition name="fade">
                   <client-only>
-                    <LocationSearchBar :buttonlocation="buttonlocation" @locationSelected="locationSelected"
-                      @toggleLocationDrop="toggleLocationDrop" @edit="edit" v-e2e="'app-location-sidebar'" />
+                    <LocationSearchBar
+                      :buttonlocation="buttonlocation"
+                      @locationSelected="locationSelected"
+                      @toggleLocationDrop="toggleLocationDrop"
+                      @edit="edit"
+                      v-e2e="'app-location-sidebar'"
+                    />
                   </client-only>
                 </transition>
               </SfSidebar>
@@ -89,13 +132,23 @@
           <template>
             <div class="bar-pos" @click="Alertmodal">
               <SfButton class="sf-button--pure rect-bar-style">
-                <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
+                <SfImage
+                  src="/icons/Rectangle-bar.png"
+                  :width="60"
+                  :height="5.5"
+                  alt="Rectangle bar"
+                />
               </SfButton>
             </div>
             <div>
               <div class="modal-heading">
                 Alert
-                <SfImage src="/icons/Alert.png" :width="15" :height="15" alt="Rectangle bar" />
+                <SfImage
+                  src="/icons/Alert.png"
+                  :width="15"
+                  :height="15"
+                  alt="Rectangle bar"
+                />
               </div>
               <div>
                 <hr class="sf-divider" />
@@ -110,13 +163,21 @@
                   <br />
                   <br />
 
-                  <span @click="openViolatedPolicy" style="cursor: pointer; color: blue">
+                  <span
+                    @click="openViolatedPolicy"
+                    style="cursor: pointer; color: blue"
+                  >
                     {{ violatedPolicyName }}
                   </span>
                 </p>
-                <button class="color-primary btnclass1" @click="underStandButtonHandler">
+                <button
+                  class="color-primary btnclass1"
+                  @click="underStandButtonHandler"
+                >
                   <div class="f-btn-text">
-                    <label style="color: antiquewhite; font-weight: 700;">Ok, I Understand</label>
+                    <label style="color: antiquewhite; font-weight: 700;"
+                      >Ok, I Understand</label
+                    >
                   </div>
                 </button>
               </div>
@@ -128,7 +189,7 @@
 
     <!-- TODO TERM AND CONDITION MODEL UNCOMMENT IF NEDEDD IN FUTUR -->
 
-    <!-- <keep-alive>
+    <keep-alive>
       <div class="location-content">
         <BottomSlider :visible="TC_modal">
           <template>
@@ -146,23 +207,117 @@
             <div>
               <div>
                 <div>
-                  <div class="modal-heading1">Terms & Conditions</div>
+                  <div class="modal-heading1">Imported Order</div>
                   <div><hr class="sf-divider" /></div>
                 </div>
                 <div>
-                  <br />
                   <div class="option-container">
-                    we have updated our terms and conditions. <br /><br />
-                    Request you to kindly go through and accept. <br /><br />
-                    <span style="color: rgba(243, 122, 32, 1);">
-                      Terms & Condition</span
+                    <div>
+                      <img
+                        style=" width: 100%; height: auto;"
+                        src="/icons/Bhrigu-Lake 2.svg"
+                        alt="brigu lake"
+                      />
+                    </div>
+                    <br />
+                    <span class="modal-text">
+                      we have updated our terms and conditions.
+                    </span>
+                    <br />
+                    <div class="container">
+                      <div
+                        style="display:flex; justify-content: space-between; "
+                      >
+                        <div>
+                          <span class="trektittle">
+                            Bhrigu-Lake
+
+                            <!-- {{
+                              decodedOrderObject !== null
+                                ? decodedOrderObject.message.order.item[0]
+                                    .descriptor.name
+                                : ''
+                            }} -->
+                          </span>
+                        </div>
+                        <div>
+                          <span class="trektittle">Order ID:</span>
+                          <span>
+                            dummy 123
+                            <!-- {{
+                            decodedOrderObject !== null
+                              ? decodedOrderObject.message.order.id
+                              : ''
+                          }} -->
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <P>
+                          <span class="trektittle"
+                            >The Orchad Greens Resort & SPA,</span
+                          >
+                          <br />
+
+                          Log Huts Area Rd, Old Manali, Manali, Himachal Pradesh
+                          175131
+                        </P>
+                      </div>
+                      <!-- <div style="display:flex; justify-content: space-between; ">
+                          <div>
+                           <span class="trektittle"> Booked on</span>
+                         </div>
+                         <div>
+                         <span>21st Jun 2021, 12:21pm</span>
+                        </div>
+                         </div> -->
+                      <div
+                        style="display:flex; justify-content: space-between; "
+                      >
+                        <div>
+                          <span class="trektittle">No.of Travellers</span>
+                        </div>
+                        <div>
+                          <span>01 </span>
+                        </div>
+                      </div>
+                      <div
+                        style="display:flex; justify-content: space-between; "
+                      >
+                        <div>
+                          <span class="trektittle"> Total Price</span>
+                        </div>
+                        <div>
+                          <span
+                            >₹70
+                            <!-- {{
+                              formatPrice(
+                                decodedOrderObject !== null
+                                  ? decodedOrderObject.message.order.item[0]
+                                      .price.value
+                                  : ''
+                              )
+                            }} -->
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- Your content goes here -->
+
+                      <!-- more content -->
+                    </div>
+                    <br />
+                    <span class="modal-text">
+                      Would you like to see best travel options to reach this
+                      location?</span
                     >
+                    <br />
                   </div>
                   <div style="margin: 13px;">
                     <button class="color-primary btnclass1" @click="TC_toggle">
                       <div class="f-btn-text">
                         <label style="color: antiquewhite;font-weight: 700;"
-                          >Accept & Continue</label
+                          >Yes! Let's go</label
                         >
                       </div>
                     </button>
@@ -170,7 +325,7 @@
                     <button class="color-primary btnclass" @click="TC_toggle">
                       <div class="f-btn-text">
                         <label style="color:#f37a20;font-weight: 700;"
-                          >I do not accept</label
+                          >No, I will travel later</label
                         >
                       </div>
                     </button>
@@ -181,7 +336,7 @@
           </template>
         </BottomSlider>
       </div>
-    </keep-alive> -->
+    </keep-alive>
   </div>
 </template>
 
@@ -227,17 +382,29 @@ export default {
     const errorMsg2 = ref(false);
     const upadateMap = ref('');
     const isAlert = ref(false);
-    const violatedPolicyName = ref('')
+    const violatedPolicyName = ref('');
     const violatedPolicyId = ref('');
 
     const underStandButtonHandler = () => {
       isAlert.value = false;
       openSearch();
-    }
+    };
     const Alertmodal = () => {
       isAlert.value = !isAlert.value;
     };
     const enableLoader = ref(false);
+    onMounted(() => {
+      let URL = window.location.href;
+      if (URL.includes('?')) {
+        TC_toggle();
+        // const encodedOrderObject = URL.slice(URL.indexOf('?') + 1);
+        // const decodedOrderObject = JSON.parse(window.atob(encodedOrderObject));
+        // localStorage.setItem(
+        //   'decodedOrderObject',
+        //   JSON.stringify(decodedOrderObject)
+        // );
+      }
+    });
 
     const voilationcheck = async () => {
       enableLoader.value = true;
@@ -259,8 +426,10 @@ export default {
               openSearch();
             } else if (res.body.policyCheckResult[0].violation === true) {
               enableLoader.value = false;
-              violatedPolicyName.value = res.body.policyCheckResult[0].violatedPolicies[0].name;
-              violatedPolicyId.value = res.body.policyCheckResult[0].violatedPolicies[0].id;
+              violatedPolicyName.value =
+                res.body.policyCheckResult[0].violatedPolicies[0].name;
+              violatedPolicyId.value =
+                res.body.policyCheckResult[0].violatedPolicies[0].id;
               Alertmodal();
             }
           });
@@ -475,7 +644,7 @@ export default {
           policyId: violatedPolicyId.value
         }
       });
-    }
+    };
 
     return {
       pickupLocation,
@@ -519,7 +688,7 @@ export default {
 //   top: 107px;
 // }
 .option-container {
-  padding: 0 10px 20px;
+  padding: 15px;
   //font-family: 'SF Pro Text';
   font-weight: 300;
   font-size: 12px;
@@ -546,7 +715,6 @@ export default {
   margin: 13px;
   font-size: 20px;
   font-weight: 500;
-  text-align: center;
 }
 
 .modal-heading {
@@ -554,7 +722,33 @@ export default {
   font-size: 20px;
   font-weight: 500;
 }
+.modal-text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  /* or 157% */
 
+  color: #37474f;
+}
+.container {
+  padding: 8px;
+  margin: 10px;
+  height: 125px; /* set the desired height */
+  overflow: auto; /* create a scrollable area */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid #bbbbbb;
+  border-radius: 3px;
+}
+.trektittle {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  color: #37474f;
+}
 .btnclass {
   border-radius: 3px;
   width: 100%;
