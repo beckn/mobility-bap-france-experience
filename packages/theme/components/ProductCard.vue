@@ -44,7 +44,8 @@
           v-if="!dropdownCouner"
           v-e2e="'add-to-cart'"
           :value="_pCount"
-          :index="_pIndex"
+          :product="_product"
+          :index="1"
           @updateItemCount="(data) => $emit('updateItemCount', data)"
         />
       </div>
@@ -86,6 +87,7 @@ export default {
     const _pPrice = computed(() => props.pPrice);
     const _pImage = computed(() => props.pImage);
     const _pCount = computed(() => props.pCount);
+    const _product = computed(() => props.product);
     const _updatedPrice = computed(() => props.updatedPrice);
     const _updatedCount = computed(() => props.updatedCount);
     const dpList = [1, 2, 3, 4, 'More'];
@@ -110,6 +112,7 @@ export default {
       _pPrice,
       _pImage,
       _pCount,
+      _product,
       dpList,
       openDropdown,
       _updatedPrice,
@@ -135,6 +138,7 @@ export default {
 <style lang="scss" scoped>
 .dropdown-container {
   position: relative;
+
   .dropdown-button {
     display: flex;
     align-items: center;
@@ -156,20 +160,24 @@ export default {
     position: absolute;
     width: 56px;
     z-index: 1;
+
     .dowpdown-item {
       display: flex;
       justify-content: center;
       padding: 7px 0;
     }
+
     .border {
       border-bottom: 1px solid rgba(226, 226, 226, 0.7);
     }
+
     .color-text {
       color: #f37a20;
       cursor: pointer;
     }
   }
 }
+
 .s-p-name {
   min-height: 0;
   font-family: 'Roboto';
@@ -179,12 +187,15 @@ export default {
   line-height: 10px;
   color: #37474f;
 }
+
 .s-p-price {
   line-height: 10px;
 }
+
 .p-image {
   padding-left: 25%;
 }
+
 .p-distance {
   line-height: 13px;
   //line-height: 14px;
