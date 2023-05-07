@@ -6,14 +6,14 @@
           <SfIcon color="var(--c-primary)" size="20px" icon="chevron_left" />
         </span>
       </div>
-      <div>Billing and Shipping</div>
+      <div>Facturation et expédition</div>
     </div>
     <div v-if="enableLoader" key="loadingCircle" class="loader-circle">
       <LoadingCircle :enable="enableLoader" />
     </div>
     <div class="details header-push">
       <div class="sub-heading">
-        <div class="p-name" v-e2e="'cart-item'">Items in Cart</div>
+        <div class="p-name" v-e2e="'cart-item'">Articles en panier</div>
       </div>
 
       <div class="provider-head p-0">
@@ -39,14 +39,14 @@
           }}
         </div>
         <div class="text-padding">
-          <span class="p-distance"> by </span> {{ cartGetters.getBpp(cart) }}
+          <span class="p-distance"> par </span> {{ cartGetters.getBpp(cart) }}
         </div>
 
         <!-- <div class="text-padding">
             <div class="flexy-center">
               <div class="p-name">Abc</div>
               <div class="text-padding">
-                <span class="p-distance"> by </span>
+                <span class="p-distance"> par </span>
                 <span>BCA</span>
               </div>
             </div>
@@ -81,13 +81,13 @@
       </div>
 
       <div class="sub-heading">
-        <div class="p-name">Shipping</div>
+        <div class="p-name">Expédition</div>
         <SfButton
           v-if="isShippingAddressFilled"
           class="sf-button--pure"
           @click="toggleShippingModal"
         >
-          <div class="color-def">Change</div>
+          <div class="color-def">Changement</div>
         </SfButton>
       </div>
       <AddressCard
@@ -119,19 +119,19 @@
             v-e2e="'add-shipping-details'"
             class="address-text color-def"
           >
-            Add Shipping Details
+            Add Les détails d'expédition
           </div>
         </CardContent>
       </Card>
 
       <div v-if="isShippingAddressFilled" class="sub-heading">
-        <div class="p-name">Billing</div>
+        <div class="p-name">Facturation</div>
         <SfButton
           v-if="isBillingAddressFilled || !shippingAsBilling"
           class="sf-button--pure"
           @click="toggleBillingModal"
         >
-          <div class="color-def">Change</div>
+          <div class="color-def">Changement</div>
         </SfButton>
       </div>
       <Card v-if="isShippingAddressFilled" class="card-checkbox">
@@ -143,7 +143,7 @@
               name="shipping"
             />
           </div>
-          <div class="address-text">Same as Shipping Details</div>
+          <div class="address-text">Same as Les détails d'expédition</div>
         </CardContent>
       </Card>
 
@@ -157,7 +157,7 @@
       />
 
       <div class="sub-heading">
-        <div class="p-name">Payment</div>
+        <div class="p-name">Paiement</div>
       </div>
       <Card>
         <CardContent
@@ -203,7 +203,7 @@
       @buttonClick="paymentProceed"
       :totalPrice="cartGetters.getTotals(cart).total"
       :totalItem="cartGetters.getTotalItems(cart)"
-      :buttonText="'Proceed'"
+      :buttonText="'Procéder'"
       :buttonEnable="proceedToPay"
     >
       <template v-slot:buttonIcon>
@@ -226,8 +226,8 @@
     </Footer>
     <ModalSlide :visible="shippingAddressModal" @close="toggleShippingModal">
       <AddressInputs
-        :buttonText="'Save Shipping Details'"
-        :headingText="'Shipping Details'"
+        :buttonText="'Save Les détails d'expédition'"
+        :headingText="'Les détails d'expédition'"
         :addressDetails="shippingAddress"
         @getAddress="toggleShippingModal"
         @initCall="initOrder"
@@ -235,9 +235,9 @@
     </ModalSlide>
     <ModalSlide :visible="billingAddressModal" @close="toggleBillingModal">
       <AddressInputs
-        :buttonText="'Save Billing Details'"
+        :buttonText="'Save Détails de la facturation'"
         :buttonEnable="false"
-        :headingText="'Billing Details'"
+        :headingText="'Détails de la facturation'"
         :addressDetails="billingAddress"
         @getAddress="toggleBillingModal"
         @initCall="initOrder"

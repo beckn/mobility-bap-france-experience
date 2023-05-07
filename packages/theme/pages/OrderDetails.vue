@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="top-bar">
-      <div class="header-push">Order Details</div>
+      <div class="header-push">Les détails de réservation</div>
       <SfButton
         v-if="isTrackingAvailable"
         class="sf-button--pure top-button"
         @click="openTrackModal = true"
       >
-        <div class="color-def">Track Order</div>
+        <div class="color-def">Suivre réservation</div>
       </SfButton>
     </div>
 
@@ -53,7 +53,7 @@
       </div>
 
       <div class="sub-heading">
-        <div class="p-name">Items</div>
+        <div class="p-name">Articles</div>
       </div>
 
       <div
@@ -82,7 +82,7 @@
 
       <Card>
         <SfAccordion>
-          <SfAccordionItem :header="'Shipping'">
+          <SfAccordionItem :header="'Expédition'">
             <AddressCard
               :name="order.shippingAddress.name"
               :address="order.shippingAddress.address"
@@ -98,9 +98,9 @@
 
       <Card>
         <SfAccordion>
-          <SfAccordionItem :header="'Billing'">
+          <SfAccordionItem :header="'Facturation'">
             <CardContent v-if="order.shippingAsBilling" class="flex-space-bw">
-              <div class="address-text">Same as Shipping Details</div>
+              <div class="address-text">Identique aux détails d'expédition</div>
             </CardContent>
             <AddressCard
               v-else
@@ -118,7 +118,7 @@
 
       <Card>
         <SfAccordion>
-          <SfAccordionItem :header="'Payment'">
+          <SfAccordionItem :header="'Paiement'">
             <!-- <CardContent class="flex-space-bw">
               <div class="address-text">SubTotal</div>
               <div class="address-text">
@@ -155,11 +155,11 @@
               </div>
             </CardContent>
             <CardContent class="flex-space-bw">
-              <div class="address-text">Method</div>
+              <div class="address-text">Mode de paiement</div>
               <div class="address-text">{{ order.paymentMethod }}</div>
             </CardContent>
             <CardContent v-if="paymentData" class="flex-space-bw">
-              <div class="address-text">Status</div>
+              <div class="address-text">Statut</div>
               <div
                 v-if="paymentData.payment.status === 'PAID'"
                 class="address-text paid-green"
@@ -177,7 +177,7 @@
               </div>
             </CardContent>
             <CardContent v-if="false" class="flex-space-bw">
-              <div class="address-text">Transaction Id</div>
+              <div class="address-text">Identifiant de transaction</div>
               <div class="address-text">
                 <!-- {{ order.order.payment.params.transaction_id }} -->
               </div>
@@ -201,7 +201,7 @@
               <div class="address-text">{{ order.order.created_at }}</div>
             </CardContent>
             <CardContent v-if="isFulfillmentAvailable" class="flex-space-bw">
-              <div class="address-text">Status</div>
+              <div class="address-text">Statut</div>
               <!-- <div class="address-text">{{ isFulfillmentAvailable.state }}</div> -->
 
               <div class="address-text order-status">
@@ -252,7 +252,7 @@
                 v-if="fulfillmentData.fulfillment.state"
                 class="flex-space-bw"
               >
-                <div class="address-text">Latest Status</div>
+                <div class="address-text">Dernier statut</div>
                 <div class="address-text fulfillment-state">
                   {{ fulfillmentData.fulfillment.state.descriptor.name }}
                 </div>
@@ -276,7 +276,7 @@
                 </div>
               </CardContent>
               <!-- <CardContent class="flex-space-bw">
-                <div class="address-text">Status</div>
+                <div class="address-text">Statut</div>
                 <div class="address-text">{{isFulfillmentAvailable.state}}</div>
               </CardContent> -->
             </SfAccordionItem>
@@ -284,7 +284,7 @@
         </Card>
         <div class="fulfillment-progress" v-if="false">
           <div class="head">
-            <span>Fulfillment Progress</span>
+            <span>Progrès de l'accomplissement</span>
           </div>
           <div class="sub-head">
             <img src="/icons/calendar.svg" alt="" />
@@ -324,14 +324,14 @@
         class="sf-button color-primary support-btns card-checkbox"
         @click="goHome"
       >
-        <div class="f-btn-text">Home</div>
+        <div class="f-btn-text">Page d’accueil</div>
       </button>
       <button
         v-if="isSupportAvailable"
         class="sf-button color-primary support-btns"
         @click="openSupportModal = true"
       >
-        <div class="f-btn-text">Contact Support</div>
+        <div class="f-btn-text">Contactez le support</div>
         <img class="btn-img" src="/icons/support.svg" />
       </button>
       <!-- <button
@@ -342,7 +342,7 @@
         <div class="btn-text">Cancel Order</div>
       </button> -->
       <ModalSlide :visible="openSupportModal" @close="openSupportModal = false">
-        <div class="modal-heading">Contact Support</div>
+        <div class="modal-heading">Contactez le support</div>
         <div><hr class="sf-divider" /></div>
         <div class="modal-body">
           <div class="support-text">
@@ -359,21 +359,21 @@
             @click="openWindow('tel:' + isSupportAvailable.phone)"
             aria-label="Close modal"
             type="button"
-            >Call us</SfButton
+            >Nous appeler</SfButton
           >
           <SfButton
             class="support-btns"
             @click="openWindow('mailto:' + isSupportAvailable.email)"
             aria-label="Close modal"
             type="button"
-            >Email us</SfButton
+            >Envoyez-nous un email</SfButton
           >
           <SfButton
             class="support-btns"
             @click="openWindow(isSupportAvailable.uri)"
             aria-label="Close modal"
             type="button"
-            >Chat with us</SfButton
+            >Discute avec nous</SfButton
           >
         </div>
       </ModalSlide>
@@ -383,7 +383,7 @@
         <div><hr class="sf-divider" /></div>
         <div class="modal-body">
           <div v-if="!isTrackingAvailable" class="support-text">
-            No Tracking details available
+            Aucun détail de suivi disponible
             <!-- {{
               providerGetters.getProviderName(
                 cartGetters.getBppProvider(order.cart)
@@ -400,10 +400,10 @@
             >
           </div>
           <!-- <SfButton class="support-btns" aria-label="Close modal" type="button"
-            >Call us</SfButton
+            >Nous appeler</SfButton
           >
           <SfButton class="support-btns" aria-label="Close modal" type="button"
-            >Chat with us</SfButton
+            >Discute avec nous</SfButton
           > -->
         </div>
       </ModalSlide>

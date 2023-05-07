@@ -17,7 +17,7 @@
       </div>
       <div><hr class="sf-divider" /></div>
       <div class="detail-body">
-        <div class="b-head">Cancellation policy</div>
+        <div class="b-head">Politique d'annulation</div>
         <p>
           FIn publishing and graphic design, Lorem ipsum is a placeholder text
           commonly used to demonstrate the visual form of a document or a
@@ -52,19 +52,19 @@
     </div>
     <div class="c-footer">
       <button class="sf-button color-primary" @click="openCancelModal = true">
-        <div class="f-btn-text">Accept Cancellation Policy</div>
+        <div class="f-btn-text">Accepter la politique d'annulation</div>
       </button>
     </div>
     <ModalSlide :visible="openCancelModal" @close="goBack()" >
       <div v-if="!canceltext">
-        <div class="modal-heading">Cancel booking Reason</div>
+        <div class="modal-heading">Raison pour l'annulation</div>
         <div><hr class="sf-divider" /></div>
       </div>
 
       <div class="modal-body">
         <div v-if="!canceltext" class="option-container">
           <div class="option-head">
-            Please select the reason for cancellation
+            Veuillez sélectionner la raison de l'annulation
           </div>
 
           <SfRadio
@@ -90,7 +90,7 @@
            </div>
         </button>
         <div>
-          <h4 v-if="canceltext">Booking Cancelled</h4>
+          <h4 v-if="canceltext">Réservation annulée</h4>
           <p v-if="canceltext">
             <!-- Refund will be credited to your account as per refund policy -->
           </p>
@@ -125,10 +125,10 @@ export default {
     const openCancelModal = ref(false);
     const selectedReason = ref('');
     const cancelReasonValues = [
-      'Plan Changed',
-      'Booked by mistake',
-      'Unable to contact driver',
-      'Driver denied duty'
+      'Le plan a changé',
+      'Réservé par erreur',
+      'Impossible de contacter le pilote',
+      'Driver refusé'
     ];
     const canceltext = ref(false);
     const cancelBox = () => {

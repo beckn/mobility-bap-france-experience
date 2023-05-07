@@ -4,7 +4,7 @@
     <div class="details">
       <div v-if="!submitted">
         <div class="div-padding">
-          <div class="head">Add a rating <b>ABC mart</b></div>
+          <div class="head">Ajouter une note <b>ABC mart</b></div>
           <div class="stars">
             <img
               v-for="(star, index) in starArr"
@@ -15,14 +15,14 @@
             />
           </div>
           <div class="input-container">
-            <div class="label">Write your Review here</div>
+            <div class="label">Écrivez votre critique ici</div>
             <textarea class="review" name="review1" rows="3"></textarea>
           </div>
         </div>
         <div class="sf-divider"></div>
         <div></div>
         <div class="div-padding">
-          <div class="head">Add a rating <b>Manjunath</b></div>
+          <div class="head">Ajouter une note <b>Manjunath</b></div>
           <div class="stars">
             <img
               v-for="(star, index) in starArr"
@@ -37,7 +37,7 @@
             />
           </div>
           <div class="input-container">
-            <div class="label">Write your Review here</div>
+            <div class="label">Écrivez votre critique ici</div>
             <textarea class="review" name="review2" rows="3"></textarea>
           </div>
           <button
@@ -48,19 +48,19 @@
             @click="submitted = true"
             :disabled="bppRating === 0 || deliveryBoyRating === 0"
           >
-            <div>Submit Review</div>
+            <div>Poster le commentaire</div>
           </button>
           <button class="sf-button color-light skip" @click="goBack">
-            <div>skip</div>
+            <div>sauter</div>
           </button>
         </div>
       </div>
       <div v-if="submitted" class="submitted">
         <img src="/icons/ratingSubmitted.svg" alt="" />
-        <div class="head">Thank You!</div>
-        <div class="sub">Have a nice day</div>
+        <div class="head">Merci!</div>
+        <div class="sub">Passe une bonne journée</div>
         <button class="sf-button color-primary" @click="goBack">
-          <div>Go back Home</div>
+          <div>Page d’accueil</div>
         </button>
       </div>
       <div v-if="false"></div>

@@ -1,23 +1,23 @@
 <template>
   <div>
-    Filter
+    Filtre
     <div>
         <hr class="sf-divider" />
     </div>
-    Category
+    Catégorie
     <div>
         <button>Taxi</button>
-        <button>Metro</button>
-        <button>Bike Rentals</button>
-        <button>City Buses</button>
+        <button>Métro</button>
+        <button>Location de vélos</button>
+        <button>Bus de la ville</button>
         <button>Parking</button>
-        <button>Bicycle</button>
+        <button>Vélo</button>
         <button>Water Metro</button>
-        <button>Parking Space</button>
-        <button>EV Charging</button>
-        <button>Toll Fee</button>
+        <button>Place de parking</button>
+        <button>Charge EV</button>
+        <button>Péage</button>
     </div>
-    Other
+    Autre
   </div>
 </template>
 

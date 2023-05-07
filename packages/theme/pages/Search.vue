@@ -6,16 +6,16 @@
           <SfIcon color="var(--c-primary)" size="20px" icon="chevron_left" />
         </span>
       </div>
-      <div>Search</div>
+      <div>Recherche</div>
     </div>
 
     <div class="open-search-input">
       <div class="input1">
         <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
 
-        <label>Pickup: </label>
+        <label>Origine: </label>
 
-        <input disabled="true" :value="pickuploc" errorMessage="errer" type="text" placeholder="Enter Pickup" />
+        <input disabled="true" :value="pickuploc" errorMessage="errer" type="text" placeholder="Entrer l'origine" />
       </div>
 
       <div class="hr-theme-slash-2">
@@ -25,7 +25,7 @@
 
       <div class="input">
         <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
-        <label for=""> Dropoff: </label>
+        <label for=""> Destination </label>
 
         <input disabled="true" :value="dropLoc" errorMessage="errer" type="text" placeholder="Enter Destination" />
       </div>
@@ -36,7 +36,7 @@
       <div v-if="pollResults && pollResults.length > 0" class="search__wrapper-results" key="results">
         <div class="side-padding result-num res res1 ">
           <span><span v-e2e="'total-result'">{{ totalResults(pollResults) }}</span>
-            results found
+            résultats trouvés
           </span>
         </div>
 
@@ -67,7 +67,7 @@
                 </div>
               </div>
               <div class="exp-provider" @click="openProvider(bpp, provider)">
-                Explore All
+                Explorez tout
               </div>
             </div>
             <div class="results--mobile">
@@ -99,13 +99,13 @@
       <div v-if="noSearchFound" key="no-search" class="before-results">
         <SfImage src="/icons/feather_search.svg" class="" alt="error" loading="lazy" />
         <p>
-          <b>{{ $t('Your search did not yield ') }}</b>
+          <b>{{ $t('Votre recherche n'a donné ') }}</b>
         </p>
         <p>
-          <b>{{ $t('any results ') }}</b>
+          <b>{{ $t('aucun résultat ') }}</b>
         </p>
         <p>{{ $t('Please try searching again using ') }}</p>
-        <p>{{ $t('different keyword') }}</p>
+        <p>{{ $t('autre mot-clé') }}</p>
       </div>
       <!-- </transition-group> -->
     </div>

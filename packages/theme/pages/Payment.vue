@@ -9,12 +9,12 @@
           <SfIcon color="var(--c-primary)" size="20px" icon="chevron_left" />
         </span>
       </div>
-      <div class="">Select Payment Method</div>
+      <div class="">Select Paiement Method</div>
     </div>
 
     <div class="details header-push">
       <div class="sub-heading">
-        <div class="p-name">Payment</div>
+        <div class="p-name">Paiement</div>
       </div>
       <Card v-if="!!(order && order.cart)">
         <CardContent
@@ -57,14 +57,14 @@
               :width="30"
               :height="30"
             />
-            <label class="cash">Cash</label>
+            <label class="cash">Espèces</label>
           </div>
         </CardContent>
       </Card>
     </div>
     <BookRide
       class="footer-fixed"
-      :buttonText="'Book Now'"
+      :buttonText="'Reserve maintenant'"
       :buttonEnable="isPayConfirmActive"
     >
     </BookRide>

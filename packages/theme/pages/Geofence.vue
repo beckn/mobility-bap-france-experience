@@ -7,7 +7,7 @@
         </span>
       </div>
       <div class="pagetittle">
-        Geofence
+        Géofence
       </div>
     </div>
     <div id="map"></div>
@@ -17,7 +17,7 @@
         class="button-pos sf-button--pure color-primary"
         @click="goHome"
         v-e2e="'home-search-button'"
-        ><label for="btn">Go Back to Home</label>
+        ><label for="btn">Page d’accueil</label>
       </SfButton>
     </div>
   </div>

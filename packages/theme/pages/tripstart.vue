@@ -149,7 +149,7 @@ export default {
       root.$router.back();
     };
     const DriverInfo = ref(false);
-    const tripStatusVal = ref('Ride is Confirmed');
+    const tripStatusVal = ref('La conduite est confirmée');
     const cancelRide = ref(false);
     const {
       poll: onStatus,

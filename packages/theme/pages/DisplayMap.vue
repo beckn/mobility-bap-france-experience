@@ -6,8 +6,8 @@
           ref="locationAutocomplete"
           v-model="location"
           type="text"
-          placeholder="Enter Location"
-          aria-label="Select Location"
+          placeholder="Entrer l'emplacement"
+          aria-label="Sélectionnez l'emplacement"
           class="
             sf-header__search
             be-search-location
@@ -50,19 +50,19 @@
               <div class="popover-content position-relative">
                 <br />
                 <div>
-                  <h4>Set Location</h4>
+                  <h4>Définir l'emplacement</h4>
                   <div class="close" @click="reload()"></div>
                 </div>
 
                 <hr style="width:100%;" />
                 <h6 style="font-weight:400; padding: 0%;">
-                  <p>Current Location</p>
+                  <p>Localisation actuelle</p>
                   {{ this.location }}
                 </h6>
                 <hr style="width:100%;" />
 
                 <SfButton @click="$emit('toggleLocationDrop')" id="btn">
-                  Set Location</SfButton
+                  Définir l'emplacement</SfButton
                 >
 
                 <!-- <ModalComponent class="modalclass" /> -->

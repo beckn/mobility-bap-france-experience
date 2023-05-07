@@ -7,7 +7,7 @@
             class="color-primary sf-button add-btn"
             @click="changeItemNumber('add')"
           >
-            Confirm & Proceed
+            Confirmer et procéder
           </button>
         </div>
       </client-only>
@@ -16,7 +16,7 @@
           <SfSidebar
             :visible="!!isLocationdropOpen"
             :button="false"
-            title="Ride is Confirmed"
+            title="La conduite est confirmée"
             @click="goBack"
             @close="toggleLocationDrop"
             class="sidebar sf-sidebar--right"
@@ -161,7 +161,7 @@ export default {
       return this.location !== '';
     },
     locationText() {
-      return this.location !== '' ? 'Your location' : 'Set location';
+      return this.location !== '' ? 'Votre emplacement' : 'Définir l'emplacement';
     },
     isAuthenticatedUser() {
       return this.currentUser !== null;

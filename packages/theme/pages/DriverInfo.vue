@@ -84,7 +84,7 @@
                                   {{ driverInfo.fulfillment.agent.name }}
                                 </div>
                                 <div v-if="!DriverInfo === true">
-                                  Searching for nearby drivers...
+                                  Recherche de conducteurs à proximité ...
                                 </div>
                               </div>
                             </div>
@@ -224,7 +224,7 @@
                                       {{ driverInfo.fulfillment.agent.name }}
                                     </div>
                                     <div v-if="!DriverInfo === true">
-                                      Searching for nearby drivers...
+                                      Recherche de conducteurs à proximité ...
                                     </div>
                                   </div>
                                 </div>
@@ -322,7 +322,7 @@
                               <div class="text-padding1">
                                 <div class="aline-center">
                                   <div class="p-name">
-                                    Source
+                                    Origine
                                   </div>
                                 </div>
                                 <div class="rating-css">
@@ -375,7 +375,7 @@
                           <div><hr class="sf-divider" /></div>
                           <div @click="isShow = false">
                             <SfButton id="btn" @click="isContactSupport = true">
-                              Contact Support
+                              Contactez le support
                               <SfIcon class="button-pos">
                                 <SfImage
                                   id="icon"
@@ -393,7 +393,7 @@
                             class="cancel-order"
                             @click="goBack2"
                           >
-                            Cancel Ride
+                            Annuler le voyage
                           </div>
                         </div>
                       </template>
@@ -421,7 +421,7 @@
                     </SfButton>
                   </div>
                   <div>
-                    <div class="modal-heading">Contact Support</div>
+                    <div class="modal-heading">Contactez le support</div>
                     <div><hr class="sf-divider" /></div>
                   </div>
                   <div class="modal-body">
@@ -435,14 +435,14 @@
                         @click="openWindow('tel:' + `+919876542183`)"
                         aria-label="Close modal"
                         type="button"
-                        >Call us</SfButton
+                        >Nous appeler</SfButton
                       >
                       <SfButton
                         class="support-btns"
                         @click="openWindow('mailto:' + `john.soans@gmail.com`)"
                         aria-label="Close modal"
                         type="button"
-                        >Email us</SfButton
+                        >Envoyez-nous un email</SfButton
                       >
                       <!-- TO DO chat with us button  -->
                       <!-- <SfButton
@@ -520,7 +520,7 @@ export default {
       return this.location !== '';
     },
     locationText() {
-      return this.location !== '' ? 'Your location' : 'Set location';
+      return this.location !== '' ? 'Votre emplacement' : 'Définir l'emplacement';
     },
     isAuthenticatedUser() {
       return this.currentUser !== null;
