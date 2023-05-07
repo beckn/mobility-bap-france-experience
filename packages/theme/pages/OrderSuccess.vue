@@ -26,7 +26,7 @@
                 </p>
               </div>
               <div style="padding-top: 4%;">
-                <b> ₹{{ Math.round(driverInfo.quote.price.value) }}</b>
+                <b> €{{ Math.round(driverInfo.quote.price.value) }}</b>
               </div>
               <!-- <p class="p2">
                 Mode

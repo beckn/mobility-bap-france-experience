@@ -289,7 +289,7 @@
                         </div>
                         <div>
                           <span
-                            >₹70
+                            >€70
                             <!-- {{
                               formatPrice(
                                 decodedOrderObject !== null
