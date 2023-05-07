@@ -105,6 +105,7 @@ export default {
     'nuxt-i18n',
     'cookie-universal-nuxt',
     'vue-scrollto/nuxt',
+    'nuxt-leaflet',
     '@vue-storefront/middleware/nuxt',
     [
       '@nuxtjs/firebase',

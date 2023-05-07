@@ -46,7 +46,8 @@ export default {
     },
     value: { type: Number, default: 1 },
     maxLimit: { type: Number, default: 100 },
-    index: { typr: Number, default: 0 }
+    index: { type: Number, default: 0 },
+    product: { type: Object },
   },
   data() {
     return {
@@ -97,7 +98,6 @@ export default {
       });
     };
     const getQuote = async (_productIndex) => {
-      console.log('_productIndex.value', _productIndex.value);
       enableLoader.value = true;
       const cartItems = JSON.parse(root.$store.state.cartItem);
       if (cartItems) {
@@ -108,11 +108,11 @@ export default {
               bpp_id: cartItems[0].bpp_id,
               // eslint-disable-next-line camelcase
               bpp_uri: cartItems[0].bpp_uri,
-              transaction_id:root.$store.state.TransactionId,
+              transaction_id: root.$store.state.TransactionId,
             },
             message: {
               cart: {
-                items: cartItems[_productIndex.value].bpp_providers[0].items
+                items: [props.product]
               }
             }
           }
@@ -178,9 +178,9 @@ export default {
             stopPolling();
 
             //setquoteData(JSON.stringify(onGetQuoteRes[0].message));
-            root.$store.dispatch('setquoteData',(JSON.stringify(onGetQuoteRes[0].message)));
+            root.$store.dispatch('setquoteData', (JSON.stringify(onGetQuoteRes[0].message)));
 
-            root.$store.dispatch('setTransactionId',(onGetQuoteRes[0].context.transaction_id));
+            root.$store.dispatch('setTransactionId', (onGetQuoteRes[0].context.transaction_id));
 
             enableLoader.value = false;
             if (root.$store.state.experienceId !== null) {

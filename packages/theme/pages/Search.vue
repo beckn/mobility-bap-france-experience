@@ -44,11 +44,10 @@
           <div v-for="(provider, prIndex) in bpp.bpp_providers" :key="prIndex">
             <div class="provider-head aline-center side-padding">
               <div class="flexy">
-                <img class="provide-img" :src="
-                  providerGetters.getProviderImages(provider)[0]
-                    ? providerGetters.getProviderImages(provider)[0]
-                    : require('~/assets/images/store-placeholder.png')
-                " alt="Vila stripe maxi shirt dress" :width="35" :height="36" />
+                <img class="provide-img" :src="providerGetters.getProviderImages(provider)[0]
+                  ? providerGetters.getProviderImages(provider)[0]
+                  : require('~/assets/images/store-placeholder.png')
+                  " alt="Vila stripe maxi shirt dress" :width="35" :height="36" />
 
                 <div class="text-padding">
                   <div class="aline-center">
@@ -72,8 +71,7 @@
             </div>
             <div class="results--mobile">
               <ProductCard v-for="(product, pIndex) in provider.items.slice(0, 5)"
-                @goToProduct="goToProduct(product, provider, bpp)" :key="
-                  bppIndex +
+                @goToProduct="goToProduct(product, provider, bpp)" :key="bppIndex +
                   '-' +
                   prIndex +
                   '-' +
@@ -81,11 +79,11 @@
                   '-' +
                   keyVal +
                   'product'
-                " :pName="productGetters.getName(product)" :pPrice="productGetters.getPrice(product).regular"
+                  " :pName="productGetters.getName(product)" :pPrice="productGetters.getPrice(product).regular"
                 :pImage="product.descriptor.images[0]" :pWieght="productGetters.getProductWeight(product) + ' kg'"
-                :pCount="cartGetters.getItemQty(isInCart({ product }))" :pIndex="pIndex" @updateItemCount="
-                  (item) => updateItemCount(item, provider, bpp, pIndex)
-                " />
+                :product="product"
+                :pCount="cartGetters.getItemQty(isInCart({ product }))" :pIndex="pIndex" @updateItemCount="(item) => updateItemCount(item, provider, bpp, pIndex)
+                  " />
             </div>
             <div>
               <hr class="sf-divider" />
