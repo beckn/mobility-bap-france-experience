@@ -81,8 +81,8 @@
                   'product'
                   " :pName="productGetters.getName(product)" :pPrice="productGetters.getPrice(product).regular"
                 :pImage="product.descriptor.images[0]" :pWieght="productGetters.getProductWeight(product) + ' kg'"
-                :product="product"
-                :pCount="cartGetters.getItemQty(isInCart({ product }))" :pIndex="pIndex" @updateItemCount="(item) => updateItemCount(item, provider, bpp, pIndex)
+                :product="product" :pCount="cartGetters.getItemQty(isInCart({ product }))" :pIndex="pIndex"
+                @updateItemCount="(item) => updateItemCount(item, provider, bpp, pIndex)
                   " />
             </div>
             <div>
@@ -170,7 +170,7 @@ export default {
     const data = context.root.$route.params.searchKey;
     const data2 = context.root.$route.params.pickuploc;
 
-    const pickuploc = context.root.$store.state.sLocation.addres;
+    const pickuploc = context.root.$store.state.sLocation.addres
 
     const searchKey = ref(data);
     const dropLoc = context.root.$store.state.dLocation.addres;

@@ -3,34 +3,19 @@
     <div>
       <div class="open-search"></div>
       <div>
-        <CurrentLocationMapForOpenStreet
-          :enable="true"
-          :disablepulse="true"
-          :upadateMap="upadateMap"
-        />
+        <CurrentLocationMapForOpenStreet :enable="true" :disablepulse="true" :upadateMap="upadateMap" />
       </div>
       <div v-if="!enableLoader" class="open-search header-top-space">
         <div class="open-search-input">
           <div class="inputBox">
             <div class="input1 input-opensearch">
-              <SfImage
-                id="icon"
-                src="/icons/Vector.png"
-                alt="Vue Storefront Next"
-              />
+              <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
 
               <label>Pickup: </label>
 
               <!-- v-on:keyup.enter="openSearch" -->
-              <input
-                @click="pickupLocation"
-                v-model="pickup"
-                :valid="false"
-                errorMessage="errer"
-                type="text"
-                placeholder="Enter Pickup"
-                v-e2e="'home-search-input'"
-              />
+              <input @click="pickupLocation" v-model="pickup" :valid="false" errorMessage="errer" type="text"
+                placeholder="Enter Pickup" v-e2e="'home-search-input'" />
             </div>
             <!-- <div class="hr">  <hr style="width:100%;" />
         <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /></div> -->
@@ -42,34 +27,15 @@
             </div>
 
             <div class="input">
-              <SfImage
-                id="icon"
-                src="/icons/Vector.png"
-                alt="Vue Storefront Next"
-              />
+              <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
               <label for=""> Dropoff: </label>
 
-              <input
-                @click="dropLocation"
-                v-model="message"
-                v-on:keyup.enter="openSearch"
-                :valid="false"
-                errorMessage="errer"
-                type="text"
-                placeholder="Enter Destination"
-                v-e2e="'home-search-input'"
-              />
+              <input @click="dropLocation" v-model="message" v-on:keyup.enter="openSearch" :valid="false"
+                errorMessage="errer" type="text" placeholder="Enter Destination" v-e2e="'home-search-input'" />
             </div>
 
-            <SfButton
-              id="btn"
-              class="button-pos sf-button--pure color-primary"
-              @click="voilationcheck"
-              :disabled="
-                !selectedLocation.latitude || !selectedLocation.longitude
-              "
-              v-e2e="'home-search-button'"
-              ><label for="btn">Search Rides</label>
+            <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck" :disabled="!selectedLocation.latitude || !selectedLocation.longitude
+              " v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
               <!-- <span class="sf-search-bar__icon"> contactSupport
             <SfIcon color="var(--c-text)" size="18px" icon="search" />
           </span> -->
@@ -91,22 +57,12 @@
         <div class="location-blk d-flex w-100">
           <div class="layout-container">
             <div id="location" class="location-content">
-              <SfSidebar
-                :visible="!!isLocationdropOpen"
-                :button="false"
-                title="Set Location"
-                @close="toggleLocationDrop"
-                class="sidebar sf-sidebar--right"
-              >
+              <SfSidebar :visible="!!isLocationdropOpen" :button="false" title="Set Location" @close="toggleLocationDrop"
+                class="sidebar sf-sidebar--right">
                 <transition name="fade">
                   <client-only>
-                    <LocationSearchBar
-                      :buttonlocation="buttonlocation"
-                      @locationSelected="locationSelected"
-                      @toggleLocationDrop="toggleLocationDrop"
-                      @edit="edit"
-                      v-e2e="'app-location-sidebar'"
-                    />
+                    <LocationSearchBar :buttonlocation="buttonlocation" @locationSelected="locationSelected"
+                      @toggleLocationDrop="toggleLocationDrop" @edit="edit" v-e2e="'app-location-sidebar'" />
                   </client-only>
                 </transition>
               </SfSidebar>
@@ -131,23 +87,13 @@
           <template>
             <div class="bar-pos" @click="Alertmodal">
               <SfButton class="sf-button--pure rect-bar-style">
-                <SfImage
-                  src="/icons/Rectangle-bar.png"
-                  :width="60"
-                  :height="5.5"
-                  alt="Rectangle bar"
-                />
+                <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
               </SfButton>
             </div>
             <div>
               <div class="modal-heading">
                 Alert
-                <SfImage
-                  src="/icons/Alert.png"
-                  :width="15"
-                  :height="15"
-                  alt="Rectangle bar"
-                />
+                <SfImage src="/icons/Alert.png" :width="15" :height="15" alt="Rectangle bar" />
               </div>
               <div>
                 <hr class="sf-divider" />
@@ -162,21 +108,13 @@
                   <br />
                   <br />
 
-                  <span
-                    @click="openViolatedPolicy"
-                    style="cursor: pointer; color: blue"
-                  >
+                  <span @click="openViolatedPolicy" style="cursor: pointer; color: blue">
                     {{ violatedPolicyName }}
                   </span>
                 </p>
-                <button
-                  class="color-primary btnclass1"
-                  @click="underStandButtonHandler"
-                >
+                <button class="color-primary btnclass1" @click="underStandButtonHandler">
                   <div class="f-btn-text">
-                    <label style="color: antiquewhite; font-weight: 700;"
-                      >Ok, I Understand</label
-                    >
+                    <label style="color: antiquewhite; font-weight: 700;">Ok, I Understand</label>
                   </div>
                 </button>
               </div>
@@ -194,19 +132,14 @@
           <template>
             <div class="bar-pos" @click="TC_toggle">
               <SfButton class="sf-button--pure rect-bar-style">
-                <SfImage
-                  src="/icons/Rectangle-bar.png"
-                  :width="60"
-                  :height="5.5"
-                  alt="Rectangle bar"
-                />
+                <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
               </SfButton>
             </div>
 
             <div>
               <div>
                 <div>
-                  <div class="modal-heading1">Imported Order</div>
+                  <div style="text-align: center;" class="modal-heading1">Imported Order</div>
                   <div>
                     <hr class="sf-divider" />
                   </div>
@@ -214,37 +147,31 @@
                 <div>
                   <div class="option-container">
                     <div>
-                      <img
-                        style=" width: 100%; height: auto;"
-                        src="/icons/Bhrigu-Lake 2.svg"
-                        alt="brigu lake"
-                      />
+                      <img style=" width: 100%; height: 135px;" :src="importedOrderObject !== null
+                        ? importedOrderObject.message.order.item[0].descriptor
+                          .images[0]
+                        : ''" alt="brigu lake" />
                     </div>
                     <br />
-                    <span class="modal-text">
-                      we have updated our terms and conditions.
-                    </span>
+                    <div style="text-align: center;" class="modal-text">
+                      You appear to have placed an order for "{{ importedOrderObject !== null ?
+                        importedOrderObject.message.order.item[0].descriptor.name : null }}"
+                    </div>
                     <br />
                     <div class="container">
-                      <div
-                        style="display:flex; justify-content: space-between; "
-                      >
+                      <div style="display:flex; justify-content: space-between; ">
                         <div>
-                          <span class="trektittle">
-                            Bhrigu-Lake
+                          <span class="trektittle">{{ importedOrderObject !== null ?
+                            importedOrderObject.message.order.item[0].descriptor.name : '' }}
 
-                            <!-- {{
-                              decodedOrderObject !== null
-                                ? decodedOrderObject.message.order.item[0]
-                                    .descriptor.name
-                                : ''
-                            }} -->
+
                           </span>
                         </div>
                         <div>
                           <span class="trektittle">Order ID:</span>
                           <span>
-                            dummy 123
+                            {{ importedOrderObject !== null ?
+                              importedOrderObject.message.order.id : '' }}
                             <!-- {{
                             decodedOrderObject !== null
                               ? decodedOrderObject.message.order.id
@@ -253,15 +180,11 @@
                           </span>
                         </div>
                       </div>
-                      <div>
-                        <P>
-                          <span class="trektittle"
-                            >The Orchad Greens Resort & SPA,</span
-                          >
-                          <br />
+                      <div style="margin-top: 10px; text-align: center;">
+                        <P style="font-size: 14px;">
+                          {{ importedOrderObject !== null ?
+                            importedOrderObject.message.order.item[0].descriptor.short_desc : '' }}
 
-                          Log Huts Area Rd, Old Manali, Manali, Himachal Pradesh
-                          175131
                         </P>
                       </div>
                       <!-- <div style="display:flex; justify-content: space-between; ">
@@ -272,34 +195,23 @@
                          <span>21st Jun 2021, 12:21pm</span>
                         </div>
                          </div> -->
-                      <div
-                        style="display:flex; justify-content: space-between; "
-                      >
+                      <div style="display:flex; justify-content: space-between; margin-top: 10px; ">
                         <div>
                           <span class="trektittle">No.of Travellers</span>
                         </div>
                         <div>
-                          <span>01 </span>
+                          <span> {{ importedOrderObject !== null ?
+                            importedOrderObject.message.order.item[0].quantity : '' }} </span>
                         </div>
                       </div>
-                      <div
-                        style="display:flex; justify-content: space-between; "
-                      >
+                      <div style="display:flex; justify-content: space-between; ">
                         <div>
                           <span class="trektittle"> Total Price</span>
                         </div>
                         <div>
-                          <span
-                            >€70
-
-                            <!-- {{
-                              formatPrice(
-                                decodedOrderObject !== null
-                                  ? decodedOrderObject.message.order.item[0]
-                                      .price.value
-                                  : ''
-                              )
-                            }} -->
+                          <span>
+                            € {{ importedOrderObject !== null ?
+                              importedOrderObject.message.order.item[0].price.value : '' }}
                           </span>
                         </div>
                       </div>
@@ -311,24 +223,19 @@
                     <br />
                     <span class="modal-text">
                       Would you like to see best travel options to reach this
-                      location?</span
-                    >
+                      location?</span>
                     <br />
                   </div>
                   <div style="margin: 13px;">
                     <button class="color-primary btnclass1" @click="TC_toggle">
                       <div class="f-btn-text">
-                        <label style="color: antiquewhite;font-weight: 700;"
-                          >Yes! Let's go</label
-                        >
+                        <label style="color: antiquewhite;font-weight: 700;">Yes! Let's go</label>
                       </div>
                     </button>
                     <br />
                     <button class="color-primary btnclass" @click="TC_toggle">
                       <div class="f-btn-text">
-                        <label style="color:#f37a20;font-weight: 700;"
-                          >No, I will travel later</label
-                        >
+                        <label style="color:#f37a20;font-weight: 700;">No, I will travel later</label>
                       </div>
                     </button>
                   </div>
@@ -346,7 +253,7 @@
 import { SfButton, SfSidebar, SfIcon, SfImage } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
 import { SfFooter } from '@storefront-ui/vue';
-import { ref, onBeforeMount, onMounted } from '@vue/composition-api';
+import { ref, onBeforeMount, onMounted, computed } from '@vue/composition-api';
 import LocationSearchBar from './LocationSearchBar.vue';
 import superAgent from 'superagent';
 import CurrentLocationMapForOpenStreet from './CurrentLocationMapForOpenStreet.vue';
@@ -375,7 +282,14 @@ export default {
     LoadingCircle
   },
 
+  props: {
+    importedOrderObject: {
+      type: Object,
+    }
+  },
+
   setup(_, context) {
+    const importedOrderObject = computed(() => props.importedOrderObject);
     const pickup = ref('Paris, France');
     const buttonlocation = ref(false);
     const location = ref(true);
@@ -395,16 +309,17 @@ export default {
       isAlert.value = !isAlert.value;
     };
     const enableLoader = ref(false);
+
     onMounted(() => {
+      context.root.$store.dispatch('updateslocation', {
+        lat: 48.856614,
+        long: 2.3522219,
+        addres: 'Paris, France'
+      });
       let URL = window.location.href;
       if (URL.includes('?')) {
         TC_toggle();
-        // const encodedOrderObject = URL.slice(URL.indexOf('?') + 1);
-        // const decodedOrderObject = JSON.parse(window.atob(encodedOrderObject));
-        // localStorage.setItem(
-        //   'decodedOrderObject',
-        //   JSON.stringify(decodedOrderObject)
-        // );
+
       }
     });
 
@@ -674,7 +589,8 @@ export default {
       underStandButtonHandler,
       violatedPolicyName,
       openViolatedPolicy,
-      violatedPolicyId
+      violatedPolicyId,
+      importedOrderObject
     };
   }
 };
@@ -686,16 +602,12 @@ export default {
   pointer-events: none;
 }
 
-// .header-top-space{
-//   top: 107px;
-// }
 .option-container {
   padding: 15px;
-  //font-family: 'SF Pro Text';
   font-weight: 300;
   font-size: 12px;
   line-height: 14px;
-  text-align: center;
+  // text-align: center;
   letter-spacing: 0.6px;
 
   color: #000000;
@@ -726,8 +638,6 @@ export default {
 }
 
 .modal-text {
-  font-family: 'Roboto';
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -749,7 +659,6 @@ export default {
 }
 
 .trektittle {
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: 600 !important;
   font-size: 14px !important;
@@ -783,7 +692,6 @@ export default {
   color: #37474f;
 
   .option-container {
-    // font-family: 'SF Pro Text';
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -953,7 +861,6 @@ export default {
       box-sizing: border-box;
       border: none;
       font-weight: 700;
-      font-family: 'Inter', sans-serif;
       font-size: 12px;
       padding: 2px 0 0 4px;
     }

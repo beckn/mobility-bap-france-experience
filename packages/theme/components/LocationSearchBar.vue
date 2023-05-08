@@ -238,24 +238,13 @@ export default {
           localStorage.getItem('SourceLocation')
         );
 
+       
+          
 
-        if (!this.buttonlocation && pickupLocation.hasOwnProperty('geometry')) {
-          const radius = process.env.RADIUS_KEY
-            ? process.env.RADIUS_KEY
-            : 100;
-          const bounds = new google.maps.Circle({
-            center: {
-              lat: pickupLocation.geometry.location.lat,
-              lng: pickupLocation.geometry.location.lng
-            },
-            radius: radius
-          }).getBounds();
-
-          return this.service
+          this.service
             .getPlacePredictions({
-              input: this.location,
-              bounds: bounds,
-              strictbounds: true
+              input: this.location
+              // bounds: bounds
             })
             .then((r) => {
 
@@ -264,20 +253,10 @@ export default {
             .catch((error) =>
               console.error(`error while fetching search predictions ${error}`)
             );
-        }
+        
 
-        this.service
-          .getPlacePredictions({
-            input: this.location
-            // bounds: bounds
-          })
-          .then((r) => {
 
-            this.searchResults = r.predictions;
-          })
-          .catch((error) =>
-            console.error(`error while fetching search predictions ${error}`)
-          );
+
 
 
       }
