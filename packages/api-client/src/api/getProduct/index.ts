@@ -22,13 +22,11 @@ export default async function getProduct(
 
   const qParams = {
     context: {
-      transaction_id: params.experienceId
-        ? uuidv4() + `.${params.experienceId}`
-        : uuidv4(),
+      transaction_id: uuidv4()
     },
     message: {
-      criteria: criteriaData,
-    },
+      criteria: criteriaData
+    }
   };
   const config = context.config as Config;
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
