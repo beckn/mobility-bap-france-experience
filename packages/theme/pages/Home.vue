@@ -1,6 +1,6 @@
 <template>
   <div id="">
-    <OpenSearch :importedOrderObject="importedOrder" />
+    <OpenSearch v-if="isOrderImported ? !!importedOrder : true" :importedOrderObject="importedOrder" />
     <div @click="openCart"></div>
   </div>
 </template>
@@ -29,21 +29,18 @@ export default {
   setup() {
     const { load } = useCart();
     const importedOrder = ref(null)
+    const isOrderImported = ref(false)
 
     onBeforeMount(() => {
       let URL = window.location.href;
       if (URL.includes('?')) {
+        isOrderImported.value = true
         let start = URL.indexOf('=') + 1;
         const orderObjectUrl = decodeURIComponent(URL.substring(start));
         sa.get(orderObjectUrl).then(res => {
-
           localStorage.setItem('importedOrderObject', res.text
           )
-
           importedOrder.value = JSON.parse(res.text)
-
-
-
         }
         ).catch(e => console.error(e))
       }
@@ -62,7 +59,8 @@ export default {
     });
 
     return {
-      importedOrder
+      importedOrder,
+      isOrderImported
     }
   }
 };

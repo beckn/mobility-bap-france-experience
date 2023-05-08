@@ -34,8 +34,8 @@
                 errorMessage="errer" type="text" placeholder="Enter Destination" v-e2e="'home-search-input'" />
             </div>
 
-            <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck" :disabled="!selectedLocation.latitude || !selectedLocation.longitude
-              " v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
+            <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck"
+              v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
               <!-- <span class="sf-search-bar__icon"> contactSupport
             <SfIcon color="var(--c-text)" size="18px" icon="search" />
           </span> -->
@@ -147,22 +147,22 @@
                 <div>
                   <div class="option-container">
                     <div>
-                      <img style=" width: 100%; height: 135px;" :src="importedOrderObject !== null
-                        ? importedOrderObject.message.order.item[0].descriptor
+                      <img style=" width: 100%; height: 135px;" :src="_importedOrderObject !== null
+                        ? _importedOrderObject.message.order.item[0].descriptor
                           .images[0]
                         : ''" alt="brigu lake" />
                     </div>
                     <br />
                     <div style="text-align: center;" class="modal-text">
-                      You appear to have placed an order for "{{ importedOrderObject !== null ?
-                        importedOrderObject.message.order.item[0].descriptor.name : null }}"
+                      You appear to have placed an order for "{{ _importedOrderObject !== null ?
+                        _importedOrderObject.message.order.item[0].descriptor.name : null }}"
                     </div>
                     <br />
                     <div class="container">
                       <div style="display:flex; justify-content: space-between; ">
                         <div>
-                          <span class="trektittle">{{ importedOrderObject !== null ?
-                            importedOrderObject.message.order.item[0].descriptor.name : '' }}
+                          <span class="trektittle">{{ _importedOrderObject !== null ?
+                            _importedOrderObject.message.order.item[0].descriptor.name : '' }}
 
 
                           </span>
@@ -170,8 +170,8 @@
                         <div>
                           <span class="trektittle">Order ID:</span>
                           <span>
-                            {{ importedOrderObject !== null ?
-                              importedOrderObject.message.order.id : '' }}
+                            {{ _importedOrderObject !== null ?
+                              _importedOrderObject.message.order.id : '' }}
                             <!-- {{
                             decodedOrderObject !== null
                               ? decodedOrderObject.message.order.id
@@ -182,8 +182,8 @@
                       </div>
                       <div style="margin-top: 10px; text-align: center;">
                         <P style="font-size: 14px;">
-                          {{ importedOrderObject !== null ?
-                            importedOrderObject.message.order.item[0].descriptor.short_desc : '' }}
+                          {{ _importedOrderObject !== null ?
+                            _importedOrderObject.message.order.item[0].descriptor.short_desc : '' }}
 
                         </P>
                       </div>
@@ -200,8 +200,8 @@
                           <span class="trektittle">No.of Travellers</span>
                         </div>
                         <div>
-                          <span> {{ importedOrderObject !== null ?
-                            importedOrderObject.message.order.item[0].quantity : '' }} </span>
+                          <span> {{ _importedOrderObject !== null ?
+                            _importedOrderObject.message.order.item[0].quantity : '' }} </span>
                         </div>
                       </div>
                       <div style="display:flex; justify-content: space-between; ">
@@ -210,8 +210,8 @@
                         </div>
                         <div>
                           <span>
-                            € {{ importedOrderObject !== null ?
-                              importedOrderObject.message.order.item[0].price.value : '' }}
+                            € {{ _importedOrderObject !== null ?
+                              _importedOrderObject.message.order.item[0].price.value : '' }}
                           </span>
                         </div>
                       </div>
@@ -288,8 +288,8 @@ export default {
     }
   },
 
-  setup(_, context) {
-    const importedOrderObject = computed(() => props.importedOrderObject);
+  setup(props, context) {
+    const _importedOrderObject = computed(() => props.importedOrderObject);
     const pickup = ref('Paris, France');
     const buttonlocation = ref(false);
     const location = ref(true);
@@ -309,6 +309,36 @@ export default {
       isAlert.value = !isAlert.value;
     };
     const enableLoader = ref(false);
+    if (_importedOrderObject.value) {
+      const fulfillment_end_loc = _importedOrderObject.value.message.order.item[0].tags.fulfillment_end_loc;
+      const [latStr, longStr] = fulfillment_end_loc.split('/');
+
+
+      const lat = parseFloat(latStr);
+      const long = parseFloat(longStr);
+
+      const latlng = { lat: lat, lng: long };
+
+      const geoCodeService = new window.google.maps.Geocoder();
+
+      geoCodeService.geocode({ location: latlng }, (results, status) => {
+        if (status === 'OK') {
+          if (results[0]) {
+            console.log(results[0].formatted_address);
+            message.value = results[0].formatted_address
+            context.root.$store.dispatch('updateDlocation', {
+              late: latStr,
+              lng: longStr,
+              addres: results[0].formatted_address
+            });
+          } else {
+            window.alert('No results found');
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);
+        }
+      });
+    }
 
     onMounted(() => {
       context.root.$store.dispatch('updateslocation', {
@@ -590,7 +620,8 @@ export default {
       violatedPolicyName,
       openViolatedPolicy,
       violatedPolicyId,
-      importedOrderObject
+      _importedOrderObject,
+
     };
   }
 };
