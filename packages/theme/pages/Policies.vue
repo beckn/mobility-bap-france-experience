@@ -7,7 +7,7 @@
         </span>
       </div>
       <div class="pagetittle">
-        Policies
+        Stratégies
         <span
           style="background-color: #F37A20; color: aliceblue;border-radius: 50%; font-weight: 400; display: inline-block; width: 15px;text-align: center;">{{
             notification }}</span>
@@ -19,13 +19,13 @@
       <select class="custom-select" name="Filter" id="Filter" @change="switchSelect($event)">
         <option value="All"> All</option>
         <option value="New">
-          New
+          Nouveau
         </option>
         <option value="Applied">
-          Applied
+          Appliqué
         </option>
-        <option value="Disputed">Disputed</option>
-        <option value="Inactive">Inactive</option>
+        <option value="Disputed">Contesté</option>
+        <option value="Inactive">Inactif</option>
       </select>
     </div>
     <hr />

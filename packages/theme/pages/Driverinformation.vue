@@ -6,7 +6,7 @@
           <SfIcon color="var(--c-primary)" size="20px" icon="chevron_left" />
         </span>
       </div>
-      <div>Driver Information</div>
+      <div>Informations sur le conducteur</div>
     </div>
     <template>
       <div id="cafe-map"></div>

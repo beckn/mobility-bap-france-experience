@@ -7,7 +7,7 @@
         </span>
       </div>
       <div>
-        Traffic Zone
+        Zone de circulation
       </div>
     </div>
 
@@ -15,17 +15,17 @@
       <div class="Form">
         <div class="flexform">
           <div>
-            <label class="lableclass">Name</label>
+            <label class="lableclass">Nom</label>
             <br />
             <input class="flexinputbox" disabled="true" :value="Name" errorMessage="errer" type="text" placeholder="" />
           </div>
           <div>
-            <label class="lableclass">Owner </label>
+            <label class="lableclass">Propriétaire </label>
             <br />
             <input class="flexinputbox" disabled="true" :value="Owner" errorMessage="errer" type="text" placeholder="" />
           </div>
           <div>
-            <label class="lableclass">Type </label>
+            <label class="lableclass">Type de politique </label>
             <br />
             <input class="flexinputbox" disabled="true" :value="Type" errorMessage="errer" type="text" placeholder="" />
           </div>
@@ -40,25 +40,25 @@
 
         <div class="flexform">
           <div>
-            <label class="lableclass">Country </label>
+            <label class="lableclass">Pays </label>
             <br />
             <input class="flexinputbox" disabled="true" :value="Country" errorMessage="errer" type="text"
               placeholder="" />
           </div>
 
           <div>
-            <label class="lableclass">City :</label>
+            <label class="lableclass">Ville :</label>
             <br />
             <input class="flexinputbox" disabled="true" :value="City" errorMessage="errer" type="text" placeholder="" />
           </div>
           <div>
-            <label class="lableclass">From </label>
+            <label class="lableclass">Depuis </label>
             <br />
             <input class="flexinputbox" disabled="true" :value="FromDate" errorMessage="errer" type="text"
               placeholder="" />
           </div>
           <div>
-            <label class="lableclass">To </label>
+            <label class="lableclass">à </label>
             <br />
             <input class="flexinputbox" disabled="true" :value="ToDate" errorMessage="errer" type="text" placeholder="" />
           </div>
@@ -66,7 +66,7 @@
 
         <div>
           <br />
-          <label class="lableclass">Policy Document </label>
+          <label class="lableclass">Document de politique </label>
           <br />
           <a class="policy-document-link" :href='Document' target="_blank">{{ Document }}</a>
           <br />
@@ -75,16 +75,16 @@
         </div>
 
         <div>
-          <label class="lableclass">Applicable to </label>
+          <label class="lableclass">Applicable à </label>
           <br />
           <input class="flexinputbox" disabled="true" :value="Applicable" errorMessage="errer" type="text"
             placeholder="" />
         </div>
         <div>
-          <label class="lableclass">Geofence: </label>
+          <label class="lableclass">Géofence: </label>
           <br />
 
-          <label class="link" @click="Geo">Click to View</label>
+          <label class="link" @click="Geo">Clique pour voir</label>
         </div>
         <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="Applyslider"
           v-e2e="'home-search-button'"><label for="btn">Apply</label>
@@ -92,7 +92,7 @@
         <br />
         <div>
           <button class="color-primary btnclass" @click="desputeslider">
-            <div class="f-btn-text"><label> Dispute</label></div>
+            <div class="f-btn-text"><label> Litige</label></div>
           </button>
         </div>
       </div>
@@ -106,7 +106,7 @@
                 </SfButton>
               </div>
               <div>
-                <div class="modal-heading" v-if="Dispute">Dispute Policy</div>
+                <div class="modal-heading" v-if="Dispute">Disposition des différends</div>
                 <div class="modal-heading" v-if="Applied">Policy Applied</div>
                 <div>
                   <hr class="sf-divider" />
@@ -116,7 +116,7 @@
                 <div class="option-container">
                   <p class="warningtext" v-if="Dispute">
                     <br />
-                    To raise a dispute against this policy,<br />
+                    à raise a dispute against this policy,<br />
                     please send an email to <br />
                     policy@openmobilitynetwork.com
                     <br />
@@ -141,7 +141,7 @@
       <!-- <div v-show="!showForm" class="mapSection">
         <div class="toggle-date">
           <div>
-            <label class="lableclass">Type :</label>
+            <label class="lableclass">Type de politique :</label>
             <br />
             <div>
               <span

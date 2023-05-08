@@ -7,7 +7,7 @@
         </span>
       </div>
       <div>
-        Initialize
+        Initialiser
       </div>
     </div>
     <template>

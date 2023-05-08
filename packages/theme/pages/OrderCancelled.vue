@@ -3,15 +3,15 @@
     <div class="top-bar"></div>
     <div class="details">
       <!-- <img src="/icons/cancelOrder.svg" alt="" /> -->
-      <div class="head">Booking Cancelled</div>
+      <div class="head">Réservation annulée</div>
       <!-- <div class="sub"> -->
       <!-- Refund will be credited to your account as per refund policy. -->
       <!-- </div> -->
       <button class="sf-button color-primary" @click="goBack">
-        <div>Go back Home</div>
+        <div>Page d’accueil</div>
       </button>
       <button class="sf-button color-light continue" @click="goBack">
-        <div class="f-btn-text">Continue Ride</div>
+        <div class="f-btn-text">Continuer le voyage</div>
       </button>
     </div>
   </div>

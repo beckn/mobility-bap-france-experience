@@ -79,7 +79,7 @@
 
         <div class="provider-head aline-center side-padding">
           <div>
-            Temperature  
+            Température  
           </div>
           <div class="button-pos" >
             97.3*F
@@ -88,7 +88,7 @@
 
         <div class="provider-head aline-center side-padding">
           <div>
-            Last Checked at
+            Dernière vérification à
           </div>
           <div class="button-pos" >
             12:34pm
@@ -109,7 +109,7 @@
             <div class="text-padding">
              <span class="flexy">
                 <span class="rating-css">
-                 Total fare
+                 Prix ​​total
                 </span>
               </span> 
               <div class="aline-center">
@@ -123,11 +123,11 @@
             <div class="text-padding">
               <div class="aline-center">
                 <div>
-                  Payment <span class="p-name">Google Pay</span>
+                  Paiement <span class="p-name">Google Pay</span>
                 </div>
               </div>
               <span class="flexy">
-                change
+                changement
               </span> 
             </div>
           </div>    
@@ -143,11 +143,11 @@
             <input
               type="text"
               placeholder=""
-              aria-label="Select Location"
+              aria-label="Sélectionnez l'emplacement"
             />
             <template class="position-relative">
               <SfButton class="button-pos1 sf-button--pure">
-                Edit
+                Modifier
               </SfButton>
             </template>
           </div>
@@ -161,11 +161,11 @@
             <input
               type="text"
               placeholder=""
-              aria-label="Select Location"
+              aria-label="Sélectionnez l'emplacement"
             />
             <template class="position-relative">
               <SfButton class="button-pos1 sf-button--pure">
-                Edit
+                Modifier
               </SfButton>
             </template>
           </div>

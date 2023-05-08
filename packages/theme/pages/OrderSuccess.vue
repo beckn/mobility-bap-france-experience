@@ -8,7 +8,7 @@
       <div class="details">
         <div class="sub-heading dis-block">
           <div class="sub-heading">
-            Your trip has completed
+            Votre voyage est terminé
           </div>
           <div class="p-name flex-set">Thank you! You have arrived your</div>
           <div class="p-name flex-set">
@@ -22,7 +22,7 @@
             <div style="display:flex; justify-content: space-between;">
               <div>
                 <p class="p1">
-                  Total payable amount
+                  Montant total payable
                 </p>
               </div>
               <div style="padding-top: 4%;">
@@ -43,7 +43,7 @@
               >
                 <!-- button icon template  -->
                 <slot name="buttonIcon" />
-                <div class="f-btn-text">Search for another ride</div>
+                <div class="f-btn-text">Rechercher une autre balade</div>
               </button>
             </div>
           </div>

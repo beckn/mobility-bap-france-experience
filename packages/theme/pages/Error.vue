@@ -8,14 +8,14 @@
         alt="something went wrong"
       />
       <SfHeading
-        title="Something went wrong"
+        title="Quelque chose s'est mal passé"
         :level="2"
-        description="please go back and try again"
+        description="S'il vous plaît, retournez et réessayez"
         class="heading sf-heading--no-underline"
       />
       <div class="actions">
         <SfButton class="sf-button--full-width actions__button" @click="goHome">
-          Return home
+          Page d’accueil
         </SfButton>
         <!-- <SfButton
           @click="goBack"
