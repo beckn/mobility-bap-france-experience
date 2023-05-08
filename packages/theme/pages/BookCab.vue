@@ -108,7 +108,7 @@ export default {
               bpp_id: cartItems[0].bpp_id,
               // eslint-disable-next-line camelcase
               bpp_uri: cartItems[0].bpp_uri,
-              transaction_id:root.$store.state.TransactionId,
+              transaction_id: root.$store.state.TransactionId,
             },
             message: {
               cart: {
@@ -178,9 +178,9 @@ export default {
             stopPolling();
 
             //setquoteData(JSON.stringify(onGetQuoteRes[0].message));
-            root.$store.dispatch('setquoteData',(JSON.stringify(onGetQuoteRes[0].message)));
+            root.$store.dispatch('setquoteData', (JSON.stringify(onGetQuoteRes[0].message)));
 
-            root.$store.dispatch('setTransactionId',(onGetQuoteRes[0].context.transaction_id));
+            root.$store.dispatch('setTransactionId', (onGetQuoteRes[0].context.transaction_id));
 
             enableLoader.value = false;
             if (root.$store.state.experienceId !== null) {
@@ -251,7 +251,7 @@ export default {
       return this.location !== '';
     },
     locationText() {
-      return this.location !== '' ? 'Votre emplacement' : 'Définir l'emplacement';
+      return this.location !== '' ? 'Votre emplacement' : "Définir l'emplacement";
     },
     isAuthenticatedUser() {
       return this.currentUser !== null;
