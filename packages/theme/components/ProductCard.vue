@@ -46,6 +46,7 @@
           :value="_pCount"
           :product="_product"
           :index="1"
+          :relatedBpp="_relatedBpp"
           @updateItemCount="(data) => $emit('updateItemCount', data)"
         />
       </div>
@@ -67,6 +68,7 @@ export default {
   },
   props: {
     product: { type: Object },
+    relatedBpp: { type: Object},
     pName: { type: String, default: '' },
     pIndex: { type: Number, default: 0 },
     pWieght: { type: String, default: '' },
@@ -90,6 +92,7 @@ export default {
     const _product = computed(() => props.product);
     const _updatedPrice = computed(() => props.updatedPrice);
     const _updatedCount = computed(() => props.updatedCount);
+    const _relatedBpp = computed(() => props.relatedBpp)
     const dpList = [1, 2, 3, 4, 'More'];
     const openDropdown = ref(false);
     const dropdownClick = (data) => {
@@ -117,7 +120,8 @@ export default {
       openDropdown,
       _updatedPrice,
       _updatedCount,
-      dropdownClick
+      dropdownClick,
+      _relatedBpp
     };
   },
   methods: {

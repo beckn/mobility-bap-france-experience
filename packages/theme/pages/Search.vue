@@ -82,7 +82,7 @@
                   " :pName="productGetters.getName(product)" :pPrice="productGetters.getPrice(product).regular"
                 :pImage="product.descriptor.images[0]" :pWieght="productGetters.getProductWeight(product) + ' kg'"
                 :product="product" :pCount="cartGetters.getItemQty(isInCart({ product }))" :pIndex="pIndex"
-                @updateItemCount="(item) => updateItemCount(item, provider, bpp, pIndex)
+                :relatedBpp="bpp" @updateItemCount="(item) => updateItemCount(item, provider, bpp, pIndex)
                   " />
             </div>
             <div>

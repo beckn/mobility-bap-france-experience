@@ -17,7 +17,7 @@
 </template>
 <script>
 import { SfCircleIcon, SfButton, SfSidebar, SfIcon } from '@storefront-ui/vue';
-import { ref, watch } from '@vue/composition-api';
+import { computed, ref, watch } from '@vue/composition-api';
 import LocationSearch from './LocationSearch.vue';
 import ModalComponent from '../components/ModalComponent.vue';
 import { useUiState } from '~/composables';
@@ -48,6 +48,7 @@ export default {
     maxLimit: { type: Number, default: 100 },
     index: { type: Number, default: 0 },
     product: { type: Object },
+    relatedBpp: { type: Object },
   },
   data() {
     return {
@@ -73,6 +74,7 @@ export default {
     const enableLoader = ref(false);
     const location = ref(selectedLocation?.value?.address);
     const currentUser = root.$store.$fire.auth.currentUser;
+    const _relatedBpp = computed(() => props.relatedBpp)
 
     const toggleLocationDrop = () => {
       isLocationdropOpen.value = !isLocationdropOpen.value;
@@ -105,9 +107,9 @@ export default {
           {
             context: {
               // eslint-disable-next-line camelcase
-              bpp_id: cartItems[0].bpp_id,
+              bpp_id: _relatedBpp.value.bpp_id,
               // eslint-disable-next-line camelcase
-              bpp_uri: cartItems[0].bpp_uri,
+              bpp_uri: _relatedBpp.value.bpp_uri,
               transaction_id: root.$store.state.TransactionId,
             },
             message: {
@@ -243,7 +245,8 @@ export default {
       openHamburger,
       goBack,
       getQuote,
-      enableLoader
+      enableLoader,
+      _relatedBpp
     };
   },
   computed: {
