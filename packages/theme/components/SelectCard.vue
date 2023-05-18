@@ -403,11 +403,7 @@
                                 </div>
                                 <div>
                                     <SfButton
-                                      :class="{
-                                        [_value]: Boolean(_value)
-                                          ? ''
-                                          : 'is-disabled--button'
-                                      }"
+                                      
                                       :disabled="!name || !phoneNo"
                                       type="submit"
                                       id="btn"

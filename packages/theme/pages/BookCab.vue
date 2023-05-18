@@ -107,9 +107,9 @@ export default {
           {
             context: {
               // eslint-disable-next-line camelcase
-              bpp_id: _relatedBpp.value.bpp_id,
+              bpp_id: _relatedBpp.value.context.bpp_id,
               // eslint-disable-next-line camelcase
-              bpp_uri: _relatedBpp.value.bpp_uri,
+              bpp_uri: _relatedBpp.value.context.bpp_uri,
               transaction_id: root.$store.state.TransactionId,
             },
             message: {

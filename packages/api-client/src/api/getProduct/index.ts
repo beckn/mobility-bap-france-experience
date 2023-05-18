@@ -32,7 +32,9 @@ export default async function getProduct(
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
   Logger.error(qParams);
   return client
-    .post(config.api.url + config.api.endpoints.search)
+    .post(
+      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v1/search'
+    )
     .send(qParams)
     .then((res) => {
       return res.body as AckResponse;

@@ -129,7 +129,7 @@ export default {
         position: {
           lat: this.$store.state.trackLat ? parseFloat(this.$store.state.trackLat) : 0,
 
-          lng: this.$store.state.trackLong ? parseFloat(this.$store.state.trackLong ) : 0
+          lng: this.$store.state.trackLong ? parseFloat(this.$store.state.trackLong) : 0
         },
         map: this.map,
         icon: movingIcon
@@ -185,7 +185,7 @@ export default {
                     redirect: 'follow', // manual, *follow, error
                     referrerPolicy: 'no-referrer', // no-referrer,
                     body: JSON.stringify({
-                      experienceId:root.$store.state.experienceId,
+                      experienceId: root.$store.state.experienceId,
                       eventCode: 'mbtb_payment_endride',
                       eventAction: 'ending ride',
                       eventSourceId: 'mobilityreferencebap.becknprotocol.io',
@@ -211,10 +211,11 @@ export default {
       }
       return statusResults.value;
     });
+    const parsedCardItem = JSON.parse(root.$store.state.cartItem)
 
-    const transactionId = root.$store.state.TransactionId; 
-    const bpp_id = root.$store.state.cartItem.bpp_id;
-    const bpp_uri = root.$store.state.cartItem.bpp_uri;
+    const transactionId = root.$store.state.TransactionId;
+    const bpp_id = parsedCardItem[0].context.bpp_id;
+    const bpp_uri = parsedCardItem[0].context.bpp_uri;
     const orderID = root.$store.state.confirmDatas.order.id;
 
     const lat = ref(12.9732);
@@ -236,14 +237,14 @@ export default {
           }
         }
       ];
-      const response = await status(params,  root.$store.state.token);
-      await onStatus({ orderIds: orderID },root.$store.state.token);
+      const response = await status(params, root.$store.state.token);
+      await onStatus({ orderIds: orderID }, root.$store.state.token);
     };
 
     const tripTrack = async () => {
       const formattedInitResult =
-      root.$store.state.initResult; 
-        
+        root.$store.state.initResult;
+
       const params = [
         {
           context: root.$store.state.confirmDataContext,
@@ -267,7 +268,7 @@ export default {
                   redirect: 'follow', // manual, *follow, error
                   referrerPolicy: 'no-referrer', // no-referrer,
                   body: JSON.stringify({
-                    experienceId:root.$store.state.experienceId,
+                    experienceId: root.$store.state.experienceId,
                     eventCode: 'mbtb_tracking_driver',
                     eventAction: 'tracking ride',
                     eventSourceId: 'mobilityreferencebap.becknprotocol.io',
@@ -313,8 +314,8 @@ export default {
                 lat.value = coordinatesArray[0];
                 long.value = coordinatesArray[1];
 
-                root.$store.dispatch('settrackLat',lat.value);
-                root.$store.dispatch('settrackLong',long.value);
+                root.$store.dispatch('settrackLat', lat.value);
+                root.$store.dispatch('settrackLong', long.value);
 
                 // localStorage.setItem('trackLat', lat.value);
                 // localStorage.setItem('trackLong', long.value);

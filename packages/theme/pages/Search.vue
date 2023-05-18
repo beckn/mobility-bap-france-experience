@@ -41,7 +41,7 @@
         </div>
 
         <div v-for="(bpp, bppIndex) in pollResults" :key="bppIndex">
-          <div v-for="(provider, prIndex) in bpp.bpp_providers" :key="prIndex">
+          <div v-for="(provider, prIndex) in bpp.message.catalog['bpp/providers']" :key="prIndex">
             <div class="provider-head aline-center side-padding">
               <div class="flexy">
                 <img class="provide-img" :src="providerGetters.getProviderImages(provider)[0]
@@ -176,7 +176,7 @@ export default {
     const dropLoc = context.root.$store.state.dLocation.addres;
     const keyVal = ref(0);
     const { search, result } = useFacet();
-    const { pollResults, poll, polling, stopPolling } = useSearch('search');
+    const pollResults = ref([])
     const noSearchFound = ref(false);
 
     console.log(`${context.root.$store.state.dLocation.late},${context.root.$store.state.dLocation.lng}`);
@@ -194,7 +194,6 @@ export default {
     })
 
     const handleSearch = debounce(async (paramValue) => {
-      if (polling.value) stopPolling();
       enableLoader.value = true;
       if (noSearchFound.value) noSearchFound.value = false;
       toggleLoadindBar(false);
@@ -206,72 +205,20 @@ export default {
         created_at: Date.now()
       });
 
+      if (result.value.data.ackResponse.message) {
+        pollResults.value = result.value.data.ackResponse.message.catalogs
+        enableLoader.value = false;
+
+        const nonEmptyBppProvderPollResult = pollResults.value.filter(
+          (pollResult) => pollResult.message.catalog['bpp/providers'].length !== 0
+        );
+
+        context.root.$store.dispatch('setcartItem', (JSON.stringify(nonEmptyBppProvderPollResult)));
+      }
       context.root.$store.dispatch('setTransactionId', (result.value.data.ackResponse.context.transaction_id));
 
-      watch(
-        () => pollResults.value,
-        async (newValue) => {
-          if (newValue?.length > 0 && enableLoader.value) {
-            enableLoader.value = false;
-            if (context.root.$store.state.experienceId !== null) {
-              setTimeout(async () => {
-                try {
-                  await fetch(
-                    'https://api.eventcollector.becknprotocol.io/v2/event',
-                    {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      redirect: 'follow', // manual, *follow, error
-                      referrerPolicy: 'no-referrer', // no-referrer,
-                      body: JSON.stringify({
-                        experienceId: context.root.$store.state.experienceId,
-                        eventCode: 'mbth_snt_catalogue',
-                        eventAction: 'sent catalogue',
-                        eventSourceId:
-                          'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                        eventDestinationId:
-                          'mobilityreferencebap.becknprotocol.io',
-                        payload: '', //add full context object
-                        eventStart_ts: new Date().toISOString()
-                      }) // body data type must match "Content-Type" header
-                    }
-                  );
-                } catch (error) {
-                  console.error(error);
-                }
-              }, 1000);
-            }
-            toggleLoadindBar(true);
 
-            const nonEmptyBppProvderPollResult = pollResults.value.filter(
-              (pollResult) => pollResult.bpp_providers.length !== 0
-            );
-            context.root.$store.dispatch('setcartItem', (JSON.stringify(nonEmptyBppProvderPollResult)));
-          }
-        }
-      );
-      // eslint-disable-next-line camelcase
-      await poll({
-        message_id: result.value.data.ackResponse.context.message_id
-      });
 
-      watch(
-        () => polling.value,
-        (newValue) => {
-          if (!newValue) {
-            enableLoader.value = false;
-            toggleLoadindBar(false);
-            if (pollResults?.value.length === 0) {
-              noSearchFound.value = true;
-            }
-          } else {
-            enableLoader.value = true;
-            noSearchFound.value = false;
-          }
-        }
-      );
     }, 1000);
 
     onBeforeMount(async () => {
@@ -311,7 +258,7 @@ export default {
       if (newValue) {
         let reusltNum = 0;
         for (const bpp of newValue) {
-          for (const provider of bpp.bpp_providers) {
+          for (const provider of bpp.message.catalog['bpp/providers']) {
             reusltNum += provider.items.length;
           }
         }
