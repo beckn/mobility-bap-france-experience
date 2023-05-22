@@ -1,6 +1,6 @@
 <template>
   <div id="">
-    <OpenSearch :importedOrderObject="importedOrder" />
+    <OpenSearch v-if="isOrderImported ? !!importedOrder : true" :importedOrderObject="importedOrder" />
     <div @click="openCart"></div>
   </div>
 </template>
@@ -11,59 +11,39 @@ import { onBeforeMount, onMounted, ref } from '@vue/composition-api';
 import helpers from '../helpers/helpers';
 import * as sa from 'superagent';
 import { useCart } from '@vue-storefront/beckn';
-
 const { toggleCartSidebar } = useUiState();
 export default {
   name: 'Home',
   components: {
     OpenSearch
   },
-
   methods: {
     openCart() {
       toggleCartSidebar();
     }
   },
-
-
   setup() {
     const { load } = useCart();
-    const importedOrder = ref(null)
-
+    const importedOrder = ref(null);
+    const isOrderImported = ref(false);
     onBeforeMount(() => {
       let URL = window.location.href;
       if (URL.includes('?')) {
+        isOrderImported.value = true;
         let start = URL.indexOf('=') + 1;
         const orderObjectUrl = decodeURIComponent(URL.substring(start));
-        sa.get(orderObjectUrl).then(res => {
-
-          localStorage.setItem('importedOrderObject', res.text
-          )
-
-          importedOrder.value = JSON.parse(res.text)
-
-
-
-        }
-        ).catch(e => console.error(e))
+        sa.get(orderObjectUrl)
+          .then((res) => {
+            localStorage.setItem('importedOrderObject', res.text);
+            importedOrder.value = JSON.parse(res.text);
+          })
+          .catch((e) => console.error(e));
       }
-    })
-
-    onMounted(() => {
-      if (localStorage.getItem('cartData')) {
-        const cartData = JSON.parse(localStorage.getItem('cartData'));
-        const days = helpers.calculateDays(cartData.cartTime, new Date());
-        if (days > 7) {
-          localStorage.removeItem('cartData');
-          localStorage.removeItem('transactionId');
-        }
-      }
-      load();
     });
-
     return {
-      importedOrder
-    }
+      importedOrder,
+      isOrderImported
+    };
   }
 };
 </script>
