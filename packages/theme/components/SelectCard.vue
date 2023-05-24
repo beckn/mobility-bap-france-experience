@@ -5,21 +5,12 @@
         <client-only>
           <div class="location-icon">
             <slot>
-              <div
-                @click="toggleIsShow"
-                class=""
-                v-e2e="'app-header-location-input-div'"
-              >
+              <div @click="toggleIsShow" class="" v-e2e="'app-header-location-input-div'">
                 <template>
                   <div class="button-pos1">
                     <SfButton class="sf-button--pure rect-bar-style">
                       <!--<span class="sf-search-bar__icon">-->
-                      <SfImage
-                        src="/icons/Rectangle-bar.png"
-                        :width="60"
-                        :height="5.5"
-                        alt="Rectangle bar"
-                      />
+                      <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
                       <!--</span>-->
                     </SfButton>
                   </div>
@@ -29,12 +20,7 @@
                         <div>
                           <div class="form-class location-content ">
                             <div class="flexy">
-                              <img
-                                src="/icons/car.png"
-                                alt=""
-                                :width="37"
-                                :height="39"
-                              />
+                              <img src="/icons/car.png" alt="" :width="37" :height="39" />
 
                               <div class="text-padding">
                                 <div class="aline-center">
@@ -126,22 +112,13 @@
                           <div>
                             <div class="location-box">
                               <div style="display: flex;align-items: center; ">
-                                <SfIcon
-                                  class="locationicon"
-                                  color="#f37a20"
-                                  size="10px"
-                                  icon="marker"
-                                />
+                                <SfIcon class="locationicon" color="#f37a20" size="10px" icon="marker" />
 
                                 <span class="s-name">Source</span>
                               </div>
                               <div>
                                 <span class="text1">
-                                  <input
-                                    type="text"
-                                    :value="_SourceLocation"
-                                    disabled
-                                  />
+                                  <input type="text" :value="_SourceLocation" disabled />
                                 </span>
                               </div>
                             </div>
@@ -149,22 +126,13 @@
 
                             <div class="location-box">
                               <div style="display: flex; align-items: center;">
-                                <SfIcon
-                                  class="locationicon"
-                                  color="#2081F3"
-                                  size="20px"
-                                  icon="marker"
-                                />
+                                <SfIcon class="locationicon" color="#2081F3" size="20px" icon="marker" />
 
                                 <span class="s-name"> Destination</span>
                               </div>
                               <div>
                                 <span class="text1">
-                                  <input
-                                    type="text"
-                                    :value="_destloc"
-                                    disabled
-                                  />
+                                  <input type="text" :value="_destloc" disabled />
                                 </span>
                               </div>
                             </div>
@@ -185,12 +153,7 @@
                 <template>
                   <div class="bar" @click="toggleIsShow">
                     <SfButton class="sf-button--pure ">
-                      <SfImage
-                        src="/icons/Rectangle-bar.png"
-                        :width="60"
-                        :height="5.5"
-                        alt="Rectangle bar"
-                      />
+                      <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
                     </SfButton>
                   </div>
 
@@ -202,47 +165,40 @@
                             <div class="">
                               <template>
                                 <div>
-                                <div class="location-content">
-                                  <div
-                                    class="provider-head aline-center side-padding "
-                                  >
-                                    <div class="flexy">
-                                      <img
-                                        src="/icons/car.png"
-                                        alt=""
-                                        :width="37"
-                                        :height="39"
-                                      />
+                                  <div class="location-content">
+                                    <div class="provider-head aline-center side-padding ">
+                                      <div class="flexy">
+                                        <img src="/icons/car.png" alt="" :width="37" :height="39" />
 
-                                      <div class="text-padding">
-                                        <div class="aline-center">
-                                          <div class="S-name">
-                                            {{ _pName }}
+                                        <div class="text-padding">
+                                          <div class="aline-center">
+                                            <div class="S-name">
+                                              {{ _pName }}
+                                            </div>
                                           </div>
+                                          <span class="flexy">
+                                            <p clamp="subtext">
+                                              5 min away
+                                            </p>
+                                          </span>
                                         </div>
-                                        <span class="flexy">
-                                          <p clamp="subtext">
-                                            5 min away
-                                          </p>
-                                        </span>
+                                      </div>
+                                      <div class="s-p-price">
+                                        € {{ Math.round(_pPrice) }}
                                       </div>
                                     </div>
-                                    <div class="s-p-price">
-                                      € {{ Math.round(_pPrice) }}
-                                    </div>
-                                  </div>
 
-                                  <div>
-                                    <hr class="sf-divider" />
-                                  </div>
-                                  <div>
-                                    <select class="form-select">
-                                      <option selected>Ride Now</option>
-                                      <!--<option value="Schedule">Schedule</option>
+                                    <div>
+                                      <hr class="sf-divider" />
+                                    </div>
+                                    <div>
+                                      <select class="form-select">
+                                        <option selected>Ride Now</option>
+                                        <!--<option value="Schedule">Schedule</option>
                                          <option value="Recurring">Recurring</option>-->
-                                    </select>
-                                  </div>
-                                  <!-- <div class="loc">
+                                      </select>
+                                    </div>
+                                    <!-- <div class="loc">
                                     <div class="form-class">
                                       <div class="flexy">
                                         <SfIcon
@@ -297,122 +253,73 @@
                                       </div>
                                     </div>
                                   </div> -->
-                                  <div>
-                                    <div class="location-box">
-                                      <div
-                                        style="display: flex; align-items: center;"
-                                      >
-                                        <SfIcon
-                                          class="locationicon"
-                                          color="#f37a20"
-                                          size="10px"
-                                          icon="marker"
-                                        />
-
-                                        <span class="s-name">Source</span>
-                                      </div>
-                                      <div>
-                                        <span class="text1">
-                                          <input
-                                            type="text"
-                                            :value="_SourceLocation"
-                                            disabled
-                                          />
-                                        </span>
-                                      </div>
-                                    </div>
-                                    <br />
-                                    <div class="location-box">
-                                      <div
-                                        style="display: flex;align-items: center; "
-                                      >
-                                        <SfIcon
-                                          class="locationicon"
-                                          color="#2081F3"
-                                          size="20px"
-                                          icon="marker"
-                                        />
-
-                                        <span class="s-name"> Destination</span>
-                                      </div>
-                                      <div>
-                                        <span class="text1">
-                                          <input
-                                            type="text"
-                                            :value="_destloc"
-                                            disabled
-                                          />
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <p class="bookfor">Book for :</p>
-                                    <select class="form-select">
-                                      <option selected>MySelf</option>
-                                    </select>
-                                    <div class="location-box">
-                                      <p class="s-name">Name:</p>
-                                      <input
-                                        @click="enterName"
-                                        v-model="name"
-                                        class="text1"
-                                        type="text"
-                                        placeholder="Enter Name"
-                                      />
-                                      <div
-                                        class="invalid-warning"
-                                        v-if="!isValidName"
-                                      >
-                                        Invalid Name!
-                                      </div>
-                                      <br />
-                                      <br />
-                                      <p class="s-name">Phone Number:</p>
-                                      <input
-                                        @click="enterphoneNo"
-                                        v-model="phoneNo"
-                                        class="text1"
-                                        type="text"
-                                        placeholder="Enter phone number"
-                                      />
-                                      <div
-                                        class="invalid-warning"
-                                        v-if="!isValidPhoneNumber"
-                                      >
-                                        Invalid phone number!
-                                      </div>
-                                    </div>
-                                    <br />
-
                                     <div>
-                                      
+                                      <div class="location-box">
+                                        <div style="display: flex; align-items: center;">
+                                          <SfIcon class="locationicon" color="#f37a20" size="10px" icon="marker" />
+
+                                          <span class="s-name">Source</span>
+                                        </div>
+                                        <div>
+                                          <span class="text1">
+                                            <input type="text" :value="_SourceLocation" disabled />
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <br />
+                                      <div class="location-box">
+                                        <div style="display: flex;align-items: center; ">
+                                          <SfIcon class="locationicon" color="#2081F3" size="20px" icon="marker" />
+
+                                          <span class="s-name"> Destination</span>
+                                        </div>
+                                        <div>
+                                          <span class="text1">
+                                            <input type="text" :value="_destloc" disabled />
+                                          </span>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div
-                                      v-if="enableLoader"
-                                      key="loadingCircle"
-                                      class="loader-circle"
-                                    >
-                                      <LoadingCircle :enable="enableLoader" />
+                                    <div>
+                                      <p class="bookfor">Book for :</p>
+                                      <select class="form-select">
+                                        <option selected>MySelf</option>
+                                      </select>
+                                      <div class="location-box">
+                                        <p class="s-name">Name:</p>
+                                        <input @click="enterName" v-model="name" class="text1" type="text"
+                                          placeholder="Enter Name" />
+                                        <div class="invalid-warning" v-if="!isValidName">
+                                          Invalid Name!
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <p class="s-name">Phone Number:</p>
+                                        <input @click="enterphoneNo" v-model="phoneNo" class="text1" type="text"
+                                          placeholder="Enter phone number" />
+                                        <div class="invalid-warning" v-if="!isValidPhoneNumber">
+                                          Invalid phone number!
+                                        </div>
+                                      </div>
+                                      <br />
+
+                                      <div>
+
+                                      </div>
+                                      <div v-if="enableLoader" key="loadingCircle" class="loader-circle">
+                                        <LoadingCircle :enable="enableLoader" />
+                                      </div>
+                                      <!-- <nuxt-link :to="localePath('/payment')"> -->
+
                                     </div>
-                                    <!-- <nuxt-link :to="localePath('/payment')"> -->
-                                    
+
+                                    <!-- </nuxt-link> -->
                                   </div>
-                                
-                                  <!-- </nuxt-link> -->
+                                  <div>
+                                    <SfButton :disabled="!name || !phoneNo" type="submit" id="btn" @click="onConfirmProc">
+                                      Confirm & Proceed</SfButton>
+                                  </div>
                                 </div>
-                                <div>
-                                    <SfButton
-                                      
-                                      :disabled="!name || !phoneNo"
-                                      type="submit"
-                                      id="btn"
-                                      @click="onConfirmProc"
-                                    >
-                                      Confirm & Proceed</SfButton
-                                    >
-                                  </div>
-                                  </div>
                               </template>
                             </div>
                           </div>
@@ -580,6 +487,7 @@ export default {
       stopPolling
     } = useInitOrder();
     const quoteItems = JSON.parse(root.$store.state.quoteData);
+
     const transactionId = root.$store.state.TransactionId; //localStorage.getItem('transactionId');
     const cartitem = JSON.parse(root.$store.state.cartItem);
     const isShow = ref(false);
@@ -601,13 +509,56 @@ export default {
 
       enableLoader.value = true;
       if (quoteItems && transactionId && cartitem) {
+
         const params = createInitOrderRequest(
           transactionId,
-          quoteItems.quote,
+          quoteItems.catalogs.order,
           cartitem,
-          '12.9063433,77.5856825'
         );
-        const response = await init(params, root.$store.state.token);
+
+        try {
+          const initRes = await init(params, root.$store.state.token);
+          root.$store.dispatch(
+            'setTransactionId',
+            initRes.context.transaction_id
+          );
+          root.$store.dispatch('setinitResult', initRes);
+          enableLoader.value = false;
+          if (root.$store.state.experienceId !== null) {
+            setTimeout(async () => {
+              try {
+                await fetch(
+                  'https://api.eventcollector.becknprotocol.io/v2/event',
+                  {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer,
+                    body: JSON.stringify({
+                      experienceId: root.$store.state.experienceId,
+                      eventCode: 'mbth_sent_fnl_quote',
+                      eventAction: 'sent final quote',
+                      eventSourceId:
+                        'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
+                      eventDestinationId:
+                        'mobilityreferencebap.becknprotocol.io',
+                      payload: '', //add full context object
+                      eventStart_ts: new Date().toISOString()
+                    })
+                  }
+                );
+              } catch (error) {
+                console.error(error);
+              }
+            }, 1000);
+          }
+          root.$router.push('/payment');
+        } catch (error) {
+          throw `Init api fail with ${error}`
+        }
+
         if (root.$store.state.experienceId !== null) {
           setTimeout(async () => {
             try {
@@ -637,70 +588,9 @@ export default {
             }
           }, 1000);
         }
-
-        await onInitOrder(
-          {
-            // eslint-disable-next-line camelcase
-            messageIds: response[0].context.message_id
-          },
-          root.$store.state.token
-        );
       }
 
-      watch(
-        () => onInitResult.value,
-        async (onInitRes) => {
-          if (onInitRes?.error) {
-            throw 'api fail';
-          }
-          if (!onInitRes) {
-            return;
-          }
-          if (helpers.shouldStopPooling(onInitRes, 'order')) {
-            stopPolling();
 
-            root.$store.dispatch(
-              'setTransactionId',
-              onInitRes[0].context.transaction_id
-            );
-
-            root.$store.dispatch('setinitResult', onInitRes);
-
-            enableLoader.value = false;
-            if (root.$store.state.experienceId !== null) {
-              setTimeout(async () => {
-                try {
-                  await fetch(
-                    'https://api.eventcollector.becknprotocol.io/v2/event',
-                    {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      redirect: 'follow', // manual, *follow, error
-                      referrerPolicy: 'no-referrer', // no-referrer,
-                      body: JSON.stringify({
-                        experienceId: root.$store.state.experienceId,
-                        eventCode: 'mbth_sent_fnl_quote',
-                        eventAction: 'sent final quote',
-                        eventSourceId:
-                          'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                        eventDestinationId:
-                          'mobilityreferencebap.becknprotocol.io',
-                        payload: '', //add full context object
-                        eventStart_ts: new Date().toISOString()
-                      })
-                    }
-                  );
-                } catch (error) {
-                  console.error(error);
-                }
-              }, 1000);
-            }
-            root.$router.push('/payment');
-          }
-        }
-      );
     };
     return {
       closeModal,
@@ -733,10 +623,12 @@ export default {
 .loader-circle {
   margin-bottom: 20px;
 }
+
 .location-box1 {
   padding-left: 15px;
   padding-right: 15px;
 }
+
 .location-box {
   padding-left: 35px;
   padding-right: 45px;

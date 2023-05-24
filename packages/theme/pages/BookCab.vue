@@ -99,31 +99,55 @@ export default {
         address: address
       });
     };
+
+    const handleOnGetQuoteError = (onGetQuoteRes) => {
+      if (onGetQuoteRes.error) {
+        throw 'api fail';
+      }
+      ;
+    };
+
     const getQuote = async (_productIndex) => {
       enableLoader.value = true;
       const cartItems = JSON.parse(root.$store.state.cartItem);
       if (cartItems) {
-        const getQuoteRequest = [
-          {
-            context: {
-              // eslint-disable-next-line camelcase
-              bpp_id: _relatedBpp.value.context.bpp_id,
-              // eslint-disable-next-line camelcase
-              bpp_uri: _relatedBpp.value.context.bpp_uri,
-              transaction_id: root.$store.state.TransactionId,
-            },
-            message: {
-              cart: {
-                items: [props.product]
+        console.log('_relatedBpp', _relatedBpp)
+        const getQuoteRequest =
+        {
+          context: {
+            // eslint-disable-next-line camelcase
+            bpp_id: _relatedBpp.value.context.bpp_id,
+            // eslint-disable-next-line camelcase
+            bpp_uri: _relatedBpp.value.context.bpp_uri,
+            transaction_id: root.$store.state.TransactionId,
+          },
+          message: {
+            order: {
+              items: [props.product],
+              fulfillment: {
+                id: _relatedBpp.value.message.catalog['bpp/fulfillments'][0].id,
+                start: _relatedBpp.value.message.catalog['bpp/fulfillments'][0].start,
+                end: _relatedBpp.value.message.catalog['bpp/fulfillments'][0].start
               }
             }
           }
-        ];
+        }
+          ;
 
         const responseQuote = await init(
           getQuoteRequest,
           root.$store.state.token
         );
+
+        handleOnGetQuoteError(responseQuote);
+
+        root.$store.dispatch('setquoteData', (JSON.stringify(responseQuote.message)));
+
+        root.$store.dispatch('setTransactionId', (responseQuote.context.transaction_id));
+
+        enableLoader.value = false;
+
+
 
         if (root.$store.state.experienceId !== null) {
           setTimeout(async () => {
@@ -154,72 +178,12 @@ export default {
             }
           }, 1000);
         }
+        isQuoteData.value = true;
+        root.$router.push('/LocationSearch');
 
-        const msgId = responseQuote[0].context.message_id;
-        await poll({ messageIds: msgId }, root.$store.state.token);
+
       }
-      // Loops over the onGetQuote response and checks for error object. If any error then throws 'api fail'
-      const handleOnGetQuoteError = (onGetQuoteRes) => {
-        onGetQuoteRes.forEach((onGetQuoteRes) => {
-          if (onGetQuoteRes.error) {
-            throw 'api fail';
-          }
-        });
-      };
 
-      watch(
-        () => pollResults.value,
-        async (onGetQuoteRes) => {
-          if (!polling.value || !onGetQuoteRes) {
-            return;
-          }
-
-          handleOnGetQuoteError(onGetQuoteRes);
-
-          if (helpers.shouldStopPooling(onGetQuoteRes, 'quote')) {
-            stopPolling();
-
-            //setquoteData(JSON.stringify(onGetQuoteRes[0].message));
-            root.$store.dispatch('setquoteData', (JSON.stringify(onGetQuoteRes[0].message)));
-
-            root.$store.dispatch('setTransactionId', (onGetQuoteRes[0].context.transaction_id));
-
-            enableLoader.value = false;
-            if (root.$store.state.experienceId !== null) {
-              setTimeout(async () => {
-                try {
-                  await fetch(
-                    'https://api.eventcollector.becknprotocol.io/v2/event',
-                    {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      redirect: 'follow', // manual, *follow, error
-                      referrerPolicy: 'no-referrer', // no-referrer,
-                      body: JSON.stringify({
-                        experienceId: root.$store.state.experienceId,
-                        eventCode: 'mbth_accept_ride',
-                        eventAction: 'quotation sent',
-                        eventSourceId:
-                          'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                        eventDestinationId:
-                          'mobilityreferencebap.becknprotocol.io',
-                        payload: '', //add full context object
-                        eventStart_ts: new Date().toISOString()
-                      }) // body data type must match "Content-Type" header
-                    }
-                  );
-                } catch (error) {
-                  console.error(error);
-                }
-              }, 1000);
-            }
-            isQuoteData.value = true;
-            root.$router.push('/LocationSearch');
-          }
-        }
-      );
     };
 
     const changeItemNumber = async (type) => {

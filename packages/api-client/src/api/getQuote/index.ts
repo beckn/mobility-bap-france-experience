@@ -7,7 +7,7 @@ import { AckResponse } from '../../types/BecknClientApi';
 export default async function getQuote(context, params: quoteParam): Promise<AckResponse> {
   const config = (context.config as Config);
   const client = (context.client as sa.SuperAgent<sa.SuperAgentRequest>);
-  return client.post(config.api.url + config.api.endpoints.getQuote)
+  return client.post('https://api-node.mobilityreferencebap.becknprotocol.io/client/v1/get_quote')
     .set('Content-Type', 'application/json')
     .send(params)
     .then(res => {

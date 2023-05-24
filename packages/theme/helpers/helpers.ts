@@ -109,16 +109,15 @@ export const createInitOrderRequest = (
   transactionId,
   quoteData,
   cartItem,
-  gps
 ) => {
-  const params = [
-    {
-      context: {
-        transaction_id: transactionId,
-        bpp_id: cartItem[0].context.bpp_id,
-        bpp_uri: cartItem[0].context.bpp_uri
-      },
-      message: {
+  const params = {
+    context: {
+      transaction_id: transactionId,
+      bpp_id: cartItem[0].context.bpp_id,
+      bpp_uri: cartItem[0].context.bpp_uri
+    },
+    message: {
+      order: {
         items: [
           {
             id: quoteData.items[0].id,
@@ -133,7 +132,20 @@ export const createInitOrderRequest = (
             }
           }
         ],
-        billing_info: {
+        fulfillment: {
+          customer: {
+            person: {
+              name: './Rajat//Kumar///'
+            },
+            contact: {
+              phone: '9867654322',
+              email: 'er.rjtkumar@gmail.com'
+            }
+          },
+          id:
+            './mobility/ind.blr/480@mobility-bpp-infra1.becknprotocol.io.fulfillment'
+        },
+        billing: {
           address: {
             door: 'MBT',
             country: 'IND',
@@ -148,29 +160,29 @@ export const createInitOrderRequest = (
           name: 'RajatKumar',
           email: 'er.rjtkumar@gmail.com'
         },
-        delivery_info: {
-          type: 'HOME-DELIVERY',
-          name: './Rajat//Kumar///',
-          phone: '9867654322',
-          email: 'er.rjtkumar@gmail.com',
-          location: {
-            address: {
-              name: './Rajat//Kumar///',
-              locality: 'Bengaluru',
-              door: 'MBT',
-              country: 'IND',
-              city: 'Bengaluru',
-              street: 'Bengaluru, Bangalore Urban, Karnataka',
-              area_code: '560078',
-              state: 'Karnataka',
-              building: 'A33'
-            },
-            gps: gps
-          }
-        }
+        // delivery_info: {
+        //   type: 'HOME-DELIVERY',
+        //   name: './Rajat//Kumar///',
+        //   phone: '9867654322',
+        //   email: 'er.rjtkumar@gmail.com',
+        //   location: {
+        //     address: {
+        //       name: './Rajat//Kumar///',
+        //       locality: 'Bengaluru',
+        //       door: 'MBT',
+        //       country: 'IND',
+        //       city: 'Bengaluru',
+        //       street: 'Bengaluru, Bangalore Urban, Karnataka',
+        //       area_code: '560078',
+        //       state: 'Karnataka',
+        //       building: 'A33'
+        //     },
+        //     gps: gps
+        //   }
+        // }
       }
     }
-  ];
+  };
   return params;
 };
 /**
