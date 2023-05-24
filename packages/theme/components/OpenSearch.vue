@@ -361,7 +361,7 @@ export default {
       try {
         superAgent
           .post(
-            'http://ec2-3-110-194-223.ap-south-1.compute.amazonaws.com:8082/v1/policy/checkViolation/location'
+            'https://api.mobility-bap-policy-demo.becknprotocol.io/v1/policy/checkViolation/location'
           )
           .set('Content-Type', 'application/json')
           .send({
