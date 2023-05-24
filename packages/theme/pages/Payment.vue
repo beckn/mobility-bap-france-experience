@@ -17,11 +17,7 @@
         <div class="p-name">Paiement</div>
       </div>
       <Card v-if="!!(order && order.cart)">
-        <CardContent
-          v-for="breakup in order.cart.quote.breakup"
-          :key="breakup.title"
-          class="flex-space-bw"
-        >
+        <CardContent v-for="breakup in order.cart.quote.breakup" :key="breakup.title" class="flex-space-bw">
           <div class="address-text">{{ breakup.title }}</div>
           <div class="address-text">€{{ Math.trunc(breakup.price.value) }}</div>
         </CardContent>
@@ -41,32 +37,15 @@
       <Card>
         <CardContent>
           <div class="redo">
-            <input
-              type="radio"
-              class="container"
-              :name="'Payment'"
-              :value="'Cash'"
-              :disabled="false"
-              :selected="paymentMethod"
-              @change="changePaymentMethod"
-            />
-            <img
-              style="padding-top:8px; padding-left: 10px;"
-              src="/icons/money 2.png"
-              alt=""
-              :width="30"
-              :height="30"
-            />
+            <input type="radio" class="container" :name="'Payment'" :value="'Cash'" :disabled="false"
+              :selected="paymentMethod" @change="changePaymentMethod" />
+            <img style="padding-top:8px; padding-left: 10px;" src="/icons/money 2.png" alt="" :width="30" :height="30" />
             <label class="cash">Espèces</label>
           </div>
         </CardContent>
       </Card>
     </div>
-    <BookRide
-      class="footer-fixed"
-      :buttonText="'Reserve maintenant'"
-      :buttonEnable="isPayConfirmActive"
-    >
+    <BookRide class="footer-fixed" :buttonText="'Reserve maintenant'" :buttonEnable="isPayConfirmActive">
     </BookRide>
   </div>
 </template>
@@ -142,11 +121,18 @@ export default {
       console.log(initRes[0].message.order);
 
       if (transId && initRes && quoteItems && cartItems) {
+        const { bpp_id, bpp_uri } = context.root.$store.state.relatedBpp
+
+        const bppMetaData = {
+          bpp_id,
+          bpp_uri
+        }
+
         const params = createConfirmOrderRequest(
           transId,
           initRes[0].message.order,
           quoteItems.quote,
-          cartItems
+          bppMetaData
         );
         const response = await init(params, context.root.$store.state.token);
         setTimeout(async () => {

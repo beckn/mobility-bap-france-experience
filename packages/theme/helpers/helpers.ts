@@ -26,12 +26,12 @@ export const createConfirmOrderRequest = (
   transactionId,
   initResult,
   quoteData,
-  cartItem
+  bppMetaData
 ) => {
   //const params: any = createOrderRequest(transactionId, cart, shippingAddress, billingAddress, shippingAsBilling, gps);
   const item = {
     id: initResult.items[0].id,
-    bpp_id: cartItem[0].bpp_id,
+    bpp_id: bppMetaData.bpp_id,
     fulfillment_id: initResult.fulfillment.id,
     quantity: {
       count: 1
@@ -61,8 +61,8 @@ export const createConfirmOrderRequest = (
     {
       context: {
         transaction_id: transactionId,
-        bpp_id: cartItem[0].bpp_id,
-        bpp_uri: cartItem[0].bpp_uri
+        bpp_id: bppMetaData.bpp_id,
+        bpp_uri: bppMetaData.bpp_uri
       },
       message: {
         items: [item],
@@ -109,21 +109,21 @@ export const createConfirmOrderRequest = (
 export const createInitOrderRequest = (
   transactionId,
   quoteData,
-  cartItem,
+  bppMetaData,
   gps
 ) => {
   const params = [
     {
       context: {
         transaction_id: transactionId,
-        bpp_id: cartItem[0].bpp_id,
-        bpp_uri: cartItem[0].bpp_uri
+        bpp_id: bppMetaData.bpp_id,
+        bpp_uri: bppMetaData.bpp_uri
       },
       message: {
         items: [
           {
             id: quoteData.items[0].id,
-            bpp_id: cartItem[0].bpp_id,
+            bpp_id: bppMetaData.bpp_id,
             fulfillment_id: quoteData.provider.items[0].fulfillment_id,
             descriptor: quoteData.items[0].descriptor,
             price: quoteData.quote.price,
@@ -183,4 +183,4 @@ export const createInitOrderRequest = (
  * @returns true if all the objects have data or else false
  */
 
-export default helpers
+export default helpers;
