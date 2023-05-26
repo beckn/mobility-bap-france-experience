@@ -486,10 +486,9 @@ export default {
       init,
       stopPolling
     } = useInitOrder();
-    const quoteItems = JSON.parse(root.$store.state.quoteData);
 
+    const quoteItems = JSON.parse(root.$store.state.quoteData);
     const transactionId = root.$store.state.TransactionId; //localStorage.getItem('transactionId');
-    const cartitem = JSON.parse(root.$store.state.cartItem);
     const isShow = ref(false);
     const toggleIsShow = () => {
       isShow.value = !isShow.value;
@@ -508,12 +507,20 @@ export default {
       root.$store.dispatch('setName', name.value);
 
       enableLoader.value = true;
-      if (quoteItems && transactionId && cartitem) {
+
+      const { bpp_id, bpp_uri } = root.$store.state.relatedBpp.context;
+
+      const bppMetaData = {
+        bpp_id: bpp_id,
+        bpp_uri: bpp_uri,
+      }
+
+      if (quoteItems && transactionId) {
 
         const params = createInitOrderRequest(
           transactionId,
           quoteItems.catalogs.order,
-          cartitem,
+          bppMetaData,
         );
 
         try {
@@ -524,70 +531,12 @@ export default {
           );
           root.$store.dispatch('setinitResult', initRes);
           enableLoader.value = false;
-          if (root.$store.state.experienceId !== null) {
-            setTimeout(async () => {
-              try {
-                await fetch(
-                  'https://api.eventcollector.becknprotocol.io/v2/event',
-                  {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    redirect: 'follow', // manual, *follow, error
-                    referrerPolicy: 'no-referrer', // no-referrer,
-                    body: JSON.stringify({
-                      experienceId: root.$store.state.experienceId,
-                      eventCode: 'mbth_sent_fnl_quote',
-                      eventAction: 'sent final quote',
-                      eventSourceId:
-                        'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                      eventDestinationId:
-                        'mobilityreferencebap.becknprotocol.io',
-                      payload: '', //add full context object
-                      eventStart_ts: new Date().toISOString()
-                    })
-                  }
-                );
-              } catch (error) {
-                console.error(error);
-              }
-            }, 1000);
-          }
+
           root.$router.push('/payment');
         } catch (error) {
           throw `Init api fail with ${error}`
         }
 
-        if (root.$store.state.experienceId !== null) {
-          setTimeout(async () => {
-            try {
-              await fetch(
-                'https://api.eventcollector.becknprotocol.io/v2/event',
-                {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  redirect: 'follow',
-                  referrerPolicy: 'no-referrer',
-                  body: JSON.stringify({
-                    experienceId: root.$store.state.experienceId,
-                    eventCode: 'mbtb_init_ride',
-                    eventAction: 'initiating ride',
-                    eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                    eventDestinationId:
-                      'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                    payload: '', //add full context object
-                    eventStart_ts: new Date().toISOString()
-                  })
-                }
-              );
-            } catch (error) {
-              console.error(error);
-            }
-          }, 1000);
-        }
       }
 
 

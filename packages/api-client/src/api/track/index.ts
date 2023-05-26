@@ -12,7 +12,9 @@ export async function track(
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
 
   return client
-    .post(config.api.url + config.api.endpoints.track)
+    .post(
+      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v1/track'
+    )
     .send(params)
     .then((res) => {
       return res.body as AckResponse;

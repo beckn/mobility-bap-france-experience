@@ -72,6 +72,9 @@ const actions = {
   },
   setconfirmDataContext({ commit }, data) {
     commit('Set_confirmDataContext', data);
+  },
+  setRelatedBpp({ commit }, data) {
+    commit('Set_relatedBpp', data);
   }
 };
 
@@ -123,6 +126,9 @@ const mutations = {
   },
   Set_confirmDataContext(state, data) {
     state.confirmDataContext = data;
+  },
+  Set_relatedBpp(state, data) {
+    state.relatedBpp = data;
   }
 };
 
@@ -150,7 +156,8 @@ const state = () => ({
   cartItem: '',
   token: '',
   confirmDatas: '',
-  confirmDataContext: ''
+  confirmDataContext: '',
+  relatedBpp: null
 });
 
 const getters = {
@@ -171,7 +178,8 @@ const getters = {
       state.cartItem,
       state.token,
       state.confirmDatas,
-      state.confirmDataContext
+      state.confirmDataContext,
+      state.relatedBpp
     );
   }
 };

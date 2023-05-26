@@ -108,8 +108,7 @@ export default {
     const isPayConfirmActive = computed(() => {
       return paymentMethod.value !== '';
     });
-    // const { initResult
-    // } = useUiState();
+
 
     const confirmRide = async () => {
       enableLoader.value = true;
@@ -121,75 +120,38 @@ export default {
       ;
 
       if (transId && initRes && quoteItems && cartItems) {
+        const { bpp_id, bpp_uri } = context.root.$store.state.relatedBpp.context;
 
+        const bppMetaData = {
+          bpp_id: bpp_id,
+          bpp_uri: bpp_uri,
+        }
         const params = createConfirmOrderRequest(
           transId,
           initRes.message.catalogs.responses[0].message.order,
           quoteItems.catalogs.order,
-          cartItems
+          bppMetaData
         );
         const response = await init(params, context.root.$store.state.token);
-        setTimeout(async () => {
-          await poll(
-            { messageIds: response[0].context.message_id },
-            context.root.$store.state.token
-          );
-        }, 500);
+
+        context.root.$store.dispatch('setconfirmData', response);
+        context.root.$store.dispatch(
+          'setconfirmDataContext',
+          response.context
+        );
+
+        context.root.$store.dispatch(
+          'setTransactionId',
+          response.context.transaction_id
+        );
+
+        sessionStorage.setItem(
+          'confirmDataContext',
+          JSON.stringify(response.context)
+        );
+
       }
 
-      watch(
-        () => pollResults.value,
-        (newValue) => {
-          if (helpers.shouldStopPooling(newValue, 'order')) {
-            stopPolling();
-
-            context.root.$store.dispatch('setconfirmData', newValue[0].message);
-            context.root.$store.dispatch(
-              'setconfirmDataContext',
-              newValue[0].context
-            );
-
-            context.root.$store.dispatch(
-              'setTransactionId',
-              newValue[0].context.transaction_id
-            );
-
-            sessionStorage.setItem(
-              'confirmDataContext',
-              JSON.stringify(newValue[0].context)
-            );
-          }
-        }
-      );
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbth_sent_ride_details',
-                  eventAction: 'sent ride details',
-                  eventSourceId:
-                    'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                  eventDestinationId: 'mobilityreferencebap.becknprotocol.io',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                }) // body data type must match "Content-Type" header
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
       enableLoader.value = false;
     };
 
@@ -198,35 +160,7 @@ export default {
     //   confirmRide();
     // });
     onBeforeMount(async () => {
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbtb_bkng_ride',
-                  eventAction: 'booking ride',
-                  eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                  eventDestinationId:
-                    'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                }) // body data type must match "Content-Type" header
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
+
       await confirmRide();
       order.value = JSON.parse(localStorage.getItem('orderProgress'));
     });
