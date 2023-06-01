@@ -70,7 +70,7 @@
           <div class="s-p-name">{{ cartGetters.getItemName(product) }}</div>
           <div class="s-p-weight">x {{ cartGetters.getItemQty(product) }}</div>
           <div class="s-p-price">
-            €
+            D
             {{
               cartGetters.getUpdatedPrice(product)
                 ? cartGetters.getUpdatedPrice(product)
@@ -172,7 +172,7 @@
         <CardContent class="flex-space-bw">
           <div class="address-text bold">Total</div>
           <div class="address-text bold">
-            €{{ Math.trunc(cart.quote.price.value) }}
+            D{{ Math.trunc(cart.quote.price.value) }}
           </div>
         </CardContent>
       </Card>

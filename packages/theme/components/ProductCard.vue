@@ -28,7 +28,7 @@
         </div>
         <div class="verify-inline-container">
           <div class="s-p-price" v-if="_updatedCount !== 0">
-            € {{ Math.round(_updatedPrice ? _updatedPrice : _pPrice) }}
+            D {{ Math.round(_updatedPrice ? _updatedPrice : _pPrice) }}
           </div>
         </div>
         <span class="out-stock" v-if="_updatedCount === 0">Out of Stock</span>

@@ -210,7 +210,7 @@
                         </div>
                         <div>
                           <span>
-                            € {{ _importedOrderObject !== null ?
+                            D {{ _importedOrderObject !== null ?
                               _importedOrderObject.message.order.item[0].price.value : '' }}
                           </span>
                         </div>

@@ -36,7 +36,7 @@
         </div>
         <div class="product__price-and-rating">
           <div class="s-p-price">
-            € {{ productGetters.getPrice(product).regular }}
+            D {{ productGetters.getPrice(product).regular }}
           </div>
           <AddToCart
             :key="keyVal + 'product-page'"

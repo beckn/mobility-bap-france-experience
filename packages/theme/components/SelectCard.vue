@@ -36,7 +36,7 @@
                               </div>
                             </div>
                             <div class="s-p-price">
-                              € {{ Math.round(_pPrice) }}
+                              D {{ Math.round(_pPrice) }}
                             </div>
                           </div>
 
@@ -184,7 +184,7 @@
                                         </div>
                                       </div>
                                       <div class="s-p-price">
-                                        € {{ Math.round(_pPrice) }}
+                                        D {{ Math.round(_pPrice) }}
                                       </div>
                                     </div>
 

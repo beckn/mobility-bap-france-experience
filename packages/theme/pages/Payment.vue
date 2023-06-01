@@ -27,7 +27,7 @@
         <CardContent class="flex-space-bw">
           <div class="address-text bold">Total</div>
           <div class="address-text bold">
-            €{{ Math.trunc(order.cart.quote.price.value) }}
+            D{{ Math.trunc(order.cart.quote.price.value) }}
           </div>
         </CardContent>
       </Card>

@@ -47,7 +47,7 @@
                 </div>
               </div>
               <div class="order-price">
-                €
+                D
                 {{ order.initOrder.payment.params.amount }}
               </div>
             </div>

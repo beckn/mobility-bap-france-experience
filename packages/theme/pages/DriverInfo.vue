@@ -260,7 +260,7 @@
 
                                 <div class="aline-center">
                                   <div class="p-name">
-                                    €{{
+                                    D{{
                                       Math.round(driverInfo.quote.price.value)
                                     }}
                                   </div>
