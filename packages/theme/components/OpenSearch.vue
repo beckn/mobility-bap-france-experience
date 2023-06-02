@@ -290,7 +290,7 @@ export default {
 
   setup(props, context) {
     const _importedOrderObject = computed(() => props.importedOrderObject);
-    const pickup = ref('Paris, France');
+    const pickup = ref('Banjul, The Gambia');
     const buttonlocation = ref(false);
     const location = ref(true);
     const message = ref('');
@@ -342,9 +342,9 @@ export default {
 
     onMounted(() => {
       context.root.$store.dispatch('updateslocation', {
-        lat: 48.856614,
-        long: 2.3522219,
-        addres: 'Paris, France'
+        lat: 13.45274,
+        long:  -16.57803,
+        addres: 'Banjul, The Gambia'
       });
       let URL = window.location.href;
       if (URL.includes('?')) {
