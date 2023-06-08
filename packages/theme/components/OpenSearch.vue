@@ -1,4 +1,5 @@
 <template>
+  <client-only>
   <div>
     <div>
       <div class="open-search"></div>
@@ -247,6 +248,7 @@
       </div>
     </keep-alive>
   </div>
+</client-only>
 </template>
 
 <script>
