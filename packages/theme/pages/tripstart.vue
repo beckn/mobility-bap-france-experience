@@ -253,7 +253,12 @@ export default {
     onBeforeMount(async () => {
       await tripStatus();
       await tripTrack();
+
+      setInterval(async () => {
+        await tripStatus();
+      }, 2000);
     });
+
     watch(
       () => trackResults.value,
       async (trackResult) => {
