@@ -768,8 +768,8 @@ body {
 }
 
 img {
-  border-radius: 9px;
-  padding-right: 10px;
+  border-radius: 18px;
+    margin-right: 10px;
 }
 
 .hr1 {
