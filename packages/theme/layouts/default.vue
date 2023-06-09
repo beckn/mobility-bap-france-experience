@@ -83,8 +83,13 @@ export default {
 <style lang="scss">
 @import '~@storefront-ui/vue/styles';
 
+#layout::-webkit-scrollbar {
+  display: none;
+}
+
 #layout {
   box-sizing: border-box;
+
   @include for-desktop {
     max-width: 1240px;
     margin: auto;

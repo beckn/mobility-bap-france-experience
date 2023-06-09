@@ -3,7 +3,6 @@ export const calculateDays = (_date1, _date2) => {
   const date2 = new Date(_date2);
   const diffTime = Math.abs(date2.getTime() - date1.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  console.log(diffDays + ' days');
   return diffDays;
 };
 const shouldStopPooling = (responseArr, stopObjectKey) => {
@@ -26,12 +25,12 @@ export const createConfirmOrderRequest = (
   transactionId,
   initResult,
   quoteData,
-  cartItem
+  bppMetaData
 ) => {
   //const params: any = createOrderRequest(transactionId, cart, shippingAddress, billingAddress, shippingAsBilling, gps);
   const item = {
     id: initResult.items[0].id,
-    bpp_id: cartItem[0].bpp_id,
+    bpp_id: bppMetaData.bpp_id,
     fulfillment_id: initResult.fulfillment.id,
     quantity: {
       count: 1
@@ -57,84 +56,70 @@ export const createConfirmOrderRequest = (
     name: '',
     locality: ''
   };
-  const params = [
-    {
-      context: {
-        transaction_id: transactionId,
-        bpp_id: cartItem[0].bpp_id,
-        bpp_uri: cartItem[0].bpp_uri
-      },
-      message: {
-        items: [item],
-        billing_info: {
-          address: billAddress,
-          phone: '9867654322',
-          name: 'RajatKumar',
-          email: 'er.rjtkumar@gmail.com'
-        },
-        delivery_info: {
-          type: 'HOME-DELIVERY',
-          // name: "./Rajat//Kumar///",
-          name: './Rajat//Kumar///',
-          phone: '9867654322',
-          email: 'er.rjtkumar@gmail.com',
-          location: {
-            address: {
-              name: './Rajat//Kumar///',
-              locality: 'Bengaluru',
-              door: 'MBT',
-              country: 'IND',
-              city: 'Bengaluru',
-              street: 'Bengaluru, Bangalore Urban, Karnataka',
-              area_code: '560078',
-              state: 'Karnataka',
-              building: 'A33'
-            },
-            gps: '12.9063433,77.5856825'
-          }
-        },
+  const params = {
+    context: {
+      transaction_id: transactionId,
+      bpp_id: bppMetaData.bpp_id,
+      bpp_uri: bppMetaData.bpp_uri
+    },
+    message: {
+      order: {
+        id: initResult.id,
+        items: initResult.items,
+        billing: initResult.billing,
+        quote: initResult.quote,
 
+        fulfillment: initResult.fulfillment,
+        provider: initResult.provider,
         payment: {
-          paid_amount: '100.0',
-          currency: 'INR',
-          status: 'PAID',
-          transaction_id: transactionId
+          id: transactionId,
+          type: 'ON-FULFILLMENT',
+          params: {
+            amount: '81',
+            currency: 'INR',
+            transaction_status: 'NOT-PAID'
+          }
         }
       }
     }
-  ];
+  };
 
   return params;
 };
 export const createInitOrderRequest = (
   transactionId,
   quoteData,
-  cartItem,
-  gps
+  bppMetaData
 ) => {
-  const params = [
-    {
-      context: {
-        transaction_id: transactionId,
-        bpp_id: cartItem[0].bpp_id,
-        bpp_uri: cartItem[0].bpp_uri
-      },
-      message: {
-        items: [
-          {
-            id: quoteData.items[0].id,
-            bpp_id: cartItem[0].bpp_id,
-            fulfillment_id: quoteData.provider.items[0].fulfillment_id,
-            descriptor: quoteData.items[0].descriptor,
-            price: quoteData.quote.price,
-            category_id: quoteData.provider.items[0].category_id,
-            provider: {
-              id: quoteData.provider.id,
-              locations: [quoteData.provider.locations[0].id]
+  const params = {
+    context: {
+      transaction_id: transactionId,
+      bpp_id: bppMetaData.bpp_id,
+      bpp_uri: bppMetaData.bpp_uri
+    },
+    message: {
+      order: {
+        provider: {
+          locations: quoteData.provider.locations,
+          descriptor: quoteData.provider.descriptor,
+          id: quoteData.provider.id,
+          categories: quoteData.provider.categories
+        },
+        items: quoteData.items,
+        fulfillment: {
+          customer: {
+            person: {
+              name: './Rajat//Kumar///'
+            },
+            contact: {
+              phone: '9867654322',
+              email: 'er.rjtkumar@gmail.com'
             }
-          }
-        ],
-        billing_info: {
+          },
+          id: quoteData.fulfillment.id
+        },
+
+        billing: {
           address: {
             door: 'MBT',
             country: 'IND',
@@ -148,30 +133,10 @@ export const createInitOrderRequest = (
           phone: '9867654322',
           name: 'RajatKumar',
           email: 'er.rjtkumar@gmail.com'
-        },
-        delivery_info: {
-          type: 'HOME-DELIVERY',
-          name: './Rajat//Kumar///',
-          phone: '9867654322',
-          email: 'er.rjtkumar@gmail.com',
-          location: {
-            address: {
-              name: './Rajat//Kumar///',
-              locality: 'Bengaluru',
-              door: 'MBT',
-              country: 'IND',
-              city: 'Bengaluru',
-              street: 'Bengaluru, Bangalore Urban, Karnataka',
-              area_code: '560078',
-              state: 'Karnataka',
-              building: 'A33'
-            },
-            gps: gps
-          }
         }
       }
     }
-  ];
+  };
   return params;
 };
 /**
@@ -183,4 +148,4 @@ export const createInitOrderRequest = (
  * @returns true if all the objects have data or else false
  */
 
-export default helpers
+export default helpers;

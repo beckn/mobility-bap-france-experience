@@ -122,14 +122,17 @@ export default {
       );
     },
     markers() {
-      //console.log(this.$store.state.trackLat, this.$store.state.trackLong);
       const movingIcon = new google.maps.MarkerImage('/icons/yellowcar.png');
       this.marker = new google.maps.Marker({
         //varible of markers lat and long are hardcoded .
         position: {
-          lat: this.$store.state.trackLat ? parseFloat(this.$store.state.trackLat) : 0,
+          lat: this.$store.state.trackLat
+            ? parseFloat(this.$store.state.trackLat)
+            : 0,
 
-          lng: this.$store.state.trackLong ? parseFloat(this.$store.state.trackLong ) : 0
+          lng: this.$store.state.trackLong
+            ? parseFloat(this.$store.state.trackLong)
+            : 0
         },
         map: this.map,
         icon: movingIcon
@@ -151,10 +154,11 @@ export default {
     const DriverInfo = ref(false);
     const tripStatusVal = ref('Ride is Confirmed');
     const cancelRide = ref(false);
+    const statusResults = ref(null)
     const {
       poll: onStatus,
       init: status,
-      pollResults: statusResults,
+      // pollResults: statusResults,
       stopPolling: stopStatuspolling
     } = useOrderStatus('status');
 
@@ -167,40 +171,12 @@ export default {
 
     const isFulfillmentAvailable = computed(async () => {
       if (statusResults.value !== null) {
-        if (statusResults.value[0].message) {
-          DriverInfo.value = true;
-          tripStatusVal.value = statusResults.value[0].message.order.state;
-        }
+
+        DriverInfo.value = true;
+        tripStatusVal.value = statusResults.value.state;
+
         if (tripStatusVal.value === 'Ended') {
-          if (root.$store.state.experienceId !== null) {
-            setTimeout(async () => {
-              try {
-                await fetch(
-                  'https://api.eventcollector.becknprotocol.io/v2/event',
-                  {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    redirect: 'follow', // manual, *follow, error
-                    referrerPolicy: 'no-referrer', // no-referrer,
-                    body: JSON.stringify({
-                      experienceId:root.$store.state.experienceId,
-                      eventCode: 'mbtb_payment_endride',
-                      eventAction: 'ending ride',
-                      eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                      eventDestinationId:
-                        'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                      payload: '', //add full context object
-                      eventStart_ts: new Date().toISOString()
-                    }) // body data type must match "Content-Type" header
-                  }
-                );
-              } catch (error) {
-                console.error(error);
-              }
-            }, 1000);
-          }
+
           setTimeout(function () {
             root.$router.push('/orderSuccess');
           }, 5000);
@@ -212,77 +188,58 @@ export default {
       return statusResults.value;
     });
 
-    const transactionId = root.$store.state.TransactionId; 
-    const bpp_id = root.$store.state.cartItem.bpp_id;
-    const bpp_uri = root.$store.state.cartItem.bpp_uri;
-    const orderID = root.$store.state.confirmDatas.order.id;
+    const transactionId = root.$store.state.TransactionId;
+    const orderID =
+      root.$store.state.confirmDatas.message.responses[0].message.order.id;
 
     const lat = ref(12.9732);
     const long = ref(77.6089);
 
     const tripStatus = async () => {
-      const params = [
-        {
-          context: {
-            // eslint-disable-next-line camelcase
-            transaction_id: transactionId,
-            // eslint-disable-next-line camelcase
-            bpp_id: bpp_id,
-            bpp_uri: bpp_uri
-          },
-          message: {
-            // eslint-disable-next-line camelcase
-            order_id: orderID
-          }
+      const { bpp_id, bpp_uri } = root.$store.state.relatedBpp.context;
+
+      const params =
+      {
+        context: {
+          // eslint-disable-next-line camelcase
+          transaction_id: transactionId,
+          // eslint-disable-next-line camelcase
+          bpp_id: bpp_id,
+          bpp_uri: bpp_uri
+        },
+        message: {
+          // eslint-disable-next-line camelcase
+          order_id: orderID
         }
-      ];
-      const response = await status(params,  root.$store.state.token);
-      await onStatus({ orderIds: orderID },root.$store.state.token);
+      }
+        ;
+      const response = await status(params, root.$store.state.token);
+      statusResults.value = response.message.order
+
     };
 
     const tripTrack = async () => {
-      const formattedInitResult =
-      root.$store.state.initResult; 
-        
-      const params = [
-        {
-          context: root.$store.state.confirmDataContext,
-          message: {
-            order_id: formattedInitResult[0].message.order.id
-          }
+      const { bpp_id, bpp_uri } = root.$store.state.relatedBpp.context;
+
+      const orderID =
+        root.$store.state.confirmDatas.message.responses[0].message.order.id;
+
+      const params =
+      {
+        context: {
+          // eslint-disable-next-line camelcase
+          transaction_id: transactionId,
+          // eslint-disable-next-line camelcase
+          bpp_id: bpp_id,
+          bpp_uri: bpp_uri
+        },
+        message: {
+          order_id: orderID
         }
-      ];
+      }
+        ;
       try {
         const response = await track(params, root.$store.state.token);
-        if (root.$store.state.experienceId !== null) {
-          setTimeout(async () => {
-            try {
-              await fetch(
-                'https://api.eventcollector.becknprotocol.io/v2/event',
-                {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  redirect: 'follow', // manual, *follow, error
-                  referrerPolicy: 'no-referrer', // no-referrer,
-                  body: JSON.stringify({
-                    experienceId:root.$store.state.experienceId,
-                    eventCode: 'mbtb_tracking_driver',
-                    eventAction: 'tracking ride',
-                    eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                    eventDestinationId:
-                      'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                    payload: '', //add full context object
-                    eventStart_ts: Date.now()
-                  }) // body data type must match "Content-Type" header
-                }
-              );
-            } catch (error) {
-              console.error(error);
-            }
-          }, 1000);
-        }
 
         await onTrack(
           { messageIds: response[0].context.message_id },
@@ -313,8 +270,8 @@ export default {
                 lat.value = coordinatesArray[0];
                 long.value = coordinatesArray[1];
 
-                root.$store.dispatch('settrackLat',lat.value);
-                root.$store.dispatch('settrackLong',long.value);
+                root.$store.dispatch('settrackLat', lat.value);
+                root.$store.dispatch('settrackLong', long.value);
 
                 // localStorage.setItem('trackLat', lat.value);
                 // localStorage.setItem('trackLong', long.value);
@@ -335,7 +292,8 @@ export default {
       tripStatusVal,
       DriverInfo,
       isFulfillmentAvailable,
-      cancelRide
+      cancelRide,
+      statusResults
     };
   }
 };
@@ -389,7 +347,7 @@ div#cafe-map {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   box-shadow: rgba(50, 50, 50, 0.75);
-  height: 150px;
+  // height: 150px;
 }
 
 .close {

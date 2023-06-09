@@ -17,7 +17,7 @@
 </template>
 <script>
 import { SfCircleIcon, SfButton, SfSidebar, SfIcon } from '@storefront-ui/vue';
-import { ref, watch } from '@vue/composition-api';
+import { computed, ref, watch } from '@vue/composition-api';
 import LocationSearch from './LocationSearch.vue';
 import ModalComponent from '../components/ModalComponent.vue';
 import { useUiState } from '~/composables';
@@ -48,6 +48,7 @@ export default {
     maxLimit: { type: Number, default: 100 },
     index: { type: Number, default: 0 },
     product: { type: Object },
+    relatedBpp: { type: Object }
   },
   data() {
     return {
@@ -57,7 +58,7 @@ export default {
   setup(props, { root, emit }) {
     const {
       selectedLocation,
-      updateLocation,
+      updateLocation
       //setquoteData,
       //setTransactionId,
       //cartItem,
@@ -73,6 +74,7 @@ export default {
     const enableLoader = ref(false);
     const location = ref(selectedLocation?.value?.address);
     const currentUser = root.$store.$fire.auth.currentUser;
+    const _relatedBpp = computed(() => props.relatedBpp);
 
     const toggleLocationDrop = () => {
       isLocationdropOpen.value = !isLocationdropOpen.value;
@@ -97,127 +99,71 @@ export default {
         address: address
       });
     };
+
+    const handleOnGetQuoteError = (onGetQuoteRes) => {
+      if (onGetQuoteRes.error) {
+        throw 'api fail';
+      }
+    };
+
     const getQuote = async (_productIndex) => {
       enableLoader.value = true;
       const cartItems = JSON.parse(root.$store.state.cartItem);
       if (cartItems) {
-        const getQuoteRequest = [
-          {
-            context: {
-              // eslint-disable-next-line camelcase
-              bpp_id: cartItems[0].bpp_id,
-              // eslint-disable-next-line camelcase
-              bpp_uri: cartItems[0].bpp_uri,
-              transaction_id: root.$store.state.TransactionId,
-            },
-            message: {
-              cart: {
-                items: [props.product]
+        root.$store.dispatch('setRelatedBpp', _relatedBpp.value);
+        const getQuoteRequest = {
+          context: {
+            // eslint-disable-next-line camelcase
+            bpp_id: _relatedBpp.value.context.bpp_id,
+            // eslint-disable-next-line camelcase
+            bpp_uri: _relatedBpp.value.context.bpp_uri,
+            transaction_id: root.$store.state.TransactionId
+          },
+          message: {
+            order: {
+              items: [props.product],
+              fulfillment: {
+                id: _relatedBpp.value.message.catalog['bpp/fulfillments'][0].id,
+                start:
+                  _relatedBpp.value.message.catalog['bpp/fulfillments'][0]
+                    .start,
+                end:
+                  _relatedBpp.value.message.catalog['bpp/fulfillments'][0].start
+              },
+              provider: {
+                id: _relatedBpp.value.message.catalog['bpp/providers'][0].id,
+                locations: [
+                  {
+                    id:
+                      _relatedBpp.value.message.catalog['bpp/providers'][0]
+                        .locations[0].id
+                  }
+                ]
               }
             }
           }
-        ];
-
+        };
         const responseQuote = await init(
           getQuoteRequest,
           root.$store.state.token
         );
 
-        if (root.$store.state.experienceId !== null) {
-          setTimeout(async () => {
-            try {
-              await fetch(
-                'https://api.eventcollector.becknprotocol.io/v2/event',
-                {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  redirect: 'follow', // manual, *follow, error
-                  referrerPolicy: 'no-referrer', // no-referrer,
-                  body: JSON.stringify({
-                    experienceId: root.$store.state.experienceId,
-                    eventCode: 'mbtb_ride_slectd',
-                    eventAction: 'ride selected',
-                    eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                    eventDestinationId:
-                      'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                    payload: '', //add full context object
-                    eventStart_ts: new Date().toISOString()
-                  }) // body data type must match "Content-Type" header
-                }
-              );
-            } catch (error) {
-              console.error(error);
-            }
-          }, 1000);
-        }
+        handleOnGetQuoteError(responseQuote);
 
-        const msgId = responseQuote[0].context.message_id;
-        await poll({ messageIds: msgId }, root.$store.state.token);
+        root.$store.dispatch(
+          'setquoteData',
+          JSON.stringify(responseQuote.message)
+        );
+
+        root.$store.dispatch(
+          'setTransactionId',
+          responseQuote.context.transaction_id
+        );
+
+        enableLoader.value = false;
+        isQuoteData.value = true;
+        root.$router.push('/LocationSearch');
       }
-      // Loops over the onGetQuote response and checks for error object. If any error then throws 'api fail'
-      const handleOnGetQuoteError = (onGetQuoteRes) => {
-        onGetQuoteRes.forEach((onGetQuoteRes) => {
-          if (onGetQuoteRes.error) {
-            throw 'api fail';
-          }
-        });
-      };
-
-      watch(
-        () => pollResults.value,
-        async (onGetQuoteRes) => {
-          if (!polling.value || !onGetQuoteRes) {
-            return;
-          }
-
-          handleOnGetQuoteError(onGetQuoteRes);
-
-          if (helpers.shouldStopPooling(onGetQuoteRes, 'quote')) {
-            stopPolling();
-
-            //setquoteData(JSON.stringify(onGetQuoteRes[0].message));
-            root.$store.dispatch('setquoteData', (JSON.stringify(onGetQuoteRes[0].message)));
-
-            root.$store.dispatch('setTransactionId', (onGetQuoteRes[0].context.transaction_id));
-
-            enableLoader.value = false;
-            if (root.$store.state.experienceId !== null) {
-              setTimeout(async () => {
-                try {
-                  await fetch(
-                    'https://api.eventcollector.becknprotocol.io/v2/event',
-                    {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      redirect: 'follow', // manual, *follow, error
-                      referrerPolicy: 'no-referrer', // no-referrer,
-                      body: JSON.stringify({
-                        experienceId: root.$store.state.experienceId,
-                        eventCode: 'mbth_accept_ride',
-                        eventAction: 'quotation sent',
-                        eventSourceId:
-                          'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                        eventDestinationId:
-                          'mobilityreferencebap.becknprotocol.io',
-                        payload: '', //add full context object
-                        eventStart_ts: new Date().toISOString()
-                      }) // body data type must match "Content-Type" header
-                    }
-                  );
-                } catch (error) {
-                  console.error(error);
-                }
-              }, 1000);
-            }
-            isQuoteData.value = true;
-            root.$router.push('/LocationSearch');
-          }
-        }
-      );
     };
 
     const changeItemNumber = async (type) => {
@@ -243,7 +189,8 @@ export default {
       openHamburger,
       goBack,
       getQuote,
-      enableLoader
+      enableLoader,
+      _relatedBpp
     };
   },
   computed: {
@@ -267,7 +214,6 @@ export default {
 <style lang="scss" scoped>
 .loader-circle {
   margin-top: 37%;
-
 }
 
 .sf-circle-icon {

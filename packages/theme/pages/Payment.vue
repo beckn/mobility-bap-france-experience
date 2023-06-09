@@ -17,11 +17,7 @@
         <div class="p-name">Payment</div>
       </div>
       <Card v-if="!!(order && order.cart)">
-        <CardContent
-          v-for="breakup in order.cart.quote.breakup"
-          :key="breakup.title"
-          class="flex-space-bw"
-        >
+        <CardContent v-for="breakup in order.cart.quote.breakup" :key="breakup.title" class="flex-space-bw">
           <div class="address-text">{{ breakup.title }}</div>
           <div class="address-text">€{{ Math.trunc(breakup.price.value) }}</div>
         </CardContent>
@@ -31,7 +27,7 @@
         <CardContent class="flex-space-bw">
           <div class="address-text bold">Total</div>
           <div class="address-text bold">
-            €{{ Math.trunc(order.cart.quote.price.value) }}
+            D{{ Math.trunc(order.cart.quote.price.value) }}
           </div>
         </CardContent>
       </Card>
@@ -41,32 +37,15 @@
       <Card>
         <CardContent>
           <div class="redo">
-            <input
-              type="radio"
-              class="container"
-              :name="'Payment'"
-              :value="'Cash'"
-              :disabled="false"
-              :selected="paymentMethod"
-              @change="changePaymentMethod"
-            />
-            <img
-              style="padding-top:8px; padding-left: 10px;"
-              src="/icons/money 2.png"
-              alt=""
-              :width="30"
-              :height="30"
-            />
+            <input type="radio" class="container" :name="'Payment'" :value="'Cash'" :disabled="false"
+              :selected="paymentMethod" @change="changePaymentMethod" />
+            <img style="padding-top:8px; padding-left: 10px;" src="/icons/money 2.png" alt="" :width="30" :height="30" />
             <label class="cash">Cash</label>
           </div>
         </CardContent>
       </Card>
     </div>
-    <BookRide
-      class="footer-fixed"
-      :buttonText="'Book Now'"
-      :buttonEnable="isPayConfirmActive"
-    >
+    <BookRide class="footer-fixed" :buttonText="'Book Now'" :buttonEnable="isPayConfirmActive">
     </BookRide>
   </div>
 </template>
@@ -129,8 +108,7 @@ export default {
     const isPayConfirmActive = computed(() => {
       return paymentMethod.value !== '';
     });
-    // const { initResult
-    // } = useUiState();
+
 
     const confirmRide = async () => {
       enableLoader.value = true;
@@ -139,77 +117,41 @@ export default {
       const quoteItems = JSON.parse(context.root.$store.state.quoteData); //JSON.parse(localStorage.getItem('quoteData'));
       const cartItems = JSON.parse(context.root.$store.state.cartItem);
 
-      console.log(initRes[0].message.order);
+      ;
 
       if (transId && initRes && quoteItems && cartItems) {
+        const { bpp_id, bpp_uri } = context.root.$store.state.relatedBpp.context;
+
+        const bppMetaData = {
+          bpp_id: bpp_id,
+          bpp_uri: bpp_uri,
+        }
         const params = createConfirmOrderRequest(
           transId,
-          initRes[0].message.order,
-          quoteItems.quote,
-          cartItems
+          initRes.message.catalogs.responses[0].message.order,
+          quoteItems.catalogs.order,
+          bppMetaData
         );
         const response = await init(params, context.root.$store.state.token);
-        setTimeout(async () => {
-          await poll(
-            { messageIds: response[0].context.message_id },
-            context.root.$store.state.token
-          );
-        }, 500);
+
+        context.root.$store.dispatch('setconfirmData', response);
+        context.root.$store.dispatch(
+          'setconfirmDataContext',
+          response.context
+        );
+
+        context.root.$store.dispatch(
+          'setTransactionId',
+          response.context.transaction_id
+        );
+
+        sessionStorage.setItem(
+          'confirmDataContext',
+          JSON.stringify(response.context)
+        );
+
       }
 
-      watch(
-        () => pollResults.value,
-        (newValue) => {
-          if (helpers.shouldStopPooling(newValue, 'order')) {
-            stopPolling();
-
-            context.root.$store.dispatch('setconfirmData', newValue[0].message);
-            context.root.$store.dispatch(
-              'setconfirmDataContext',
-              newValue[0].context
-            );
-
-            context.root.$store.dispatch(
-              'setTransactionId',
-              newValue[0].context.transaction_id
-            );
-
-            sessionStorage.setItem(
-              'confirmDataContext',
-              JSON.stringify(newValue[0].context)
-            );
-          }
-        }
-      );
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbth_sent_ride_details',
-                  eventAction: 'sent ride details',
-                  eventSourceId:
-                    'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                  eventDestinationId: 'mobilityreferencebap.becknprotocol.io',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                }) // body data type must match "Content-Type" header
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
       enableLoader.value = false;
     };
 
@@ -218,35 +160,7 @@ export default {
     //   confirmRide();
     // });
     onBeforeMount(async () => {
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbtb_bkng_ride',
-                  eventAction: 'booking ride',
-                  eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                  eventDestinationId:
-                    'becknify.humbhionline.in.mobility.BPP/beckn_open/app1-succinct-in',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                }) // body data type must match "Content-Type" header
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
+
       await confirmRide();
       order.value = JSON.parse(localStorage.getItem('orderProgress'));
     });

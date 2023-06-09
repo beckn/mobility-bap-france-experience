@@ -159,7 +159,7 @@ div#cafe-map {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   box-shadow: rgba(50, 50, 50, 0.75);
-  height: 150px;
+  // height: 150px;
 }
 .close {
   position: absolute;

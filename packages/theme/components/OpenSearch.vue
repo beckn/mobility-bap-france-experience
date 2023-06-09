@@ -1,4 +1,5 @@
 <template>
+  <client-only>
   <div>
     <div>
       <div class="open-search"></div>
@@ -210,7 +211,7 @@
                         </div>
                         <div>
                           <span>
-                            € {{ _importedOrderObject !== null ?
+                            D {{ _importedOrderObject !== null ?
                               _importedOrderObject.message.order.item[0].price.value : '' }}
                           </span>
                         </div>
@@ -247,6 +248,7 @@
       </div>
     </keep-alive>
   </div>
+</client-only>
 </template>
 
 <script>
@@ -290,7 +292,7 @@ export default {
 
   setup(props, context) {
     const _importedOrderObject = computed(() => props.importedOrderObject);
-    const pickup = ref('Paris, France');
+    const pickup = ref('Banjul, The Gambia');
     const buttonlocation = ref(false);
     const location = ref(true);
     const message = ref('');
@@ -342,9 +344,9 @@ export default {
 
     onMounted(() => {
       context.root.$store.dispatch('updateslocation', {
-        lat: 48.856614,
-        long: 2.3522219,
-        addres: 'Paris, France'
+        lat: 13.45274,
+        long:  -16.57803,
+        addres: 'Banjul, The Gambia'
       });
       let URL = window.location.href;
       if (URL.includes('?')) {
@@ -469,101 +471,20 @@ export default {
       isLocationdropOpen.value = !isLocationdropOpen.value;
     };
     const pickupLocation = async () => {
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbtb_pickup_loc',
-                  eventAction: 'selecting pickup location',
-                  eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                  eventDestinationId: 'mobilityreferencebap.becknprotocol.io',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                })
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
+
       buttonlocation.value = true;
       location.value = true;
       isLocationdropOpen.value = !isLocationdropOpen.value;
     };
     const dropLocation = async () => {
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbtb_drop_loc',
-                  eventAction: 'selecting drop-off location',
-                  eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                  eventDestinationId: 'mobilityreferencebap.becknprotocol.io',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                })
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
+
       buttonlocation.value = false;
       location.value = false;
       isLocationdropOpen.value = !isLocationdropOpen.value;
     };
 
     const openSearch = async () => {
-      if (context.root.$store.state.experienceId !== null) {
-        setTimeout(async () => {
-          try {
-            await fetch(
-              'https://api.eventcollector.becknprotocol.io/v2/event',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer,
-                body: JSON.stringify({
-                  experienceId: context.root.$store.state.experienceId,
-                  eventCode: 'mbtb_srch_init',
-                  eventAction: 'search initiated',
-                  eventSourceId: 'mobilityreferencebap.becknprotocol.io',
-                  eventDestinationId: 'gateway.becknprotocol.io',
-                  payload: '', //add full context object
-                  eventStart_ts: new Date().toISOString()
-                })
-              }
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-      }
+
 
       if (message.value && pickup.value && message.value != pickup.value) {
         if (errorMsg.value) errorMsg.value = false;
