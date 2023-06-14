@@ -1,194 +1,211 @@
 <template>
   <client-only>
-  <div>
     <div>
-      <div class="open-search"></div>
       <div>
-        <CurrentLocationMapForOpenStreet :enable="true" :disablepulse="true" :upadateMap="upadateMap" />
-      </div>
-      <div v-if="!enableLoader" class="open-search header-top-space">
-        <div class="open-search-input">
-          <div class="inputBox">
-            <div class="input1 input-opensearch">
-              <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
+        <div class="open-search"></div>
+        <div>
+          <CurrentLocationMapForOpenStreet :enable="true" :disablepulse="true" :upadateMap="upadateMap" />
+        </div>
+        <div v-if="!enableLoader" class="open-search header-top-space">
+          <div class="open-search-input">
+            <div class="inputBox">
+              <div class="input1 input-opensearch">
+                <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
 
-              <label>Pickup: </label>
+                <label>Pickup: </label>
 
-              <!-- v-on:keyup.enter="openSearch" -->
-              <input @click="pickupLocation" v-model="pickup" :valid="false" errorMessage="errer" type="text"
-                placeholder="Enter Pickup" v-e2e="'home-search-input'" />
-            </div>
-            <!-- <div class="hr">  <hr style="width:100%;" />
-        <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /></div> -->
-            <div class="hr-theme-slash-2">
-              <div class="hr-line"></div>
-              <div class="hr-icon">
-                <!-- <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /> -->
+                <!-- v-on:keyup.enter="openSearch" -->
+                <input @click="pickupLocation" v-model="pickup" :valid="false" errorMessage="errer" type="text"
+                  placeholder="Enter Pickup" v-e2e="'home-search-input'" />
               </div>
-            </div>
+              <!-- <div class="hr">  <hr style="width:100%;" />
+        <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /></div> -->
+              <div class="hr-theme-slash-2">
+                <div class="hr-line"></div>
+                <div class="hr-icon">
+                  <!-- <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /> -->
+                </div>
+              </div>
 
-            <div class="input">
-              <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
-              <label for=""> Dropoff: </label>
+              <div class="input">
+                <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
+                <label for=""> Dropoff: </label>
 
-              <input @click="dropLocation" v-model="message" v-on:keyup.enter="openSearch" :valid="false"
-                errorMessage="errer" type="text" placeholder="Enter Destination" v-e2e="'home-search-input'" />
-            </div>
+                <input @click="dropLocation" v-model="message" v-on:keyup.enter="openSearch" :valid="false"
+                  errorMessage="errer" type="text" placeholder="Enter Destination" v-e2e="'home-search-input'" />
+              </div>
 
-            <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck"
-              v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
-              <!-- <span class="sf-search-bar__icon"> contactSupport
+              <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck"
+                v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
+                <!-- <span class="sf-search-bar__icon"> contactSupport
             <SfIcon color="var(--c-text)" size="18px" icon="search" />
           </span> -->
-            </SfButton>
-          </div>
-        </div>
-        <div v-if="errorMsg" class="error-msg">Please fill out this field.</div>
-        <div v-if="errorMsg2" class="error-msg">
-          Pickup and Drop locations are same!.
-        </div>
-      </div>
-      <div v-if="enableLoader" key="loadingCircle" class="loader-circle">
-        <br /><br /><br />
-        <LoadingCircle :enable="enableLoader" />
-        <br />
-        <p class="warningtext">Please wait! Searching for cabs..</p>
-      </div>
-      <template>
-        <div class="location-blk d-flex w-100">
-          <div class="layout-container">
-            <div id="location" class="location-content">
-              <SfSidebar :visible="!!isLocationdropOpen" :button="false" title="Set Location" @close="toggleLocationDrop"
-                class="sidebar sf-sidebar--right">
-                <transition name="fade">
-                  <client-only>
-                    <LocationSearchBar :buttonlocation="buttonlocation" @locationSelected="locationSelected"
-                      @toggleLocationDrop="toggleLocationDrop" @edit="edit" v-e2e="'app-location-sidebar'" />
-                  </client-only>
-                </transition>
-              </SfSidebar>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <div class="sf-footer">
-        <SfFooter class="footer">
-          <!-- <p><span>By</span> <img src="../assets/images/p-b-phonepe.png" alt="" /> </p> -->
-          <p>
-            <span class="powered-by">Powered by</span>
-            <img src="../assets/images/beckn-logo.png" alt="" />
-          </p>
-        </SfFooter>
-      </div>
-    </div>
-    <div>
-      <template>
-        <ContactSupportSlider :visible="isAlert" @close="isAlert = false">
-          <template>
-            <div class="bar-pos" @click="Alertmodal">
-              <SfButton class="sf-button--pure rect-bar-style">
-                <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
               </SfButton>
             </div>
-            <div>
-              <div class="modal-heading">
-                Alert
-                <SfImage src="/icons/Alert.png" :width="15" :height="15" alt="Rectangle bar" />
+          </div>
+          <div v-if="errorMsg" class="error-msg">
+            Please fill out this field.
+          </div>
+          <div v-if="errorMsg2" class="error-msg">
+            Pickup and Drop locations are same!.
+          </div>
+        </div>
+        <div v-if="enableLoader" key="loadingCircle" class="loader-circle">
+          <br /><br /><br />
+          <LoadingCircle :enable="enableLoader" />
+          <br />
+          <p class="warningtext">Please wait! Searching for cabs..</p>
+        </div>
+        <template>
+          <div class="location-blk d-flex w-100">
+            <div class="layout-container">
+              <div id="location" class="location-content">
+                <SfSidebar :visible="!!isLocationdropOpen" :button="false" title="Set Location"
+                  @close="toggleLocationDrop" class="sidebar sf-sidebar--right">
+                  <transition name="fade">
+                    <client-only>
+                      <LocationSearchBar :buttonlocation="buttonlocation" @locationSelected="locationSelected"
+                        @toggleLocationDrop="toggleLocationDrop" @edit="edit" v-e2e="'app-location-sidebar'" />
+                    </client-only>
+                  </transition>
+                </SfSidebar>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <div class="sf-footer">
+          <SfFooter class="footer">
+            <!-- <p><span>By</span> <img src="../assets/images/p-b-phonepe.png" alt="" /> </p> -->
+            <p>
+              <span class="powered-by">Powered by</span>
+              <img src="../assets/images/beckn-logo.png" alt="" />
+            </p>
+          </SfFooter>
+        </div>
+      </div>
+      <div>
+        <template>
+          <ContactSupportSlider :visible="isAlert" @close="isAlert = false">
+            <template>
+              <div class="bar-pos" @click="Alertmodal">
+                <SfButton class="sf-button--pure rect-bar-style">
+                  <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
+                </SfButton>
               </div>
               <div>
-                <hr class="sf-divider" />
-              </div>
-            </div>
-            <div class="modal-body">
-              <div class="option-container">
-                <p class="warningtext">
-                  This Area has extremely high traffic, <br />
-                  Recommend alternate modes of transport. <br /><br />
-                  To know more, read the details at :
-                  <br />
-                  <br />
-
-                  <span @click="openViolatedPolicy" style="cursor: pointer; color: blue">
-                    {{ violatedPolicyName }}
-                  </span>
-                </p>
-                <button class="color-primary btnclass1" @click="underStandButtonHandler">
-                  <div class="f-btn-text">
-                    <label style="color: antiquewhite; font-weight: 700;">Ok, I Understand</label>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </template>
-        </ContactSupportSlider>
-      </template>
-    </div>
-
-    <!-- TODO TERM AND CONDITION MODEL UNCOMMENT IF NEDEDD IN FUTUR -->
-
-    <keep-alive>
-      <div class="location-content">
-        <BottomSlider :visible="TC_modal">
-          <template>
-            <div class="bar-pos" @click="TC_toggle">
-              <SfButton class="sf-button--pure rect-bar-style">
-                <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
-              </SfButton>
-            </div>
-
-            <div>
-              <div>
-                <div>
-                  <div style="text-align: center;" class="modal-heading1">Imported Order</div>
-                  <div>
-                    <hr class="sf-divider" />
-                  </div>
+                <div class="modal-heading">
+                  Alert
+                  <SfImage src="/icons/Alert.png" :width="15" :height="15" alt="Rectangle bar" />
                 </div>
                 <div>
-                  <div class="option-container">
+                  <hr class="sf-divider" />
+                </div>
+              </div>
+              <div class="modal-body">
+                <div class="option-container">
+                  <p class="warningtext">
+                    This Area has extremely high traffic, <br />
+                    Recommend alternate modes of transport. <br /><br />
+                    To know more, read the details at :
+                    <br />
+                    <br />
+
+                    <span @click="openViolatedPolicy" style="cursor: pointer; color: blue">
+                      {{ violatedPolicyName }}
+                    </span>
+                  </p>
+                  <button class="color-primary btnclass1" @click="underStandButtonHandler">
+                    <div class="f-btn-text">
+                      <label style="color: antiquewhite; font-weight: 700;">Ok, I Understand</label>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </template>
+          </ContactSupportSlider>
+        </template>
+      </div>
+
+      <!-- TODO TERM AND CONDITION MODEL UNCOMMENT IF NEDEDD IN FUTUR -->
+
+      <keep-alive>
+        <div class="location-content">
+          <BottomSlider :visible="TC_modal">
+            <template>
+              <div class="bar-pos" @click="TC_toggle">
+                <SfButton class="sf-button--pure rect-bar-style">
+                  <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
+                </SfButton>
+              </div>
+
+              <div>
+                <div>
+                  <div>
+                    <div style="text-align: center;" class="modal-heading1">
+                      Imported Order
+                    </div>
                     <div>
-                      <img style=" width: 100%; height: 135px;" :src="_importedOrderObject !== null
-                        ? _importedOrderObject.message.order.item[0].descriptor
-                          .images[0]
-                        : ''" alt="brigu lake" />
+                      <hr class="sf-divider" />
                     </div>
-                    <br />
-                    <div style="text-align: center;" class="modal-text">
-                      You appear to have placed an order for "{{ _importedOrderObject !== null ?
-                        _importedOrderObject.message.order.item[0].descriptor.name : null }}"
-                    </div>
-                    <br />
-                    <div class="container">
-                      <div style="display:flex; justify-content: space-between; ">
-                        <div>
-                          <span class="trektittle">{{ _importedOrderObject !== null ?
-                            _importedOrderObject.message.order.item[0].descriptor.name : '' }}
-
-
-                          </span>
-                        </div>
-                        <div>
-                          <span class="trektittle">Order ID:</span>
-                          <span>
-                            {{ _importedOrderObject !== null ?
-                              _importedOrderObject.message.order.id : '' }}
-                            <!-- {{
+                  </div>
+                  <div>
+                    <div class="option-container">
+                      <div>
+                        <img style=" width: 100%; height: 135px;" :src="_importedOrderObject !== null
+                          ? _importedOrderObject.message.order.item[0]
+                            .descriptor.images[0]
+                          : ''
+                          " alt="brigu lake" />
+                      </div>
+                      <br />
+                      <div style="text-align: center;" class="modal-text">
+                        You appear to have placed an order for "{{
+                          _importedOrderObject !== null
+                          ? _importedOrderObject.message.order.item[0]
+                            .descriptor.name
+                          : null
+                        }}"
+                      </div>
+                      <br />
+                      <div class="container">
+                        <div style="display:flex; justify-content: space-between; ">
+                          <div>
+                            <span class="trektittle">{{
+                              _importedOrderObject !== null
+                              ? _importedOrderObject.message.order.item[0]
+                                .descriptor.name
+                              : ''
+                            }}
+                            </span>
+                          </div>
+                          <div>
+                            <span class="trektittle">Order ID:</span>
+                            <span>
+                              {{
+                                _importedOrderObject !== null
+                                ? _importedOrderObject.message.order.id
+                                : ''
+                              }}
+                              <!-- {{
                             decodedOrderObject !== null
                               ? decodedOrderObject.message.order.id
                               : ''
                           }} -->
-                          </span>
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                      <div style="margin-top: 10px; text-align: center;">
-                        <P style="font-size: 14px;">
-                          {{ _importedOrderObject !== null ?
-                            _importedOrderObject.message.order.item[0].descriptor.short_desc : '' }}
-
-                        </P>
-                      </div>
-                      <!-- <div style="display:flex; justify-content: space-between; ">
+                        <div style="margin-top: 10px; text-align: center;">
+                          <P style="font-size: 14px;">
+                            {{
+                              _importedOrderObject !== null
+                              ? _importedOrderObject.message.order.item[0]
+                                .descriptor.short_desc
+                              : ''
+                            }}
+                          </P>
+                        </div>
+                        <!-- <div style="display:flex; justify-content: space-between; ">
                           <div>
                            <span class="trektittle"> Booked on</span>
                          </div>
@@ -196,59 +213,70 @@
                          <span>21st Jun 2021, 12:21pm</span>
                         </div>
                          </div> -->
-                      <div style="display:flex; justify-content: space-between; margin-top: 10px; ">
-                        <div>
-                          <span class="trektittle">No.of Travellers</span>
+                        <div style="display:flex; justify-content: space-between; margin-top: 10px; ">
+                          <div>
+                            <span class="trektittle">No.of Travellers</span>
+                          </div>
+                          <div>
+                            <span>
+                              {{
+                                _importedOrderObject !== null
+                                ? _importedOrderObject.message.order.item[0]
+                                  .quantity
+                                : ''
+                              }}
+                            </span>
+                          </div>
                         </div>
-                        <div>
-                          <span> {{ _importedOrderObject !== null ?
-                            _importedOrderObject.message.order.item[0].quantity : '' }} </span>
+                        <div style="display:flex; justify-content: space-between; ">
+                          <div>
+                            <span class="trektittle"> Total Price</span>
+                          </div>
+                          <div>
+                            <span>
+                              D
+                              {{
+                                _importedOrderObject !== null
+                                ? _importedOrderObject.message.order.item[0]
+                                  .price.value
+                                : ''
+                              }}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                      <div style="display:flex; justify-content: space-between; ">
-                        <div>
-                          <span class="trektittle"> Total Price</span>
-                        </div>
-                        <div>
-                          <span>
-                            D {{ _importedOrderObject !== null ?
-                              _importedOrderObject.message.order.item[0].price.value : '' }}
-                          </span>
-                        </div>
-                      </div>
 
-                      <!-- Your content goes here -->
+                        <!-- Your content goes here -->
 
-                      <!-- more content -->
+                        <!-- more content -->
+                      </div>
+                      <br />
+                      <span class="modal-text">
+                        Would you like to see best travel options to reach this
+                        location?</span>
+                      <br />
                     </div>
-                    <br />
-                    <span class="modal-text">
-                      Would you like to see best travel options to reach this
-                      location?</span>
-                    <br />
-                  </div>
-                  <div style="margin: 13px;">
-                    <button class="color-primary btnclass1" @click="TC_toggle">
-                      <div class="f-btn-text">
-                        <label style="color: antiquewhite;font-weight: 700;">Yes! Let's go</label>
-                      </div>
-                    </button>
-                    <br />
-                    <button class="color-primary btnclass" @click="TC_toggle">
-                      <div class="f-btn-text">
-                        <label style="color:#f37a20;font-weight: 700;">No, I will travel later</label>
-                      </div>
-                    </button>
+                    <div style="margin: 13px;">
+                      <button class="color-primary btnclass1" @click="TC_toggle">
+                        <div class="f-btn-text">
+                          <label style="color: antiquewhite;font-weight: 700;">Yes! Let's go</label>
+                        </div>
+                      </button>
+                      <br />
+                      <button class="color-primary btnclass" @click="TC_toggle">
+                        <div class="f-btn-text">
+                          <label style="color:#f37a20;font-weight: 700;">No, I will travel later</label>
+                        </div>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </template>
-        </BottomSlider>
-      </div>
-    </keep-alive>
-  </div>
-</client-only>
+            </template>
+          </BottomSlider>
+        </div>
+      </keep-alive>
+    </div>
+  </client-only>
 </template>
 
 <script>
@@ -286,7 +314,7 @@ export default {
 
   props: {
     importedOrderObject: {
-      type: Object,
+      type: Object
     }
   },
 
@@ -312,9 +340,10 @@ export default {
     };
     const enableLoader = ref(false);
     if (_importedOrderObject.value) {
-      const fulfillment_end_loc = _importedOrderObject.value.message.order.item[0].tags.fulfillment_end_loc;
+      const fulfillment_end_loc =
+        _importedOrderObject.value.message.order.item[0].tags
+          .fulfillment_end_loc;
       const [latStr, longStr] = fulfillment_end_loc.split('/');
-
 
       const lat = parseFloat(latStr);
       const long = parseFloat(longStr);
@@ -327,7 +356,7 @@ export default {
         if (status === 'OK') {
           if (results[0]) {
             console.log(results[0].formatted_address);
-            message.value = results[0].formatted_address
+            message.value = results[0].formatted_address;
             context.root.$store.dispatch('updateDlocation', {
               late: latStr,
               lng: longStr,
@@ -345,13 +374,12 @@ export default {
     onMounted(() => {
       context.root.$store.dispatch('updateslocation', {
         lat: 13.45274,
-        long:  -16.57803,
+        long: -16.57803,
         addres: 'Banjul, The Gambia'
       });
       let URL = window.location.href;
       if (URL.includes('?')) {
         TC_toggle();
-
       }
     });
 
@@ -361,7 +389,7 @@ export default {
       try {
         superAgent
           .post(
-            'http://ec2-3-110-194-223.ap-south-1.compute.amazonaws.com:8082/v1/policy/checkViolation/location'
+            'https://api.mobility-bap-policy-demo.becknprotocol.io/v1/policy/checkViolation/location'
           )
           .set('Content-Type', 'application/json')
           .send({
@@ -471,21 +499,17 @@ export default {
       isLocationdropOpen.value = !isLocationdropOpen.value;
     };
     const pickupLocation = async () => {
-
       buttonlocation.value = true;
       location.value = true;
       isLocationdropOpen.value = !isLocationdropOpen.value;
     };
     const dropLocation = async () => {
-
       buttonlocation.value = false;
       location.value = false;
       isLocationdropOpen.value = !isLocationdropOpen.value;
     };
 
     const openSearch = async () => {
-
-
       if (message.value && pickup.value && message.value != pickup.value) {
         if (errorMsg.value) errorMsg.value = false;
         if (errorMsg2.value) errorMsg2.value = false;
@@ -541,8 +565,7 @@ export default {
       violatedPolicyName,
       openViolatedPolicy,
       violatedPolicyId,
-      _importedOrderObject,
-
+      _importedOrderObject
     };
   }
 };
