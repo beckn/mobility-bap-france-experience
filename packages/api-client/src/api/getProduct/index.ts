@@ -16,13 +16,14 @@ export default async function getProduct(
 ): Promise<AckResponse> {
   const criteriaData: { [k: string]: any } = {};
   if (params.pickup_location)
-    criteriaData.pickup_location = params.pickup_location;
-  if (params.drop_location) criteriaData.drop_location = params.drop_location;
+    criteriaData.pickupLocation = params.pickup_location;
+  if (params.drop_location) criteriaData.dropLocation = params.drop_location;
   if (params.created_at) criteriaData.created_at = params.created_at;
 
   const qParams = {
     context: {
-      transaction_id: uuidv4()
+      // transaction_id: uuidv4()
+      domain: 'mobility'
     },
     message: {
       criteria: criteriaData
@@ -33,7 +34,7 @@ export default async function getProduct(
   Logger.error(qParams);
   return client
     .post(
-      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v1/search'
+      'https://api-node-dev.mobilityreferencebap.becknprotocol.io/client/v2/search'
     )
     .send(qParams)
     .then((res) => {

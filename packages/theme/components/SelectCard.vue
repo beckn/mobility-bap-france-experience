@@ -527,7 +527,7 @@ export default {
           const initRes = await init(params, root.$store.state.token);
           root.$store.dispatch(
             'setTransactionId',
-            initRes.context.transaction_id
+            initRes[0].context.transaction_id
           );
           root.$store.dispatch('setinitResult', initRes);
           enableLoader.value = false;
