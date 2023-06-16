@@ -4,19 +4,34 @@
       <div>
         <div class="open-search"></div>
         <div>
-          <CurrentLocationMapForOpenStreet :enable="true" :disablepulse="true" :upadateMap="upadateMap" />
+          <CurrentLocationMapForOpenStreet
+            :enable="true"
+            :disablepulse="true"
+            :upadateMap="upadateMap"
+          />
         </div>
         <div v-if="!enableLoader" class="open-search header-top-space">
           <div class="open-search-input">
             <div class="inputBox">
               <div class="input1 input-opensearch">
-                <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
+                <SfImage
+                  id="icon"
+                  src="/icons/Vector.png"
+                  alt="Vue Storefront Next"
+                />
 
                 <label>Pickup: </label>
 
                 <!-- v-on:keyup.enter="openSearch" -->
-                <input @click="pickupLocation" v-model="pickup" :valid="false" errorMessage="errer" type="text"
-                  placeholder="Enter Pickup" v-e2e="'home-search-input'" />
+                <input
+                  @click="pickupLocation"
+                  v-model="pickup"
+                  :valid="false"
+                  errorMessage="errer"
+                  type="text"
+                  placeholder="Enter Pickup"
+                  v-e2e="'home-search-input'"
+                />
               </div>
               <!-- <div class="hr">  <hr style="width:100%;" />
         <SfImage src="/icons/Transport.svg" alt="Vue Storefront Next" /></div> -->
@@ -28,15 +43,31 @@
               </div>
 
               <div class="input">
-                <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
+                <SfImage
+                  id="icon"
+                  src="/icons/Vector.png"
+                  alt="Vue Storefront Next"
+                />
                 <label for=""> Dropoff: </label>
 
-                <input @click="dropLocation" v-model="message" v-on:keyup.enter="openSearch" :valid="false"
-                  errorMessage="errer" type="text" placeholder="Enter Destination" v-e2e="'home-search-input'" />
+                <input
+                  @click="dropLocation"
+                  v-model="message"
+                  v-on:keyup.enter="openSearch"
+                  :valid="false"
+                  errorMessage="errer"
+                  type="text"
+                  placeholder="Enter Destination"
+                  v-e2e="'home-search-input'"
+                />
               </div>
 
-              <SfButton id="btn" class="button-pos sf-button--pure color-primary" @click="voilationcheck"
-                v-e2e="'home-search-button'"><label for="btn">Search Rides</label>
+              <SfButton
+                id="btn"
+                class="button-pos sf-button--pure color-primary"
+                @click="voilationcheck"
+                v-e2e="'home-search-button'"
+                ><label for="btn">Search Rides</label>
                 <!-- <span class="sf-search-bar__icon"> contactSupport
             <SfIcon color="var(--c-text)" size="18px" icon="search" />
           </span> -->
@@ -60,12 +91,22 @@
           <div class="location-blk d-flex w-100">
             <div class="layout-container">
               <div id="location" class="location-content">
-                <SfSidebar :visible="!!isLocationdropOpen" :button="false" title="Set Location"
-                  @close="toggleLocationDrop" class="sidebar sf-sidebar--right">
+                <SfSidebar
+                  :visible="!!isLocationdropOpen"
+                  :button="false"
+                  title="Set Location"
+                  @close="toggleLocationDrop"
+                  class="sidebar sf-sidebar--right"
+                >
                   <transition name="fade">
                     <client-only>
-                      <LocationSearchBar :buttonlocation="buttonlocation" @locationSelected="locationSelected"
-                        @toggleLocationDrop="toggleLocationDrop" @edit="edit" v-e2e="'app-location-sidebar'" />
+                      <LocationSearchBar
+                        :buttonlocation="buttonlocation"
+                        @locationSelected="locationSelected"
+                        @toggleLocationDrop="toggleLocationDrop"
+                        @edit="edit"
+                        v-e2e="'app-location-sidebar'"
+                      />
                     </client-only>
                   </transition>
                 </SfSidebar>
@@ -90,13 +131,23 @@
             <template>
               <div class="bar-pos" @click="Alertmodal">
                 <SfButton class="sf-button--pure rect-bar-style">
-                  <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
+                  <SfImage
+                    src="/icons/Rectangle-bar.png"
+                    :width="60"
+                    :height="5.5"
+                    alt="Rectangle bar"
+                  />
                 </SfButton>
               </div>
               <div>
                 <div class="modal-heading">
                   Alert
-                  <SfImage src="/icons/Alert.png" :width="15" :height="15" alt="Rectangle bar" />
+                  <SfImage
+                    src="/icons/Alert.png"
+                    :width="15"
+                    :height="15"
+                    alt="Rectangle bar"
+                  />
                 </div>
                 <div>
                   <hr class="sf-divider" />
@@ -111,13 +162,21 @@
                     <br />
                     <br />
 
-                    <span @click="openViolatedPolicy" style="cursor: pointer; color: blue">
+                    <span
+                      @click="openViolatedPolicy"
+                      style="cursor: pointer; color: blue"
+                    >
                       {{ violatedPolicyName }}
                     </span>
                   </p>
-                  <button class="color-primary btnclass1" @click="underStandButtonHandler">
+                  <button
+                    class="color-primary btnclass1"
+                    @click="underStandButtonHandler"
+                  >
                     <div class="f-btn-text">
-                      <label style="color: antiquewhite; font-weight: 700;">Ok, I Understand</label>
+                      <label style="color: antiquewhite; font-weight: 700;"
+                        >Ok, I Understand</label
+                      >
                     </div>
                   </button>
                 </div>
@@ -135,7 +194,12 @@
             <template>
               <div class="bar-pos" @click="TC_toggle">
                 <SfButton class="sf-button--pure rect-bar-style">
-                  <SfImage src="/icons/Rectangle-bar.png" :width="60" :height="5.5" alt="Rectangle bar" />
+                  <SfImage
+                    src="/icons/Rectangle-bar.png"
+                    :width="60"
+                    :height="5.5"
+                    alt="Rectangle bar"
+                  />
                 </SfButton>
               </div>
 
@@ -152,40 +216,50 @@
                   <div>
                     <div class="option-container">
                       <div>
-                        <img style=" width: 100%; height: 135px;" :src="_importedOrderObject !== null
-                          ? _importedOrderObject.message.order.item[0]
-                            .descriptor.images[0]
-                          : ''
-                          " alt="brigu lake" />
+                        <img
+                          style=" width: 100%; height: 135px;"
+                          :src="
+                            _importedOrderObject !== null
+                              ? _importedOrderObject.message.order.item[0]
+                                  .descriptor.images[0]
+                              : ''
+                          "
+                          alt="brigu lake"
+                        />
                       </div>
                       <br />
                       <div style="text-align: center;" class="modal-text">
                         You appear to have placed an order for "{{
                           _importedOrderObject !== null
-                          ? _importedOrderObject.message.order.item[0]
-                            .descriptor.name
-                          : null
+                            ? _importedOrderObject.message.order.item[0]
+                                .descriptor.name
+                            : null
                         }}"
                       </div>
                       <br />
                       <div class="container">
-                        <div style="display:flex; justify-content: space-between; ">
+                        <div
+                          style="display:flex; justify-content: space-between; "
+                        >
                           <div>
-                            <span class="trektittle">{{
-                              _importedOrderObject !== null
-                              ? _importedOrderObject.message.order.item[0]
-                                .descriptor.name
-                              : ''
-                            }}
+                            <span class="trektittle"
+                              >{{
+                                _importedOrderObject !== null
+                                  ? _importedOrderObject.message.order.item[0]
+                                      .descriptor.name
+                                  : ''
+                              }}
                             </span>
                           </div>
                           <div>
                             <span class="trektittle">Order ID:</span>
-                            <span>
+                            <span
+                              style=" overflow:hidden; width:100px; display:block; text-overflow:ellipsis;"
+                            >
                               {{
                                 _importedOrderObject !== null
-                                ? _importedOrderObject.message.order.id
-                                : ''
+                                  ? _importedOrderObject.message.order.id
+                                  : ''
                               }}
                               <!-- {{
                             decodedOrderObject !== null
@@ -199,9 +273,9 @@
                           <P style="font-size: 14px;">
                             {{
                               _importedOrderObject !== null
-                              ? _importedOrderObject.message.order.item[0]
-                                .descriptor.short_desc
-                              : ''
+                                ? _importedOrderObject.message.order.item[0]
+                                    .descriptor.short_desc
+                                : ''
                             }}
                           </P>
                         </div>
@@ -213,7 +287,9 @@
                          <span>21st Jun 2021, 12:21pm</span>
                         </div>
                          </div> -->
-                        <div style="display:flex; justify-content: space-between; margin-top: 10px; ">
+                        <div
+                          style="display:flex; justify-content: space-between; margin-top: 10px; "
+                        >
                           <div>
                             <span class="trektittle">No.of Travellers</span>
                           </div>
@@ -221,14 +297,16 @@
                             <span>
                               {{
                                 _importedOrderObject !== null
-                                ? _importedOrderObject.message.order.item[0]
-                                  .quantity
-                                : ''
+                                  ? _importedOrderObject.message.order.item[0]
+                                      .quantity
+                                  : ''
                               }}
                             </span>
                           </div>
                         </div>
-                        <div style="display:flex; justify-content: space-between; ">
+                        <div
+                          style="display:flex; justify-content: space-between; "
+                        >
                           <div>
                             <span class="trektittle"> Total Price</span>
                           </div>
@@ -237,9 +315,9 @@
                               D
                               {{
                                 _importedOrderObject !== null
-                                ? _importedOrderObject.message.order.item[0]
-                                  .price.value
-                                : ''
+                                  ? _importedOrderObject.message.order.item[0]
+                                      .price.value
+                                  : ''
                               }}
                             </span>
                           </div>
@@ -252,19 +330,27 @@
                       <br />
                       <span class="modal-text">
                         Would you like to see best travel options to reach this
-                        location?</span>
+                        location?</span
+                      >
                       <br />
                     </div>
                     <div style="margin: 13px;">
-                      <button class="color-primary btnclass1" @click="TC_toggle">
+                      <button
+                        class="color-primary btnclass1"
+                        @click="TC_toggle"
+                      >
                         <div class="f-btn-text">
-                          <label style="color: antiquewhite;font-weight: 700;">Yes! Let's go</label>
+                          <label style="color: antiquewhite;font-weight: 700;"
+                            >Yes! Let's go</label
+                          >
                         </div>
                       </button>
                       <br />
                       <button class="color-primary btnclass" @click="TC_toggle">
                         <div class="f-btn-text">
-                          <label style="color:#f37a20;font-weight: 700;">No, I will travel later</label>
+                          <label style="color:#f37a20;font-weight: 700;"
+                            >No, I will travel later</label
+                          >
                         </div>
                       </button>
                     </div>
