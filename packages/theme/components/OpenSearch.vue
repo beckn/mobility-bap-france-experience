@@ -429,7 +429,8 @@ export default {
       const fulfillment_end_loc =
         _importedOrderObject.value.message.order.item[0].tags
           .fulfillment_end_loc;
-      const [latStr, longStr] = fulfillment_end_loc.split('/');
+      const [longStr, latStr] = fulfillment_end_loc.split('/');
+      
 
       const lat = parseFloat(latStr);
       const long = parseFloat(longStr);
@@ -439,8 +440,11 @@ export default {
       const geoCodeService = new window.google.maps.Geocoder();
 
       geoCodeService.geocode({ location: latlng }, (results, status) => {
+        //console.log('lat:', latlng.lat, 'lng:', latlng.lng);
         if (status === 'OK') {
           if (results[0]) {
+            //console.log(results[0]);
+
             console.log(results[0].formatted_address);
             message.value = results[0].formatted_address;
             context.root.$store.dispatch('updateDlocation', {
