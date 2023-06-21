@@ -425,41 +425,45 @@ export default {
       isAlert.value = !isAlert.value;
     };
     const enableLoader = ref(false);
-    if (_importedOrderObject.value) {
-      const fulfillment_end_loc =
-        _importedOrderObject.value.message.order.item[0].tags
-          .fulfillment_end_loc;
-      const [longStr, latStr] = fulfillment_end_loc.split('/');
+
+
+    // TODO UNCOMMENT THIS CODE IF NEEDED DROP LOCATION FROM IMPORTEDORDEROBJECT
+
+    // if (_importedOrderObject.value) {
+    //   const fulfillment_end_loc =
+    //     _importedOrderObject.value.message.order.item[0].tags
+    //       .fulfillment_end_loc;
+    //   const [longStr, latStr] = fulfillment_end_loc.split('/');
       
 
-      const lat = parseFloat(latStr);
-      const long = parseFloat(longStr);
+    //   const lat = parseFloat(latStr);
+    //   const long = parseFloat(longStr);
 
-      const latlng = { lat: lat, lng: long };
+    //   const latlng = { lat: lat, lng: long };
 
-      const geoCodeService = new window.google.maps.Geocoder();
+    //   const geoCodeService = new window.google.maps.Geocoder();
 
-      geoCodeService.geocode({ location: latlng }, (results, status) => {
-        //console.log('lat:', latlng.lat, 'lng:', latlng.lng);
-        if (status === 'OK') {
-          if (results[0]) {
-            //console.log(results[0]);
+    //   geoCodeService.geocode({ location: latlng }, (results, status) => {
+    //     console.log('lat:', latlng.lat, 'lng:', latlng.lng);
+    //     if (status === 'OK') {
+    //       if (results[0]) {
+    //         console.log(results[0]);
 
-            console.log(results[0].formatted_address);
-            message.value = results[0].formatted_address;
-            context.root.$store.dispatch('updateDlocation', {
-              late: latStr,
-              lng: longStr,
-              addres: results[0].formatted_address
-            });
-          } else {
-            window.alert('No results found');
-          }
-        } else {
-          window.alert('Geocoder failed due to: ' + status);
-        }
-      });
-    }
+    //         console.log(results[0].formatted_address);
+    //         message.value = results[0].formatted_address;
+    //         context.root.$store.dispatch('updateDlocation', {
+    //           late: latStr,
+    //           lng: longStr,
+    //           addres: results[0].formatted_address
+    //         });
+    //       } else {
+    //         window.alert('No results found');
+    //       }
+    //     } else {
+    //       window.alert('Geocoder failed due to: ' + status);
+    //     }
+    //   });
+    // }
 
     onMounted(() => {
       context.root.$store.dispatch('updateslocation', {
