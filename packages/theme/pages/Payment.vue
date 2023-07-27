@@ -97,7 +97,7 @@ export default {
     const isOrderVerified = ref(false);
     const enableLoader = ref(false);
 
-    const { init, poll, pollResults, stopPolling } = useConfirmOrder(
+    const { init } = useConfirmOrder(
       'confirm-order'
     );
 
@@ -109,7 +109,6 @@ export default {
       return paymentMethod.value !== '';
     });
 
-
     const confirmRide = async () => {
       enableLoader.value = true;
       const transId = context.root.$store.state.TransactionId; //localStorage.getItem('transactionId');
@@ -117,39 +116,36 @@ export default {
       const quoteItems = JSON.parse(context.root.$store.state.quoteData); //JSON.parse(localStorage.getItem('quoteData'));
       const cartItems = JSON.parse(context.root.$store.state.cartItem);
 
-      ;
-
       if (transId && initRes && quoteItems && cartItems) {
-        const { bpp_id, bpp_uri } = context.root.$store.state.relatedBpp.context;
+        const {
+          bpp_id,
+          bpp_uri
+        } = context.root.$store.state.relatedBpp.context;
 
         const bppMetaData = {
           bpp_id: bpp_id,
-          bpp_uri: bpp_uri,
-        }
+          bpp_uri: bpp_uri
+        };
         const params = createConfirmOrderRequest(
           transId,
-          initRes.message.catalogs.responses[0].message.order,
+          initRes[0].message.catalogs.responses[0].message.order,
           quoteItems.catalogs.order,
           bppMetaData
         );
         const response = await init(params, context.root.$store.state.token);
 
         context.root.$store.dispatch('setconfirmData', response);
-        context.root.$store.dispatch(
-          'setconfirmDataContext',
-          response.context
-        );
+        context.root.$store.dispatch('setconfirmDataContext', response[0].context);
 
         context.root.$store.dispatch(
           'setTransactionId',
-          response.context.transaction_id
+          response[0].context.transaction_id
         );
 
         sessionStorage.setItem(
           'confirmDataContext',
-          JSON.stringify(response.context)
+          JSON.stringify(response[0].context)
         );
-
       }
 
       enableLoader.value = false;
@@ -160,7 +156,6 @@ export default {
     //   confirmRide();
     // });
     onBeforeMount(async () => {
-
       await confirmRide();
       order.value = JSON.parse(localStorage.getItem('orderProgress'));
     });

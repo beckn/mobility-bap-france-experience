@@ -190,7 +190,7 @@ export default {
 
     const transactionId = root.$store.state.TransactionId;
     const orderID =
-      root.$store.state.confirmDatas.message.responses[0].message.order.id;
+      root.$store.state.confirmDatas[0].message.responses[0].message.order.id;
 
     const lat = ref(12.9732);
     const long = ref(77.6089);
@@ -200,21 +200,24 @@ export default {
 
       const params =
       {
-        context: {
-          // eslint-disable-next-line camelcase
-          transaction_id: transactionId,
-          // eslint-disable-next-line camelcase
-          bpp_id: bpp_id,
-          bpp_uri: bpp_uri
-        },
-        message: {
-          // eslint-disable-next-line camelcase
-          order_id: orderID
-        }
+        statusRequestDto: [{
+          context: {
+            // eslint-disable-next-line camelcase
+            transaction_id: transactionId,
+            // eslint-disable-next-line camelcase
+            bpp_id: bpp_id,
+            bpp_uri: bpp_uri,
+            domain: "mobility"
+          },
+          message: {
+            // eslint-disable-next-line camelcase
+            order_id: orderID
+          }
+        }]
       }
         ;
       const response = await status(params, root.$store.state.token);
-      statusResults.value = response.message.order
+      statusResults.value = response[0].message.order
 
     };
 
@@ -222,20 +225,23 @@ export default {
       const { bpp_id, bpp_uri } = root.$store.state.relatedBpp.context;
 
       const orderID =
-        root.$store.state.confirmDatas.message.responses[0].message.order.id;
+        root.$store.state.confirmDatas[0].message.responses[0].message.order.id;
 
       const params =
       {
-        context: {
-          // eslint-disable-next-line camelcase
-          transaction_id: transactionId,
-          // eslint-disable-next-line camelcase
-          bpp_id: bpp_id,
-          bpp_uri: bpp_uri
-        },
-        message: {
-          order_id: orderID
-        }
+        trackRequestDto: [{
+          context: {
+            // eslint-disable-next-line camelcase
+            transaction_id: transactionId,
+            // eslint-disable-next-line camelcase
+            bpp_id: bpp_id,
+            bpp_uri: bpp_uri,
+            domain: "mobility"
+          },
+          message: {
+            order_id: orderID
+          }
+        }]
       }
         ;
       try {

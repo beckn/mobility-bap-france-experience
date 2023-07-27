@@ -559,9 +559,8 @@ export default {
       isShow.value = false;
     };
     //const { confirmDatas } = useUiState();
-    var confirmData = root.$store.state.confirmDatas;
-    console.log('confirmData hqbhbw ', confirmData)
-    const driverInfo = ref(confirmData ? confirmData.message.responses[0].message.order : '');
+    let confirmData = root.$store.state.confirmDatas;
+    const driverInfo = ref(confirmData ? confirmData[0].message.responses[0].message.order : '');
 
     const parsedItemName = driverInfo.value?.items[0].descriptor.name.split(
       ','

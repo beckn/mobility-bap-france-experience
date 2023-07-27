@@ -28,60 +28,38 @@ export const createConfirmOrderRequest = (
   bppMetaData
 ) => {
   //const params: any = createOrderRequest(transactionId, cart, shippingAddress, billingAddress, shippingAsBilling, gps);
-  const item = {
-    id: initResult.items[0].id,
-    bpp_id: bppMetaData.bpp_id,
-    fulfillment_id: initResult.fulfillment.id,
-    quantity: {
-      count: 1
-    },
-    descriptor: quoteData.items[0].descriptor,
-    price: {
-      currency: 'INR',
-      value: '100.0'
-    },
-    category_id: initResult.items[0].category_id,
-    provider: {
-      id: initResult.provider.id,
-      locations: ['E1']
-    }
-  };
-  const billAddress = {
-    door: 'MBT',
-    country: 'IND',
-    city: 'Bengaluru',
-    area_code: '560078',
-    state: 'Karnataka',
-    building: 'A33',
-    name: '',
-    locality: ''
-  };
-  const params = {
-    context: {
-      transaction_id: transactionId,
-      bpp_id: bppMetaData.bpp_id,
-      bpp_uri: bppMetaData.bpp_uri
-    },
-    message: {
-      order: {
-        id: initResult.id,
-        items: initResult.items,
-        billing: initResult.billing,
-        quote: initResult.quote,
 
-        fulfillment: initResult.fulfillment,
-        provider: initResult.provider,
-        payment: {
-          id: transactionId,
-          type: 'ON-FULFILLMENT',
-          params: {
-            amount: '81',
-            currency: 'INR',
-            transaction_status: 'NOT-PAID'
+  const params = {
+    confirmRequestDto: [
+      {
+        context: {
+          transaction_id: transactionId,
+          bpp_id: bppMetaData.bpp_id,
+          bpp_uri: bppMetaData.bpp_uri,
+          domain: 'mobility'
+        },
+        message: {
+          order: {
+            id: initResult.id,
+            items: initResult.items,
+            billing: initResult.billing,
+            quote: initResult.quote,
+
+            fulfillment: initResult.fulfillment,
+            provider: initResult.provider,
+            payment: {
+              id: transactionId,
+              type: 'ON-FULFILLMENT',
+              params: {
+                amount: '81',
+                currency: 'INR',
+                transaction_status: 'NOT-PAID'
+              }
+            }
           }
         }
       }
-    }
+    ]
   };
 
   return params;
@@ -92,50 +70,55 @@ export const createInitOrderRequest = (
   bppMetaData
 ) => {
   const params = {
-    context: {
-      transaction_id: transactionId,
-      bpp_id: bppMetaData.bpp_id,
-      bpp_uri: bppMetaData.bpp_uri
-    },
-    message: {
-      order: {
-        provider: {
-          locations: quoteData.provider.locations,
-          descriptor: quoteData.provider.descriptor,
-          id: quoteData.provider.id,
-          categories: quoteData.provider.categories
+    initRequestDto: [
+      {
+        context: {
+          transaction_id: transactionId,
+          bpp_id: bppMetaData.bpp_id,
+          bpp_uri: bppMetaData.bpp_uri,
+          domain: 'mobility'
         },
-        items: quoteData.items,
-        fulfillment: {
-          customer: {
-            person: {
-              name: './Rajat//Kumar///'
+        message: {
+          order: {
+            provider: {
+              locations: quoteData.provider.locations,
+              descriptor: quoteData.provider.descriptor,
+              id: quoteData.provider.id,
+              categories: quoteData.provider.categories
             },
-            contact: {
+            items: quoteData.items,
+            fulfillment: {
+              customer: {
+                person: {
+                  name: './Rajat//Kumar///'
+                },
+                contact: {
+                  phone: '9867654322',
+                  email: 'er.rjtkumar@gmail.com'
+                }
+              },
+              id: quoteData.fulfillment.id
+            },
+
+            billing: {
+              address: {
+                door: 'MBT',
+                country: 'IND',
+                city: 'Bengaluru',
+                area_code: '560078',
+                state: 'Karnataka',
+                building: 'A33',
+                name: '',
+                locality: ''
+              },
               phone: '9867654322',
+              name: 'RajatKumar',
               email: 'er.rjtkumar@gmail.com'
             }
-          },
-          id: quoteData.fulfillment.id
-        },
-
-        billing: {
-          address: {
-            door: 'MBT',
-            country: 'IND',
-            city: 'Bengaluru',
-            area_code: '560078',
-            state: 'Karnataka',
-            building: 'A33',
-            name: '',
-            locality: ''
-          },
-          phone: '9867654322',
-          name: 'RajatKumar',
-          email: 'er.rjtkumar@gmail.com'
+          }
         }
       }
-    }
+    ]
   };
   return params;
 };

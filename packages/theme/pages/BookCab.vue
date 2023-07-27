@@ -112,36 +112,45 @@ export default {
       if (cartItems) {
         root.$store.dispatch('setRelatedBpp', _relatedBpp.value);
         const getQuoteRequest = {
-          context: {
-            // eslint-disable-next-line camelcase
-            bpp_id: _relatedBpp.value.context.bpp_id,
-            // eslint-disable-next-line camelcase
-            bpp_uri: _relatedBpp.value.context.bpp_uri,
-            transaction_id: root.$store.state.TransactionId
-          },
-          message: {
-            order: {
-              items: [props.product],
-              fulfillment: {
-                id: _relatedBpp.value.message.catalog['bpp/fulfillments'][0].id,
-                start:
-                  _relatedBpp.value.message.catalog['bpp/fulfillments'][0]
-                    .start,
-                end:
-                  _relatedBpp.value.message.catalog['bpp/fulfillments'][0].start
+          selectRequestDto: [
+            {
+              context: {
+                // eslint-disable-next-line camelcase
+                bpp_id: _relatedBpp.value.context.bpp_id,
+                // eslint-disable-next-line camelcase
+                bpp_uri: _relatedBpp.value.context.bpp_uri,
+                transaction_id: root.$store.state.TransactionId,
+                domain: 'mobility'
               },
-              provider: {
-                id: _relatedBpp.value.message.catalog['bpp/providers'][0].id,
-                locations: [
-                  {
+              message: {
+                order: {
+                  items: [props.product],
+                  fulfillment: {
                     id:
-                      _relatedBpp.value.message.catalog['bpp/providers'][0]
-                        .locations[0].id
+                      _relatedBpp.value.message.catalog['bpp/fulfillments'][0]
+                        .id,
+                    start:
+                      _relatedBpp.value.message.catalog['bpp/fulfillments'][0]
+                        .start,
+                    end:
+                      _relatedBpp.value.message.catalog['bpp/fulfillments'][0]
+                        .start
+                  },
+                  provider: {
+                    id:
+                      _relatedBpp.value.message.catalog['bpp/providers'][0].id,
+                    locations: [
+                      {
+                        id:
+                          _relatedBpp.value.message.catalog['bpp/providers'][0]
+                            .locations[0].id
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
-          }
+          ]
         };
         const responseQuote = await init(
           getQuoteRequest,
@@ -152,12 +161,12 @@ export default {
 
         root.$store.dispatch(
           'setquoteData',
-          JSON.stringify(responseQuote.message)
+          JSON.stringify(responseQuote[0].message)
         );
 
         root.$store.dispatch(
           'setTransactionId',
-          responseQuote.context.transaction_id
+          responseQuote[0].context.transaction_id
         );
 
         enableLoader.value = false;
