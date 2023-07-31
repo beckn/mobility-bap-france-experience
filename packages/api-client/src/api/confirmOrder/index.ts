@@ -1,4 +1,3 @@
-import { Config } from './../../types/Setup';
 import * as sa from 'superagent';
 import { AckResponse } from '../../types/BecknClientApi';
 
@@ -7,12 +6,11 @@ export default async function confirmOrder(
   context,
   params
 ): Promise<AckResponse> {
-  const config = context.config as Config;
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
 
   return client
     .post(
-      'https://api-node-dev.mobilityreferencebap.becknprotocol.io/client/v2/confirm'
+      'https://api-node.mobilityreferencebap.becknprotocol.io//client/v2/confirm'
     )
     .send(params)
     .then((res) => {

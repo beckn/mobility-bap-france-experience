@@ -11,7 +11,7 @@ export async function orderStatus(
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
   return client
     .post(
-      'https://api-node-dev.mobilityreferencebap.becknprotocol.io/client/v2/status'
+      'https://api-node.mobilityreferencebap.becknprotocol.io//client/v2/status'
     )
     .send(params)
     .then((res) => {
