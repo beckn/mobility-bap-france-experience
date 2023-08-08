@@ -12,7 +12,7 @@ export default async function getQuote(
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
   return client
     .post(
-      'https://api-node.mobilityreferencebap.becknprotocol.io//client/v2/get_quote'
+      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v2/get_quote'
     )
     .set('Content-Type', 'application/json')
     .send(params)
