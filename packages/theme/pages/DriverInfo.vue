@@ -337,7 +337,7 @@
                             </SfButton>
                           </div>
 
-                          <div v-if="!cancelRide" class="cancel-order" @click="goBack2">
+                          <div style="cursor: pointer;" v-if="!cancelRide" class="cancel-order" @click="goBack2">
                             Cancel Ride
                           </div>
                         </div>
@@ -768,7 +768,7 @@ body {
 
 img {
   border-radius: 18px;
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .hr1 {
