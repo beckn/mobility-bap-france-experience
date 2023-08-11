@@ -13,7 +13,7 @@ export async function track(
 
   return client
     .post(
-      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v2/track'
+      'https://api-node-dev.mobilityreferencebap.becknprotocol.io/client/v2/track'
     )
     .send(params)
     .then((res) => {

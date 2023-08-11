@@ -10,7 +10,7 @@ export default async function confirmOrder(
 
   return client
     .post(
-      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v2/confirm'
+      'https://api-node-dev.mobilityreferencebap.becknprotocol.io/client/v2/confirm'
     )
     .send(params)
     .then((res) => {

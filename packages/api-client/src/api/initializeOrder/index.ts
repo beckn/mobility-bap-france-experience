@@ -12,7 +12,7 @@ export default async function initializeOrder(
   const client = context.client as sa.SuperAgent<sa.SuperAgentRequest>;
   return client
     .post(
-      'https://api-node.mobilityreferencebap.becknprotocol.io/client/v2/initialize_order'
+      'https://api-node-dev.mobilityreferencebap.becknprotocol.io/client/v2/initialize_order'
     )
     .send(params)
     .then((res) => {
