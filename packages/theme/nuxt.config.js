@@ -5,6 +5,7 @@ const mapsKey = process.env.MAPS_KEY
   : 'AIzaSyDj_jBuujsEk8mkIva0xG6_H73oJEytXEA';
 
 export default {
+  target: 'static',
   mode: 'universal',
   server: {
     port: 3000,

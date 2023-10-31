@@ -287,15 +287,15 @@
                                       </select>
                                       <div class="location-box">
                                         <p class="s-name">Name:</p>
-                                        <input @click="enterName" v-model="name" class="text1" type="text"
-                                          placeholder="Enter Name" />
+                                        <input @click="enterName" @input="validateInput" v-model="name" class="text1"
+                                          type="text" placeholder="Enter Name" />
                                         <div class="invalid-warning" v-if="!isValidName">
                                           Invalid Name!
                                         </div>
                                         <br />
                                         <br />
                                         <p class="s-name">Phone Number:</p>
-                                        <input @click="enterphoneNo" v-model="phoneNo" class="text1" type="text"
+                                        <input @click="enterphoneNo" v-model="phoneNo" class="text1" type="number"
                                           placeholder="Enter phone number" />
                                         <div class="invalid-warning" v-if="!isValidPhoneNumber">
                                           Invalid phone number!
@@ -386,6 +386,10 @@ export default {
     // const _pImage = '/icons/car.svg';
     const enableLoader = ref(false);
     const _pCount = computed(() => props.pCount);
+
+    const validateInput = () => {
+      name.value = name.value.replace(/[^a-zA-Z\s]/g, ''); // Allow only letters and spaces
+    }
 
     const enterName = async () => {
       if (root.$store.state.experienceId !== null) {
@@ -563,7 +567,8 @@ export default {
       isValidName,
       validateName,
       enterName,
-      enterphoneNo
+      enterphoneNo,
+      validateInput
     };
   }
 };
