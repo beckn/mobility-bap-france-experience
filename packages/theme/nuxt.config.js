@@ -5,7 +5,6 @@ const mapsKey = process.env.MAPS_KEY
   : 'AIzaSyDj_jBuujsEk8mkIva0xG6_H73oJEytXEA';
 
 export default {
-  target: 'static',
   mode: 'universal',
   server: {
     port: 3000,
@@ -58,7 +57,7 @@ export default {
         href:
           'https://fonts.googleapis.com/css?family=Inter:wght@300;500;600;700&family=Raleway:300,400,400i,500,600,700%7CRoboto:300,300i,400,400i,500,700&display=swap',
         media: 'print',
-        onload: "this.media='all'",
+        onload: 'this.media=\'all\'',
         once: true
       }
     ],
