@@ -11,6 +11,21 @@ import { onBeforeMount, onMounted, ref } from '@vue/composition-api';
 import helpers from '../helpers/helpers';
 import * as sa from 'superagent';
 import { useCart } from '@vue-storefront/beckn';
+import { Garuda } from 'garudaa'
+
+Garuda.init({
+  projectId: '656db4f5b524093260eac27c',
+  host: 'https://garuda-api.becknprotocol.io',
+  globalConfigFlags: {
+    disableNetworkPayload: true
+  }
+})
+
+Garuda.identify({
+  email: 'ujjwal.tiwari@eminds.ai',
+  name: 'Ujjwal',
+  uId: ''
+})
 
 const { toggleCartSidebar } = useUiState();
 export default {
