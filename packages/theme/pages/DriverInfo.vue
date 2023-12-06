@@ -478,7 +478,7 @@ export default {
 
       try {
         const response = await support(params);
-        console.log(response.context.message_id);
+
         await onSupport({
           messageId: response[0].context.message_id
         });
@@ -488,7 +488,6 @@ export default {
     };
 
     onBeforeMount(async () => {
-      //console.log(confirmDataContext.value);
       await callSupport();
     });
 

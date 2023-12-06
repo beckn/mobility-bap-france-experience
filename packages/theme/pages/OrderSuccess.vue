@@ -36,11 +36,7 @@
             </div>
 
             <div>
-              <button
-                class="sf-button button color-primary"
-                link=""
-                @click="goToHomePage"
-              >
+              <button class="sf-button button color-primary" link="" @click="goToHomePage">
                 <!-- button icon template  -->
                 <slot name="buttonIcon" />
                 <div class="f-btn-text">Search for another ride</div>
@@ -85,26 +81,10 @@ export default {
     const goToHomePage = () => {
       context.root.$router.push({
         path: '/'
-        // query: {
-        //   id: transactionId
-        // }
+
       });
 
-      //  onUnmounted(() => {
-      //  console.log("hi guys")
-      // setInterval(goToOrderDetails;,3000);
-      // })
-      // onMounted(() => {
-      //   console.log("hi guys")
-      //   context.root.$router.push({
-      //         path: '/',
-      //         // query: {
-      //         //   id: transactionId
-      //         // }
-      //       });
 
-      // }, 2000 )
-      //setTimeout(context.root.$router.push('/'),2000)
     };
     return {
       goToHomePage,
@@ -119,6 +99,7 @@ export default {
   padding-top: 15%;
   padding-right: 5%;
 }
+
 img {
   padding-top: 4%;
   padding-left: 3%;
@@ -145,13 +126,16 @@ img {
   background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.07);
 }
+
 #location-btn {
   padding-top: 15%;
 }
+
 .btn-div {
   box-shadow: 0px -7px 9px -7px rgba(0, 0, 0, 0.2);
   padding-bottom: 3%;
 }
+
 .p1 {
   font-style: normal;
   font-weight: 400;
@@ -160,6 +144,7 @@ img {
   text-align: center;
   color: #6c6c6e;
 }
+
 .p2 {
   padding-top: 5px;
   font-family: 'SF Pro Text';
@@ -173,6 +158,7 @@ img {
 
   color: #37474f;
 }
+
 b {
   font-family: 'Roboto';
   font-style: normal;

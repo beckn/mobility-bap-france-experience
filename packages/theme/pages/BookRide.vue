@@ -109,8 +109,7 @@ export default {
     };
     const changeItemNumber = (type) => {
       emit('updateItemCount', _value);
-      //console.log("updatecount");
-      //root.$router.push('/LocationSearch');
+
     };
     return {
       b_name,
@@ -242,4 +241,5 @@ export default {
 
 .color-def {
   background: #cacaca;
-}</style>
+}
+</style>

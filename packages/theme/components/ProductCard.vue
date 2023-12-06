@@ -2,13 +2,7 @@
   <div class="s-product">
     <div :class="{ horizontal: horizontalView, vertical: !horizontalView }">
       <div class="p-image">
-        <SfImage
-          @click="$emit('goToProduct')"
-          :src="_pImage"
-          alt="product img"
-          :width="56"
-          :height="60"
-        />
+        <SfImage @click="$emit('goToProduct')" :src="_pImage" alt="product img" :width="56" :height="60" />
       </div>
       <div class="s-p-details">
         <div class="price-verified">
@@ -20,10 +14,7 @@
           {{ providerGetters.getProviderDistance(provider) }} min away
         </div>
         <!-- <div class="s-p-weight">{{ _pWieght }}</div> -->
-        <div
-          class="price-increase"
-          v-if="!!_updatedPrice && _updatedPrice !== _pPrice"
-        >
+        <div class="price-increase" v-if="!!_updatedPrice && _updatedPrice !== _pPrice">
           Price increased by <span>€{{ _updatedPrice - _pPrice }}</span>
         </div>
         <div class="verify-inline-container">
@@ -34,21 +25,9 @@
         <span class="out-stock" v-if="_updatedCount === 0">Out of Stock</span>
       </div>
       <div class="s-p-add-cart">
-        <SfImage
-          v-if="deleteCard"
-          src="/icons/delete.svg"
-          alt="delete-icon"
-          @click="$emit('deleteItem')"
-        />
-        <Bookcab
-          v-if="!dropdownCouner"
-          v-e2e="'add-to-cart'"
-          :value="_pCount"
-          :product="_product"
-          :index="1"
-          :relatedBpp="_relatedBpp"
-          @updateItemCount="(data) => $emit('updateItemCount', data)"
-        />
+        <SfImage v-if="deleteCard" src="/icons/delete.svg" alt="delete-icon" @click="$emit('deleteItem')" />
+        <Bookcab v-if="!dropdownCouner" v-e2e="'add-to-cart'" :value="_pCount" :product="_product" :index="1"
+          :relatedBpp="_relatedBpp" @updateItemCount="(data) => $emit('updateItemCount', data)" />
       </div>
     </div>
   </div>
@@ -68,7 +47,7 @@ export default {
   },
   props: {
     product: { type: Object },
-    relatedBpp: { type: Object},
+    relatedBpp: { type: Object },
     pName: { type: String, default: '' },
     pIndex: { type: Number, default: 0 },
     pWieght: { type: String, default: '' },
@@ -96,7 +75,7 @@ export default {
     const dpList = [1, 2, 3, 4, 'More'];
     const openDropdown = ref(false);
     const dropdownClick = (data) => {
-      console.log(data);
+
       if (data === 'More') {
         emit('dropdownMore');
         openDropdown.value = false;

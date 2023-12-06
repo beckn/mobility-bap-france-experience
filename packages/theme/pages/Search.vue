@@ -15,13 +15,7 @@
 
         <label>Pickup: </label>
 
-        <input
-          disabled="true"
-          :value="pickuploc"
-          errorMessage="errer"
-          type="text"
-          placeholder="Enter Pickup"
-        />
+        <input disabled="true" :value="pickuploc" errorMessage="errer" type="text" placeholder="Enter Pickup" />
       </div>
 
       <div class="hr-theme-slash-2">
@@ -33,48 +27,27 @@
         <SfImage id="icon" src="/icons/Vector.png" alt="Vue Storefront Next" />
         <label for=""> Dropoff: </label>
 
-        <input
-          disabled="true"
-          :value="dropLoc"
-          errorMessage="errer"
-          type="text"
-          placeholder="Enter Destination"
-        />
+        <input disabled="true" :value="dropLoc" errorMessage="errer" type="text" placeholder="Enter Destination" />
       </div>
     </div>
 
     <div class="details">
       <!-- <transition-group name="sf-fade" mode="out-in"> -->
-      <div
-        v-if="pollResults && pollResults.length > 0"
-        class="search__wrapper-results"
-        key="results"
-      >
+      <div v-if="pollResults && pollResults.length > 0" class="search__wrapper-results" key="results">
         <div class="side-padding result-num res res1 ">
-          <span
-            ><span v-e2e="'total-result'">{{ totalResults(pollResults) }}</span>
+          <span><span v-e2e="'total-result'">{{ totalResults(pollResults) }}</span>
             results found
           </span>
         </div>
 
         <div v-for="(bpp, bppIndex) in pollResults" :key="bppIndex">
-          <div
-            v-for="(provider, prIndex) in bpp.message.catalog['bpp/providers']"
-            :key="prIndex"
-          >
+          <div v-for="(provider, prIndex) in bpp.message.catalog['bpp/providers']" :key="prIndex">
             <div class="provider-head aline-center side-padding">
               <div class="flexy">
-                <img
-                  class="provide-img"
-                  :src="
-                    providerGetters.getProviderImages(provider)[0]
-                      ? providerGetters.getProviderImages(provider)[0]
-                      : require('~/assets/images/store-placeholder.png')
-                  "
-                  alt="Vila stripe maxi shirt dress"
-                  :width="35"
-                  :height="36"
-                />
+                <img class="provide-img" :src="providerGetters.getProviderImages(provider)[0]
+                  ? providerGetters.getProviderImages(provider)[0]
+                  : require('~/assets/images/store-placeholder.png')
+                  " alt="Vila stripe maxi shirt dress" :width="35" :height="36" />
 
                 <div class="text-padding">
                   <div class="aline-center">
@@ -97,31 +70,20 @@
               </div>
             </div>
             <div class="results--mobile">
-              <ProductCard
-                v-for="(product, pIndex) in provider.items.slice(0, 5)"
-                @goToProduct="goToProduct(product, provider, bpp)"
-                :key="
-                  bppIndex +
-                    '-' +
-                    prIndex +
-                    '-' +
-                    pIndex +
-                    '-' +
-                    keyVal +
-                    'product'
-                "
-                :pName="productGetters.getName(product)"
-                :pPrice="productGetters.getPrice(product).regular"
-                :pImage="product.descriptor.images[0]"
-                :pWieght="productGetters.getProductWeight(product) + ' kg'"
-                :product="product"
-                :pCount="cartGetters.getItemQty(isInCart({ product }))"
-                :pIndex="pIndex"
-                :relatedBpp="bpp"
-                @updateItemCount="
-                  (item) => updateItemCount(item, provider, bpp, pIndex)
-                "
-              />
+              <ProductCard v-for="(product, pIndex) in provider.items.slice(0, 5)"
+                @goToProduct="goToProduct(product, provider, bpp)" :key="bppIndex +
+                  '-' +
+                  prIndex +
+                  '-' +
+                  pIndex +
+                  '-' +
+                  keyVal +
+                  'product'
+                  " :pName="productGetters.getName(product)" :pPrice="productGetters.getPrice(product).regular"
+                :pImage="product.descriptor.images[0]" :pWieght="productGetters.getProductWeight(product) + ' kg'"
+                :product="product" :pCount="cartGetters.getItemQty(isInCart({ product }))" :pIndex="pIndex"
+                :relatedBpp="bpp" @updateItemCount="(item) => updateItemCount(item, provider, bpp, pIndex)
+                  " />
             </div>
             <div>
               <hr class="sf-divider" />
@@ -133,12 +95,7 @@
       <CurrentLocationMap :enable="enableLoader" key="marker" />
 
       <div v-if="noSearchFound" key="no-search" class="before-results">
-        <SfImage
-          src="/icons/feather_search.svg"
-          class=""
-          alt="error"
-          loading="lazy"
-        />
+        <SfImage src="/icons/feather_search.svg" class="" alt="error" loading="lazy" />
         <p>
           <b>{{ $t('Your search did not yield ') }}</b>
         </p>
@@ -195,15 +152,9 @@ export default {
     const {
       searchString,
       changeSearchString,
-      ///selectedLocation,
       toggleLoadindBar,
       clearCartPopup,
       updateExpPageData
-      //setcartItem,
-      /// sLocation,
-      //dLocation,
-      //setTransactionId,
-      //experienceId
     } = useUiState();
     const enableLoader = ref(false);
     const goBack = () => {
@@ -221,10 +172,6 @@ export default {
     const { search, result } = useFacet();
     const pollResults = ref([]);
     const noSearchFound = ref(false);
-
-    console.log(
-      `${context.root.$store.state.dLocation.late},${context.root.$store.state.dLocation.lng}`
-    );
 
     watch(
       () => clearCartPopup.value,

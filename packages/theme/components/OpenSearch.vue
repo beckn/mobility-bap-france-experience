@@ -329,8 +329,8 @@ export default {
 
   setup(props, context) {
     const _importedOrderObject = computed(() => props.importedOrderObject);
-    console.log('_importedOrderObject===>_importedOrderObject', _importedOrderObject.value)
-    const pickup = ref(_importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : '');
+
+    const pickup = ref(_importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia');
     const buttonlocation = ref(false);
     const location = ref(true);
     const message = ref('');
@@ -388,13 +388,15 @@ export default {
     // }
 
     onMounted(() => {
-      const lat = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 48.8566 : 13.45274 : 0
-      const long = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 2.3522 : -16.57803 : 0
+      const lat = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 48.8566 : 13.45274 : 13.45274
+      const long = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 2.3522 : -16.57803 : -16.57803
+
+
 
       context.root.$store.dispatch('updateslocation', {
         lat: lat,
         long: long,
-        addres: _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : '',
+        addres: _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia',
       });
       let URL = window.location.href;
       if (URL.includes('?')) {
@@ -402,17 +404,7 @@ export default {
       }
     });
 
-    onUpdated(() => {
 
-      const lat = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 48.8566 : 13.45274 : 0
-      const long = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 2.3522 : -16.57803 : 0
-
-      context.root.$store.dispatch('updateslocation', {
-        lat: lat,
-        long: long,
-        addres: _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : '',
-      });
-    })
 
     const voilationcheck = async () => {
       enableLoader.value = true;

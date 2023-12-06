@@ -29,7 +29,7 @@ export default {
 
     const stringifiedImportedOrderObject = localStorage.getItem('importedOrderObject')
     const parsedImportedOrderObject = JSON.parse(stringifiedImportedOrderObject)
-    const mapCenter = parsedImportedOrderObject.message.order.item[0].tags?.Paris === 'Y' ? [48.8566, 2.3522] : [13.45274, -16.57803]
+    const mapCenter = parsedImportedOrderObject?.message?.order?.item?.[0].tags?.Paris === 'Y' ? [48.8566, 2.3522] : [13.45274, -16.57803]
 
     return {
       customMarker: null,
