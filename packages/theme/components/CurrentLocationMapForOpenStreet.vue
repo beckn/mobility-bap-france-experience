@@ -2,9 +2,7 @@
   <div v-show="enable" id="map-wrap" style="height: 100vh">
     <client-only>
       <l-map :zoom="15" :center="center">
-        <l-tile-layer
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-        ></l-tile-layer>
+        <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
         <l-marker :lat-lng="center"></l-marker>
       </l-map>
     </client-only>
@@ -28,9 +26,14 @@ export default {
     }
   },
   data() {
+
+    const stringifiedImportedOrderObject = localStorage.getItem('importedOrderObject')
+    const parsedImportedOrderObject = JSON.parse(stringifiedImportedOrderObject)
+    const mapCenter = parsedImportedOrderObject?.message?.order?.item?.[0].tags?.Paris === 'Y' ? [48.8566, 2.3522] : [13.45274, -16.57803]
+
     return {
       customMarker: null,
-      center: [13.45274, -16.57803]
+      center: mapCenter
     };
   },
   mounted() {
@@ -40,7 +43,7 @@ export default {
     });
   },
   watch: {
-    upadateMap: function(newVal, oldVal) {
+    upadateMap: function (newVal, oldVal) {
       this.center = [
         this.$store.state.sLocation.lat,
         this.$store.state.sLocation.long

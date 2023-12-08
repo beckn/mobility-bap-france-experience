@@ -153,9 +153,9 @@
                     <div class="option-container">
                       <div>
                         <img style="width: 100%; height: 135px" :src="_importedOrderObject !== null
-                            ? _importedOrderObject.message.order.item[0]
-                              .descriptor.images[0]
-                            : ''
+                          ? _importedOrderObject.message.order.item[0]
+                            .descriptor.images[0]
+                          : ''
                           " alt="brigu lake" />
                       </div>
                       <br />
@@ -292,7 +292,7 @@
 import { SfButton, SfSidebar, SfIcon, SfImage } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
 import { SfFooter } from '@storefront-ui/vue';
-import { ref, onBeforeMount, onMounted, computed } from '@vue/composition-api';
+import { ref, onBeforeMount, onMounted, onUpdated, computed } from '@vue/composition-api';
 import LocationSearchBar from './LocationSearchBar.vue';
 import superAgent from 'superagent';
 import CurrentLocationMapForOpenStreet from './CurrentLocationMapForOpenStreet.vue';
@@ -329,7 +329,8 @@ export default {
 
   setup(props, context) {
     const _importedOrderObject = computed(() => props.importedOrderObject);
-    const pickup = ref('Banjul, The Gambia');
+
+    const pickup = ref(_importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia');
     const buttonlocation = ref(false);
     const location = ref(true);
     const message = ref('');
@@ -387,16 +388,23 @@ export default {
     // }
 
     onMounted(() => {
+      const lat = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 48.8566 : 13.45274 : 13.45274
+      const long = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 2.3522 : -16.57803 : -16.57803
+
+
+
       context.root.$store.dispatch('updateslocation', {
-        lat: 13.45274,
-        long: -16.57803,
-        addres: 'Banjul, The Gambia',
+        lat: lat,
+        long: long,
+        addres: _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia',
       });
       let URL = window.location.href;
       if (URL.includes('?')) {
         TC_toggle();
       }
     });
+
+
 
     const voilationcheck = async () => {
       enableLoader.value = true;

@@ -12,12 +12,8 @@
     </div>
     <div id="map"></div>
     <div style=" margin: 8px;">
-      <SfButton
-        id="btn2"
-        class="button-pos sf-button--pure color-primary"
-        @click="goHome"
-        v-e2e="'home-search-button'"
-        ><label for="btn">Go Back to Home</label>
+      <SfButton id="btn2" class="button-pos sf-button--pure color-primary" @click="goHome" v-e2e="'home-search-button'">
+        <label for="btn">Go Back to Home</label>
       </SfButton>
     </div>
   </div>
@@ -44,15 +40,13 @@ export default {
   mounted() {
     const arr1 = sessionStorage.getItem('poligon');
     const arr = JSON.parse(arr1);
-    console.log(arr);
 
     const polygon1 = arr.map((coord) => coord.split(',').map(Number));
-    console.log(polygon1);
 
     const objArr = polygon1.map((pair) => ({ lat: pair[0], lng: pair[1] }));
 
     this.polygoneCoords = objArr;
-    console.log(this.polygoneCoords);
+
     this.mapCenter.lat = parseFloat(objArr[0].lat);
     this.mapCenter.lag = parseFloat(objArr[0].lng);
 
@@ -76,12 +70,7 @@ export default {
       myPolygon.setMap(map);
     }
   },
-  watch: {
-    //   upadateMap: function(newVal, oldVal) {
-    //     // watch it
-    //     console.log('N:',newVal, 'O:',oldVal)
-    //   }
-  },
+
   name: 'Geofence',
   setup(_, context) {
     const goBack = () => {
@@ -104,10 +93,12 @@ div#map {
   @media (max-height: 667px) {
     height: 300px;
   }
+
   height: 550px;
   width: 100%;
   overflow: hidden;
 }
+
 .top-bar {
   padding-right: 40%;
   padding-left: 10px;
@@ -120,6 +111,7 @@ div#map {
   background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.07);
 }
+
 .pagetittle {
 
   font-style: normal;
@@ -132,6 +124,7 @@ div#map {
 
   color: #181725;
 }
+
 #btn2 {
   width: 328px;
   height: 48px;
