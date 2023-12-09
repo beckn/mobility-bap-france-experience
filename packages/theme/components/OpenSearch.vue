@@ -402,7 +402,7 @@ export default {
       if (appUrl.includes('?') && isUrlWithImportedOrder) {
         TC_toggle();
       }
-      if (isUrlWithExperienceType) {
+      if (isUrlWithExperienceType || localStorage.getItem('experienceType')) {
         currencySign.value = '₹'
         return navigator.geolocation.getCurrentPosition(
           (position) => {
