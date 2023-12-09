@@ -32,7 +32,12 @@ export default {
     const isOrderImported = ref(false)
 
     onBeforeMount(() => {
+      const experienceTypeFromLocal = localStorage.getItem('experienceType');
       localStorage.clear()
+
+      if (experienceTypeFromLocal) {
+        localStorage.setItem('experienceType', experienceTypeFromLocal)
+      }
       function hasQueryParam(url, param) {
         const urlObject = new URL(url);
         return urlObject.searchParams.has(param);
