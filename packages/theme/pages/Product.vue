@@ -12,21 +12,14 @@
       </div>
       <div class="images">
         <LazyHydrate when-visible>
-          <ImagesScroll
-            :imageHeight="350"
-            :images="images"
-            class="product__gallery"
-          />
+          <ImagesScroll :imageHeight="350" :images="images" class="product__gallery" />
         </LazyHydrate>
       </div>
 
       <div class="product__info">
         <div class="product__header">
-          <SfHeading
-            :title="productGetters.getName(product)"
-            :level="3"
-            class="sf-heading--no-underline sf-heading--left"
-          />
+          <SfHeading :title="productGetters.getName(product)" :level="3"
+            class="sf-heading--no-underline sf-heading--left" />
           <!-- <SfIcon
             icon="drag"
             size="xxl"
@@ -36,15 +29,14 @@
         </div>
         <div class="product__price-and-rating">
           <div class="s-p-price">
-            D {{ productGetters.getPrice(product).regular }}
+            {{ getCurrencyValue() }} {{ productGetters.getPrice(product).regular }}
           </div>
-          <AddToCart
-            :key="keyVal + 'product-page'"
-            :value="cartGetters.getItemQty(isInCart({ product }))"
-            @updateItemCount="updateCart"
-          />
+          <AddToCart :key="keyVal + 'product-page'" :value="cartGetters.getItemQty(isInCart({ product }))"
+            @updateItemCount="updateCart" />
         </div>
-        <div><hr class="sf-divider divider" /></div>
+        <div>
+          <hr class="sf-divider divider" />
+        </div>
 
         <LazyHydrate when-idle>
           <SfAccordion class="product__tabs">
@@ -87,12 +79,8 @@
               <span class="sf-chevron__bar sf-chevron__bar--right" />
             </div>
           </div> -->
-          <Footer
-            @buttonClick="footerClick"
-            :totalPrice="cart.totalPrice"
-            :totalItem="cartGetters.getTotalItems(cart)"
-            buttonText="View Cart"
-          >
+          <Footer @buttonClick="footerClick" :totalPrice="cart.totalPrice" :totalItem="cartGetters.getTotalItems(cart)"
+            buttonText="View Cart">
             <template v-slot:buttonIcon>
               <SfIcon icon="empty_cart" color="white" :coverage="1" />
             </template>
@@ -174,6 +162,24 @@ export default {
       });
     };
 
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+        return '₹'
+
+      }
+      return '₹'
+    }
+
     onBeforeMount(async () => {
       await load();
     });
@@ -192,7 +198,8 @@ export default {
       isInCart,
       cartGetters,
       footerClick,
-      keyVal
+      keyVal,
+      getCurrencyValue
     };
   },
   components: {
@@ -224,6 +231,7 @@ export default {
 <style lang="scss" scoped>
 #product {
   box-sizing: border-box;
+
   @include for-desktop {
     max-width: 1272px;
     margin: 0 auto;
@@ -239,11 +247,13 @@ export default {
   position: absolute;
   margin: 15px;
   z-index: 2;
+
   .sf-icon {
     --icon-color: #f37a20 !important;
     width: 20px;
     height: 20px;
   }
+
   // width:100%;
 }
 
@@ -256,34 +266,41 @@ export default {
   bottom: 0;
   z-index: 1;
   width: 100%;
+
   .cart-checkout {
     background: #f37a20;
   }
+
   ul {
     list-style: none;
     padding: 0;
     display: flex;
     width: 100%;
     margin: 0;
+
     li {
       width: 50%;
       padding: 12px 0px 12px 50px;
       display: block;
       background: #fff;
+
       h3 {
         font-size: 12px;
         font-weight: 600;
         color: #000;
       }
+
       h4 {
         font-size: 16px;
         color: #f37a20;
+
         span {
           font-size: 10px;
           color: #8d9091;
           font-weight: 400;
         }
       }
+
       &.b-cart-blk {
         font-size: 16px;
         color: #fcfcfc;
@@ -292,6 +309,7 @@ export default {
         justify-content: space-around;
         padding: 0px 25px !important;
         padding-top: 20px !important;
+
         .mt {
           margin-top: 4px;
         }
@@ -299,13 +317,16 @@ export default {
     }
   }
 }
+
 .sf-accordion.product__tabs.has-chevron {
   margin-top: 0 !important;
 }
+
 .divider {
   width: 90%;
   margin: auto;
 }
+
 .s-p-price {
   color: #f37a20;
   font-size: 22px;
@@ -321,13 +342,16 @@ export default {
       object-fit: contain !important;
     }
   }
+
   &__info {
     margin: var(--spacer-sm) auto;
+
     @include for-desktop {
       max-width: 32.625rem;
       margin: 0 0 0 7.5rem;
     }
   }
+
   &__header {
     --heading-title-color: var(--c-link);
     --heading-title-font-weight: var(--font-weight--bold);
@@ -335,143 +359,165 @@ export default {
     margin: 0 var(--spacer-sm);
     display: flex;
     justify-content: space-between;
+
     @include for-desktop {
       --heading-title-font-weight: var(--font-weight--semibold);
       margin: 0 auto;
     }
   }
+
   &__drag-icon {
     animation: moveicon 1s ease-in-out infinite;
   }
+
   &__price-and-rating {
     margin: 0 var(--spacer-sm) var(--spacer-base);
     align-items: center;
     display: flex;
     justify-content: space-between;
+
     @include for-desktop {
       margin: var(--spacer-sm) 0 var(--spacer-lg) 0;
     }
   }
+
   &__rating {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin: var(--spacer-xs) 0 var(--spacer-xs);
   }
+
   &__count {
-    @include font(
-      --count-font,
+    @include font(--count-font,
       var(--font-weight--normal),
       var(--font-size--sm),
       1.4,
-      var(--font-family--secondary)
-    );
+      var(--font-family--secondary));
     color: var(--c-text);
     text-decoration: none;
     margin: 0 0 0 var(--spacer-xs);
   }
+
   &__description {
-    @include font(
-      --product-description-font,
+    @include font(--product-description-font,
       var(--font-weight--light),
       var(--font-size--base),
       1.6,
-      var(--font-family--primary)
-    );
+      var(--font-family--primary));
   }
+
   &__select-size {
     margin: 0 var(--spacer-sm);
+
     @include for-desktop {
       margin: 0;
     }
   }
+
   &__colors {
-    @include font(
-      --product-color-font,
+    @include font(--product-color-font,
       var(--font-weight--normal),
       var(--font-size--lg),
       1.6,
-      var(--font-family--secondary)
-    );
+      var(--font-family--secondary));
     display: flex;
     align-items: center;
     margin-top: var(--spacer-xl);
   }
+
   &__color-label {
     margin: 0 var(--spacer-lg) 0 0;
   }
+
   &__color {
     margin: 0 var(--spacer-2xs);
   }
+
   &__add-to-cart {
     margin: var(--spacer-base) var(--spacer-sm) 0;
+
     @include for-desktop {
       margin-top: var(--spacer-2xl);
     }
   }
+
   &__guide,
   &__compare,
   &__save {
     display: block;
     margin: var(--spacer-xl) 0 var(--spacer-base) auto;
   }
+
   &__compare {
     margin-top: 0;
   }
+
   &__tabs {
     --tabs-title-z-index: 0;
     margin: var(--spacer-lg) auto var(--spacer-2xl);
     --tabs-title-font-size: var(--font-size--lg);
+
     @include for-desktop {
       margin-top: var(--spacer-2xl);
     }
   }
+
   &__property {
     margin: var(--spacer-base) 0;
+
     &__button {
       --button-font-size: var(--font-size--base);
     }
   }
+
   &__review {
     padding-bottom: 24px;
     border-bottom: var(--c-light) solid 1px;
     margin-bottom: var(--spacer-base);
   }
+
   &__additional-info {
     color: var(--c-link);
-    @include font(
-      --additional-info-font,
+    @include font(--additional-info-font,
       var(--font-weight--light),
       var(--font-size--sm),
       1.6,
-      var(--font-family--primary)
-    );
+      var(--font-family--primary));
+
     &__title {
       font-weight: var(--font-weight--normal);
       font-size: var(--font-size--base);
       margin: 0 0 var(--spacer-sm);
+
       &:not(:first-child) {
         margin-top: 3.5rem;
       }
     }
+
     &__paragraph {
       margin: 0;
     }
   }
+
   &__gallery {
     flex: 1;
   }
 }
+
 .breadcrumbs {
   margin: var(--spacer-base) auto var(--spacer-lg);
 }
+
 @keyframes moveicon {
   0% {
     transform: translate3d(0, 0, 0);
   }
+
   50% {
     transform: translate3d(0, 30%, 0);
   }
+
   100% {
     transform: translate3d(0, 0, 0);
   }

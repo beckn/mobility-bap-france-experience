@@ -26,7 +26,7 @@
                 </p>
               </div>
               <div style="padding-top: 4%;">
-                <b> D{{ Math.round(driverInfo.quote.price.value) }}</b>
+                <b> {{ getCurrencyValue() }} {{ Math.round(driverInfo.quote.price.value) }}</b>
               </div>
               <!-- <p class="p2">
                 Mode
@@ -86,10 +86,29 @@ export default {
 
 
     };
+
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+        return '₹'
+
+      }
+      return '₹'
+    }
     return {
       goToHomePage,
       driverInfo,
-      confirmData
+      confirmData,
+      getCurrencyValue
     };
   }
 };

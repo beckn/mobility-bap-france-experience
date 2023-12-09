@@ -36,7 +36,7 @@
                               </div>
                             </div>
                             <div class="s-p-price">
-                              D {{ Math.round(_pPrice) }}
+                              {{ getCurrencyValue() }} {{ Math.round(_pPrice) }}
                             </div>
                           </div>
 
@@ -184,7 +184,7 @@
                                         </div>
                                       </div>
                                       <div class="s-p-price">
-                                        D {{ Math.round(_pPrice) }}
+                                        {{ getCurrencyValue() }} {{ Math.round(_pPrice) }}
                                       </div>
                                     </div>
 
@@ -545,6 +545,25 @@ export default {
 
 
     };
+
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+        return '₹'
+
+      }
+      return '₹'
+    }
+
     return {
       closeModal,
       isShow,
@@ -568,7 +587,8 @@ export default {
       validateName,
       enterName,
       enterphoneNo,
-      validateInput
+      validateInput,
+      getCurrencyValue
     };
   }
 };

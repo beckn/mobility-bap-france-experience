@@ -32,18 +32,37 @@ export default {
     const isOrderImported = ref(false)
 
     onBeforeMount(() => {
-      let URL = window.location.href;
-      if (URL.includes('?')) {
-        isOrderImported.value = true
-        let start = URL.indexOf('=') + 1;
-        const orderObjectUrl = decodeURIComponent(URL.substring(start));
-        sa.get(orderObjectUrl).then(res => {
-          localStorage.setItem('importedOrderObject', res.text
-          )
-          importedOrder.value = JSON.parse(res.text)
-        }
-        ).catch(e => console.error(e))
+      localStorage.clear()
+      function hasQueryParam(url, param) {
+        const urlObject = new URL(url);
+        return urlObject.searchParams.has(param);
       }
+
+      let appUrl = window.location.href;
+
+      const isUrlWithImportedOrder = hasQueryParam(appUrl, 'external_url')
+      const isUrlWithDomainInfo = hasQueryParam(appUrl, 'experienceType')
+
+      if (appUrl.includes('?')) {
+        if (isUrlWithImportedOrder) {
+          isOrderImported.value = true
+          let start = appUrl.indexOf('=') + 1;
+          const orderObjectUrl = decodeURIComponent(appUrl.substring(start));
+          sa.get(orderObjectUrl).then(res => {
+            localStorage.setItem('importedOrderObject', res.text
+            )
+            importedOrder.value = JSON.parse(res.text)
+          }
+          ).catch(e => console.error(e))
+        }
+        if (isUrlWithDomainInfo) {
+          let start = appUrl.indexOf('=') + 1;
+          const experienceType = decodeURIComponent(appUrl.substring(start));
+          localStorage.setItem('experienceType', experienceType)
+
+        }
+      }
+
     })
 
     onMounted(() => {

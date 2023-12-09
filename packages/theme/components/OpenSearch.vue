@@ -231,7 +231,7 @@
                               {{
                                 _importedOrderObject !== null
                                 ? _importedOrderObject.message.order.item[0]
-                                  .quantity
+                                  .quantity.count
                                 : ''
                               }}
                             </span>
@@ -243,7 +243,7 @@
                           </div>
                           <div>
                             <span>
-                              D
+                              {{ currencySign }}
                               {{
                                 _importedOrderObject !== null
                                 ? _importedOrderObject.message.order.item[0]
@@ -330,7 +330,8 @@ export default {
   setup(props, context) {
     const _importedOrderObject = computed(() => props.importedOrderObject);
 
-    const pickup = ref(_importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia');
+    // const pickup = ref(_importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia');
+    const pickup = ref('')
     const buttonlocation = ref(false);
     const location = ref(true);
     const message = ref('');
@@ -340,6 +341,7 @@ export default {
     const isAlert = ref(false);
     const violatedPolicyName = ref('');
     const violatedPolicyId = ref('');
+    const currencySign = ref('');
 
     const underStandButtonHandler = () => {
       isAlert.value = false;
@@ -363,45 +365,86 @@ export default {
 
     //   const latlng = { lat: lat, lng: long };
 
-    //   const geoCodeService = new window.google.maps.Geocoder();
+    // const geoCodeService = new window.google.maps.Geocoder();
 
-    //   geoCodeService.geocode({ location: latlng }, (results, status) => {
-    //     console.log('lat:', latlng.lat, 'lng:', latlng.lng);
-    //     if (status === 'OK') {
-    //       if (results[0]) {
-    //         console.log(results[0]);
+    // geoCodeService.geocode({ location: latlng }, (results, status) => {
+    //   console.log('lat:', latlng.lat, 'lng:', latlng.lng);
+    //   if (status === 'OK') {
+    //     if (results[0]) {
+    //       console.log(results[0]);
 
-    //         console.log(results[0].formatted_address);
-    //         message.value = results[0].formatted_address;
-    //         context.root.$store.dispatch('updateDlocation', {
-    //           late: latStr,
-    //           lng: longStr,
-    //           addres: results[0].formatted_address
-    //         });
-    //       } else {
-    //         window.alert('No results found');
-    //       }
+    //       console.log(results[0].formatted_address);
+    //       message.value = results[0].formatted_address;
+    //       context.root.$store.dispatch('updateDlocation', {
+    //         late: latStr,
+    //         lng: longStr,
+    //         addres: results[0].formatted_address
+    //       });
     //     } else {
-    //       window.alert('Geocoder failed due to: ' + status);
+    //       window.alert('No results found');
     //     }
-    //   });
+    //   } else {
+    //     window.alert('Geocoder failed due to: ' + status);
+    //   }
+    // });
     // }
 
     onMounted(() => {
+      let appUrl = window.location.href;
+
+      function hasQueryParam(url, param) {
+        const urlObject = new URL(url);
+        return urlObject.searchParams.has(param);
+      }
+
+      const isUrlWithImportedOrder = hasQueryParam(appUrl, 'external_url')
+      const isUrlWithExperienceType = hasQueryParam(appUrl, 'experienceType')
+
+      if (appUrl.includes('?') && isUrlWithImportedOrder) {
+        TC_toggle();
+      }
+      if (isUrlWithExperienceType) {
+        currencySign.value = '₹'
+        return navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const geoCodeService = new window.google.maps.Geocoder();
+            const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+            geoCodeService.geocode({ location: latlng }, (results, status) => {
+
+              if (status === 'OK') {
+                if (results[0]) {
+
+                  pickup.value = results[0].formatted_address
+                  context.root.$store.dispatch('updateslocation', {
+                    lat: position.coords.latitude,
+                    long: position.coords.longitude,
+                    addres: results[0].formatted_address,
+                  });
+                } else {
+                  window.alert('No results found');
+                }
+              } else {
+                window.alert('Geocoder failed due to: ' + status);
+              }
+            });
+
+
+          },
+          (error) => {
+            console.log(error.message);
+          }
+        );
+      }
+      localStorage.setItem('importedOrderType', _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'parisFlow' : 'gambiaFlow' : 'normal')
+      currencySign.value = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? '€' : 'D' : '₹'
+      pickup.value = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia'
       const lat = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 48.8566 : 13.45274 : 13.45274
       const long = _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 2.3522 : -16.57803 : -16.57803
-
-
-
       context.root.$store.dispatch('updateslocation', {
         lat: lat,
         long: long,
         addres: _importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia',
-      });
-      let URL = window.location.href;
-      if (URL.includes('?')) {
-        TC_toggle();
-      }
+      })
     });
 
 
@@ -409,32 +452,38 @@ export default {
     const voilationcheck = async () => {
       enableLoader.value = true;
 
+      // try {
+      //   superAgent
+      //     .post(
+      //       'https://api.mobility-bap-policy-demo.becknprotocol.io/v1/policy/checkViolation/location'
+      //     )
+      //     .set('Content-Type', 'application/json')
+      //     .send({
+      //       locations: [
+      //         `${context.root.$store.state.dLocation.late},${context.root.$store.state.dLocation.lng}`,
+      //       ],
+      //     })
+      //     .then((res) => {
+      //       if (res.body.policyCheckResult[0].violation === false) {
+      //         enableLoader.value = false;
+      //         openSearch();
+      //       } else if (res.body.policyCheckResult[0].violation === true) {
+      //         enableLoader.value = false;
+      //         violatedPolicyName.value =
+      //           res.body.policyCheckResult[0].violatedPolicies[0].name;
+      //         violatedPolicyId.value =
+      //           res.body.policyCheckResult[0].violatedPolicies[0].id;
+      //         Alertmodal();
+      //       }
+      //     });
+      // } catch (err) {
+      //   console.log(err);
+      // }
+
       try {
-        superAgent
-          .post(
-            'https://api.mobility-bap-policy-demo.becknprotocol.io/v1/policy/checkViolation/location'
-          )
-          .set('Content-Type', 'application/json')
-          .send({
-            locations: [
-              `${context.root.$store.state.dLocation.late},${context.root.$store.state.dLocation.lng}`,
-            ],
-          })
-          .then((res) => {
-            if (res.body.policyCheckResult[0].violation === false) {
-              enableLoader.value = false;
-              openSearch();
-            } else if (res.body.policyCheckResult[0].violation === true) {
-              enableLoader.value = false;
-              violatedPolicyName.value =
-                res.body.policyCheckResult[0].violatedPolicies[0].name;
-              violatedPolicyId.value =
-                res.body.policyCheckResult[0].violatedPolicies[0].id;
-              Alertmodal();
-            }
-          });
-      } catch (err) {
-        console.log(err);
+        openSearch();
+      } catch (error) {
+        console.error(error)
       }
     };
     onBeforeMount(async () => {
@@ -589,6 +638,7 @@ export default {
       openViolatedPolicy,
       violatedPolicyId,
       _importedOrderObject,
+      currencySign
     };
   },
 };
