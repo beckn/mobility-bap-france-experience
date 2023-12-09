@@ -340,6 +340,7 @@ export default {
     const violatedPolicyName = ref('');
     const violatedPolicyId = ref('');
     const currencySign = ref('');
+    const pickup = ref('');
 
     const underStandButtonHandler = () => {
       isAlert.value = false;
