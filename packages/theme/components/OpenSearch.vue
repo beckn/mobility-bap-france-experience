@@ -330,8 +330,6 @@ export default {
   setup(props, context) {
     const _importedOrderObject = computed(() => props.importedOrderObject);
 
-    // const pickup = ref(_importedOrderObject.value ? _importedOrderObject.value.message.order.item[0].tags?.Paris === 'Y' ? 'Paris, France' : 'Banjul, The Gambia' : 'Banjul, The Gambia');
-    const pickup = ref('')
     const buttonlocation = ref(false);
     const location = ref(true);
     const message = ref('');
@@ -452,39 +450,34 @@ export default {
     const voilationcheck = async () => {
       enableLoader.value = true;
 
-      // try {
-      //   superAgent
-      //     .post(
-      //       'https://api.mobility-bap-policy-demo.becknprotocol.io/v1/policy/checkViolation/location'
-      //     )
-      //     .set('Content-Type', 'application/json')
-      //     .send({
-      //       locations: [
-      //         `${context.root.$store.state.dLocation.late},${context.root.$store.state.dLocation.lng}`,
-      //       ],
-      //     })
-      //     .then((res) => {
-      //       if (res.body.policyCheckResult[0].violation === false) {
-      //         enableLoader.value = false;
-      //         openSearch();
-      //       } else if (res.body.policyCheckResult[0].violation === true) {
-      //         enableLoader.value = false;
-      //         violatedPolicyName.value =
-      //           res.body.policyCheckResult[0].violatedPolicies[0].name;
-      //         violatedPolicyId.value =
-      //           res.body.policyCheckResult[0].violatedPolicies[0].id;
-      //         Alertmodal();
-      //       }
-      //     });
-      // } catch (err) {
-      //   console.log(err);
-      // }
-
       try {
-        openSearch();
-      } catch (error) {
-        console.error(error)
+        superAgent
+          .post(
+            'https://api.mobility-bap-policy-demo.becknprotocol.io/v1/policy/checkViolation/location'
+          )
+          .set('Content-Type', 'application/json')
+          .send({
+            locations: [
+              `${context.root.$store.state.dLocation.late},${context.root.$store.state.dLocation.lng}`,
+            ],
+          })
+          .then((res) => {
+            if (res.body.policyCheckResult[0].violation === false) {
+              enableLoader.value = false;
+              openSearch();
+            } else if (res.body.policyCheckResult[0].violation === true) {
+              enableLoader.value = false;
+              violatedPolicyName.value =
+                res.body.policyCheckResult[0].violatedPolicies[0].name;
+              violatedPolicyId.value =
+                res.body.policyCheckResult[0].violatedPolicies[0].id;
+              Alertmodal();
+            }
+          });
+      } catch (err) {
+        console.error(err);
       }
+
     };
     onBeforeMount(async () => {
       let URL = window.location.href;
