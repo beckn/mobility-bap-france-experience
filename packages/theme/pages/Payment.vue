@@ -27,7 +27,7 @@
         <CardContent class="flex-space-bw">
           <div class="address-text bold">Total</div>
           <div class="address-text bold">
-            D{{ Math.trunc(order.cart.quote.price.value) }}
+            {{ getCurrencyValue() }} {{ Math.trunc(order.cart.quote.price.value) }}
           </div>
         </CardContent>
       </Card>
@@ -151,6 +151,25 @@ export default {
       enableLoader.value = false;
     };
 
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+
+        return 'D'
+
+      }
+      return 'D'
+    }
+
     const goBack = () => context.root.$router.back();
     // onMounted(() => {
     //   confirmRide();
@@ -169,7 +188,8 @@ export default {
       goBack,
       isPayConfirmActive,
       enableLoader,
-      isOrderVerified
+      isOrderVerified,
+      getCurrencyValue
     };
   }
 };

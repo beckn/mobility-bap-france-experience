@@ -2,11 +2,7 @@
   <div>
     <div class="top-bar">
       <div class="header-push">Order Details</div>
-      <SfButton
-        v-if="isTrackingAvailable"
-        class="sf-button--pure top-button"
-        @click="openTrackModal = true"
-      >
+      <SfButton v-if="isTrackingAvailable" class="sf-button--pure top-button" @click="openTrackModal = true">
         <div class="color-def">Track Order</div>
       </SfButton>
     </div>
@@ -18,17 +14,14 @@
     <div v-if="!enableLoader" class="details">
       <div class="provider-head p-0">
         <div class="provide-img">
-          <img
-            :src="
-              cartGetters.getProviderImage(
-                cartGetters.getBppProvider(order.cart)
-              )
-                ? cartGetters.getProviderImage(
-                    cartGetters.getBppProvider(order.cart)
-                  )
-                : require('~/assets/images/store-placeholder.png')
-            "
-          />
+          <img :src="cartGetters.getProviderImage(
+            cartGetters.getBppProvider(order.cart)
+          )
+            ? cartGetters.getProviderImage(
+              cartGetters.getBppProvider(order.cart)
+            )
+            : require('~/assets/images/store-placeholder.png')
+            " />
         </div>
         <div class="p-name">
           {{
@@ -56,24 +49,15 @@
         <div class="p-name">Items</div>
       </div>
 
-      <div
-        :key="index + 'new'"
-        v-for="(product, index) in cartGetters.getItems(order.cart)"
-        class="checkout-product"
-      >
+      <div :key="index + 'new'" v-for="(product, index) in cartGetters.getItems(order.cart)" class="checkout-product">
         <div class="s-p-image">
-          <SfImage
-            :src="cartGetters.getItemImage(product)"
-            alt="product img"
-            :width="85"
-            :height="90"
-          />
+          <SfImage :src="cartGetters.getItemImage(product)" alt="product img" :width="85" :height="90" />
         </div>
         <div class="s-p-details">
           <div class="s-p-name">{{ cartGetters.getItemName(product) }}</div>
           <div class="s-p-weight">x {{ cartGetters.getItemQty(product) }}</div>
           <div class="s-p-price">
-            D {{ cartGetters.getItemPrice(product).regular }}
+            {{ getCurrencyValue() }} {{ cartGetters.getItemPrice(product).regular }}
           </div>
         </div>
       </div>
@@ -83,13 +67,9 @@
       <Card>
         <SfAccordion>
           <SfAccordionItem :header="'Shipping'">
-            <AddressCard
-              :name="order.shippingAddress.name"
-              :address="order.shippingAddress.address"
-              :mobile="order.shippingAddress.mobile"
-              :building="order.shippingAddress.building"
-              :pincode="order.shippingAddress.pincode"
-            />
+            <AddressCard :name="order.shippingAddress.name" :address="order.shippingAddress.address"
+              :mobile="order.shippingAddress.mobile" :building="order.shippingAddress.building"
+              :pincode="order.shippingAddress.pincode" />
           </SfAccordionItem>
         </SfAccordion>
       </Card>
@@ -102,14 +82,9 @@
             <CardContent v-if="order.shippingAsBilling" class="flex-space-bw">
               <div class="address-text">Same as Shipping Details</div>
             </CardContent>
-            <AddressCard
-              v-else
-              :name="order.billingAddress.name"
-              :address="order.billingAddress.address"
-              :mobile="order.billingAddress.mobile"
-              :building="order.billingAddress.building"
-              :pincode="order.billingAddress.pincode"
-            />
+            <AddressCard v-else :name="order.billingAddress.name" :address="order.billingAddress.address"
+              :mobile="order.billingAddress.mobile" :building="order.billingAddress.building"
+              :pincode="order.billingAddress.pincode" />
           </SfAccordionItem>
         </SfAccordion>
       </Card>
@@ -137,21 +112,19 @@
               <div class="address-text">Taxes(SGST)</div>
               <div class="address-text">€0.00</div>
             </CardContent> -->
-            <CardContent
-              v-for="breakup in order.cart.quote.breakup"
-              :key="breakup.title"
-              class="flex-space-bw"
-            >
+            <CardContent v-for="breakup in order.cart.quote.breakup" :key="breakup.title" class="flex-space-bw">
               <div class="address-text">{{ breakup.title }}</div>
               <div class="address-text">
-                D{{ Math.trunc(breakup.price.value) }}
+                {{ getCurrencyValue() }} {{ Math.trunc(breakup.price.value) }}
               </div>
             </CardContent>
-            <div><hr class="sf-divider divider" /></div>
+            <div>
+              <hr class="sf-divider divider" />
+            </div>
             <CardContent class="flex-space-bw">
               <div class="address-text bold">Total</div>
               <div class="address-text bold">
-                D{{ Math.trunc(order.cart.quote.price.value) }}
+                {{ getCurrencyValue() }} {{ Math.trunc(order.cart.quote.price.value) }}
               </div>
             </CardContent>
             <CardContent class="flex-space-bw">
@@ -160,16 +133,10 @@
             </CardContent>
             <CardContent v-if="paymentData" class="flex-space-bw">
               <div class="address-text">Status</div>
-              <div
-                v-if="paymentData.payment.status === 'PAID'"
-                class="address-text paid-green"
-              >
+              <div v-if="paymentData.payment.status === 'PAID'" class="address-text paid-green">
                 {{ paymentData.payment.status }}
               </div>
-              <div
-                v-else-if="paymentData.payment.status === 'NOT-PAID'"
-                class="address-text paid-blue"
-              >
+              <div v-else-if="paymentData.payment.status === 'NOT-PAID'" class="address-text paid-blue">
                 {{ paymentData.payment.status }}
               </div>
               <div v-else class="address-text">
@@ -221,12 +188,8 @@
               <!-- <CardContent class="fulfillment-progress"> -->
               <div class="fulfillment-data-container">
                 <div>
-                  <SfImage
-                    alt="fulfillment-progress"
-                    src="/icons/fulfillment-progress-check.svg"
-                    :width="21"
-                    :height="21"
-                  />
+                  <SfImage alt="fulfillment-progress" src="/icons/fulfillment-progress-check.svg" :width="21"
+                    :height="21" />
                 </div>
                 <div class="fulfillment-descriptor">
                   {{ fulfillmentData.fulfillment.state.descriptor.name }}
@@ -248,28 +211,19 @@
         <Card>
           <SfAccordion>
             <SfAccordionItem :header="'Fulfillment'">
-              <CardContent
-                v-if="fulfillmentData.fulfillment.state"
-                class="flex-space-bw"
-              >
+              <CardContent v-if="fulfillmentData.fulfillment.state" class="flex-space-bw">
                 <div class="address-text">Latest Status</div>
                 <div class="address-text fulfillment-state">
                   {{ fulfillmentData.fulfillment.state.descriptor.name }}
                 </div>
               </CardContent>
-              <CardContent
-                v-if="fulfillmentData.fulfillment.id"
-                class="flex-space-bw"
-              >
+              <CardContent v-if="fulfillmentData.fulfillment.id" class="flex-space-bw">
                 <div class="address-text">Id</div>
                 <div class="address-text">
                   {{ fulfillmentData.fulfillment.id }}
                 </div>
               </CardContent>
-              <CardContent
-                v-if="fulfillmentData.provider.descriptor"
-                class="flex-space-bw"
-              >
+              <CardContent v-if="fulfillmentData.provider.descriptor" class="flex-space-bw">
                 <div class="address-text">Provider</div>
                 <div class="address-text">
                   {{ fulfillmentData.provider.descriptor.name }}
@@ -291,27 +245,16 @@
             <span>ETA</span>
             <span class="time">Today, 1.30pm</span>
           </div>
-          <div
-            class="track-details"
-            :class="{
-              first: index === 0,
-              last: index === fulfillmentSteps.length - 1
-            }"
-            v-for="(step, index) in fulfillmentSteps"
-            :key="index"
-          >
+          <div class="track-details" :class="{
+            first: index === 0,
+            last: index === fulfillmentSteps.length - 1
+          }" v-for="(step, index) in fulfillmentSteps" :key="index">
             <div class="check-container">
               <div v-if="index !== 0" class="dot"></div>
               <div v-if="index !== 0" class="dot"></div>
               <div class="check"><img src="/icons/check.svg" alt="" /></div>
-              <div
-                v-if="index !== fulfillmentSteps.length - 1"
-                class="dot"
-              ></div>
-              <div
-                v-if="index !== fulfillmentSteps.length - 1"
-                class="dot"
-              ></div>
+              <div v-if="index !== fulfillmentSteps.length - 1" class="dot"></div>
+              <div v-if="index !== fulfillmentSteps.length - 1" class="dot"></div>
             </div>
             <div class="step-details">
               <div class="step-name">{{ step.status }}</div>
@@ -320,17 +263,10 @@
           </div>
         </div>
       </div>
-      <button
-        class="sf-button color-primary support-btns card-checkbox"
-        @click="goHome"
-      >
+      <button class="sf-button color-primary support-btns card-checkbox" @click="goHome">
         <div class="f-btn-text">Home</div>
       </button>
-      <button
-        v-if="isSupportAvailable"
-        class="sf-button color-primary support-btns"
-        @click="openSupportModal = true"
-      >
+      <button v-if="isSupportAvailable" class="sf-button color-primary support-btns" @click="openSupportModal = true">
         <div class="f-btn-text">Contact Support</div>
         <img class="btn-img" src="/icons/support.svg" />
       </button>
@@ -343,7 +279,9 @@
       </button> -->
       <ModalSlide :visible="openSupportModal" @close="openSupportModal = false">
         <div class="modal-heading">Contact Support</div>
-        <div><hr class="sf-divider" /></div>
+        <div>
+          <hr class="sf-divider" />
+        </div>
         <div class="modal-body">
           <div class="support-text">
             You can reach out to one of our customer support executives for any
@@ -354,33 +292,20 @@
               )
             }}
           </div>
-          <SfButton
-            class="support-btns"
-            @click="openWindow('tel:' + isSupportAvailable.phone)"
-            aria-label="Close modal"
-            type="button"
-            >Call us</SfButton
-          >
-          <SfButton
-            class="support-btns"
-            @click="openWindow('mailto:' + isSupportAvailable.email)"
-            aria-label="Close modal"
-            type="button"
-            >Email us</SfButton
-          >
-          <SfButton
-            class="support-btns"
-            @click="openWindow(isSupportAvailable.uri)"
-            aria-label="Close modal"
-            type="button"
-            >Chat with us</SfButton
-          >
+          <SfButton class="support-btns" @click="openWindow('tel:' + isSupportAvailable.phone)" aria-label="Close modal"
+            type="button">Call us</SfButton>
+          <SfButton class="support-btns" @click="openWindow('mailto:' + isSupportAvailable.email)"
+            aria-label="Close modal" type="button">Email us</SfButton>
+          <SfButton class="support-btns" @click="openWindow(isSupportAvailable.uri)" aria-label="Close modal"
+            type="button">Chat with us</SfButton>
         </div>
       </ModalSlide>
 
       <ModalSlide :visible="openTrackModal" @close="openTrackModal = false">
         <div class="modal-heading">Track</div>
-        <div><hr class="sf-divider" /></div>
+        <div>
+          <hr class="sf-divider" />
+        </div>
         <div class="modal-body">
           <div v-if="!isTrackingAvailable" class="support-text">
             No Tracking details available
@@ -391,13 +316,8 @@
             }} -->
           </div>
           <div v-else>
-            <SfButton
-              class="support-btns"
-              aria-label="Close modal"
-              type="button"
-              @click="openWindow(isTrackingAvailable)"
-              >open Link</SfButton
-            >
+            <SfButton class="support-btns" aria-label="Close modal" type="button"
+              @click="openWindow(isTrackingAvailable)">open Link</SfButton>
           </div>
           <!-- <SfButton class="support-btns" aria-label="Close modal" type="button"
             >Call us</SfButton
@@ -606,6 +526,24 @@ export default {
         console.log('Error calling track apis - ', error);
       }
     };
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+
+        return 'D'
+
+      }
+      return 'D'
+    }
     onBeforeMount(async () => {
       const orders = JSON.parse(localStorage.getItem('orderHistory')) ?? [];
 
@@ -646,7 +584,8 @@ export default {
       fulfillmentData,
       paymentData,
       getOrderPlacementTimeline,
-      fulfillmentContext
+      fulfillmentContext,
+      getCurrencyValue
     };
   }
 };
@@ -667,6 +606,7 @@ export default {
 .fulfillment-time {
   padding-left: 25px;
 }
+
 .fulfillment-progress {
   display: flex;
   flex-direction: column;
@@ -693,6 +633,7 @@ export default {
 .verify-container {
   display: flex;
 }
+
 .verified-image {
   padding-left: 10px;
 }
@@ -714,9 +655,11 @@ export default {
   --checkbox-border-color: transparent !important;
   border: 0;
 }
+
 .sf-input {
   input {
     font-size: 14px;
+
     &:placeholder {
       font-size: 14px;
     }
@@ -747,6 +690,7 @@ export default {
   align-self: center;
   margin-left: 6px;
 }
+
 .paid-blue {
   color: blue;
 }
@@ -792,31 +736,39 @@ export default {
   font-weight: 600;
   color: #37474f;
 }
+
 #checkout {
   box-sizing: border-box;
+
   @include for-desktop {
     max-width: 1240px;
     margin: 0 auto;
   }
 }
+
 .checkout-product:first-child {
   border-top: 0px solid rgba(0, 0, 0, 0.3);
 }
+
 .checkout-product {
   display: flex;
   margin-top: 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   padding-bottom: 15px;
+
   &:first-child(2) {
     border-top: 0 !important;
   }
+
   .s-p-image {
     margin-right: 25px;
   }
+
   .s-p-name {
     font-size: 11px;
     color: #000;
   }
+
   .s-p-price {
     font-size: 16px;
     font-weight: 600;
@@ -824,24 +776,29 @@ export default {
     color: #f37a20;
   }
 }
+
 .checkout {
   @include for-desktop {
     display: flex;
   }
+
   &__main {
     @include for-desktop {
       flex: 1;
       padding: var(--spacer-xl) 0 0 0;
     }
   }
+
   &__aside {
     @include for-desktop {
       flex: 0 0 25.5rem;
       margin: 0 0 0 4.25rem;
     }
   }
+
   &__steps {
     --steps-content-padding: 0 var(--spacer-base);
+
     @include for-desktop {
       --steps-content-padding: 0;
     }
@@ -851,6 +808,7 @@ export default {
     }
   }
 }
+
 .modal-heading {
   margin: 20px;
   font-size: 20px;
@@ -865,11 +823,14 @@ export default {
   position: absolute;
   right: 6vw;
 }
+
 .modal-body {
   padding: 28px;
+
   .support-text {
     font-size: 15px;
   }
+
   .support-btns {
     margin-top: 20px;
     width: 100%;

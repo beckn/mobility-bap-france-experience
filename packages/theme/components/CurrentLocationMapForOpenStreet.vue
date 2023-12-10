@@ -26,14 +26,9 @@ export default {
     }
   },
   data() {
-
-    const stringifiedImportedOrderObject = localStorage.getItem('importedOrderObject')
-    const parsedImportedOrderObject = JSON.parse(stringifiedImportedOrderObject)
-    const mapCenter = parsedImportedOrderObject?.message?.order?.item?.[0].tags?.Paris === 'Y' ? [48.8566, 2.3522] : [13.45274, -16.57803]
-
     return {
       customMarker: null,
-      center: mapCenter
+      center: [0, 0] // Default center
     };
   },
   mounted() {
@@ -41,26 +36,39 @@ export default {
       iconUrl: '/icons/pulseMarker.svg',
       iconSize: [100, 100]
     });
+
+    this.enableLocation();
   },
   watch: {
     upadateMap: function (newVal, oldVal) {
-      this.center = [
-        this.$store.state.sLocation.lat,
-        this.$store.state.sLocation.long
-      ];
+      this.center = [this.$store.state.sLocation.lat, this.$store.state.sLocation.long];
     }
   },
 
   methods: {
     enableLocation() {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.center = [position.coords.latitude, position.coords.longitude];
-        },
-        (error) => {
-          console.log(error.message);
+      return new Promise((resolve, reject) => {
+        if (localStorage.getItem('experienceType')) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              this.center = [position.coords.latitude, position.coords.longitude];
+              resolve();
+            },
+            (error) => {
+              console.log(error.message);
+              reject(error.message);
+            }
+          );
+        } else {
+          const stringifiedImportedOrderObject = localStorage.getItem('importedOrderObject')
+          const parsedImportedOrderObject = JSON.parse(stringifiedImportedOrderObject)
+          this.center =
+            parsedImportedOrderObject?.message?.order?.item?.[0].tags?.Paris === 'Y'
+              ? [48.8566, 2.3522]
+              : [13.45274, -16.57803];
+          resolve();
         }
-      );
+      });
     }
   }
 };
@@ -79,3 +87,4 @@ div#map-wrap {
   z-index: 0;
 }
 </style>
+

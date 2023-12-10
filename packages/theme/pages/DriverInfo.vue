@@ -260,7 +260,8 @@
 
                                 <div class="aline-center">
                                   <div class="p-name">
-                                    D{{
+                                    {{ getCurrencyValue() }}
+                                    {{
                                       Math.round(driverInfo.quote.price.value)
                                     }}
                                   </div>
@@ -571,6 +572,24 @@ export default {
     const openWindow = (link) => {
       window.open(link);
     };
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+
+        return 'D'
+
+      }
+      return 'D'
+    }
 
     return {
       driverInfo,
@@ -595,7 +614,8 @@ export default {
       parsedItemName,
       vehicleMakeAndModal,
       isSupportAvailable,
-      openWindow
+      openWindow,
+      getCurrencyValue
     };
   }
 };

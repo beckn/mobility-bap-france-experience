@@ -19,7 +19,7 @@
         </div>
         <div class="verify-inline-container">
           <div class="s-p-price" v-if="_updatedCount !== 0">
-            D {{ Math.round(_updatedPrice ? _updatedPrice : _pPrice) }}
+            {{ getCurrencyValue() }} {{ Math.round(_updatedPrice ? _updatedPrice : _pPrice) }}
           </div>
         </div>
         <span class="out-stock" v-if="_updatedCount === 0">Out of Stock</span>
@@ -74,6 +74,7 @@ export default {
     const _relatedBpp = computed(() => props.relatedBpp)
     const dpList = [1, 2, 3, 4, 'More'];
     const openDropdown = ref(false);
+
     const dropdownClick = (data) => {
 
       if (data === 'More') {
@@ -84,6 +85,25 @@ export default {
         openDropdown.value = false;
       }
     };
+
+    const getCurrencyValue = () => {
+      if (localStorage.getItem('experienceType')) {
+        return '₹'
+      }
+      if (localStorage.getItem('importedOrderType')) {
+        const orderType = localStorage.getItem('importedOrderType');
+        if (orderType === 'parisFlow') {
+          return '€'
+        }
+        if (orderType === 'gambiaFlow') {
+          return 'D'
+        }
+
+        return 'D'
+
+      }
+      return 'D'
+    }
 
     return {
       productGetters,
@@ -100,7 +120,8 @@ export default {
       _updatedPrice,
       _updatedCount,
       dropdownClick,
-      _relatedBpp
+      _relatedBpp,
+      getCurrencyValue
     };
   },
   methods: {
@@ -114,7 +135,7 @@ export default {
       setTimeout(() => {
         element.style.display = 'none';
       }, 2000);
-    }
+    },
   }
 };
 </script>
