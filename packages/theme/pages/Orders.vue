@@ -97,7 +97,6 @@ export default {
         }
       });
     };
-
     const getCurrencyValue = () => {
       if (localStorage.getItem('experienceType')) {
         return '₹'
@@ -110,7 +109,8 @@ export default {
         if (orderType === 'gambiaFlow') {
           return 'D'
         }
-        return '₹'
+
+        return 'D'
 
       }
       return 'D'

@@ -558,7 +558,8 @@ export default {
         if (orderType === 'gambiaFlow') {
           return 'D'
         }
-        return '₹'
+
+        return 'D'
 
       }
       return 'D'

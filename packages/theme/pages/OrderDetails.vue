@@ -526,7 +526,6 @@ export default {
         console.log('Error calling track apis - ', error);
       }
     };
-
     const getCurrencyValue = () => {
       if (localStorage.getItem('experienceType')) {
         return '₹'
@@ -539,7 +538,8 @@ export default {
         if (orderType === 'gambiaFlow') {
           return 'D'
         }
-        return '₹'
+
+        return 'D'
 
       }
       return 'D'
