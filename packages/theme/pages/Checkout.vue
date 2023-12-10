@@ -26,8 +26,8 @@
           /> -->
         <div class="provide-img">
           <img :src="cartGetters.getProviderImage(cartGetters.getBppProvider(cart))
-              ? cartGetters.getProviderImage(cartGetters.getBppProvider(cart))
-              : require('~/assets/images/store-placeholder.png')
+            ? cartGetters.getProviderImage(cartGetters.getBppProvider(cart))
+            : require('~/assets/images/store-placeholder.png')
             " />
         </div>
         <div class="p-name">
@@ -381,7 +381,7 @@ export default {
         return '₹'
 
       }
-      return '₹'
+      return 'D'
     }
 
     watch(

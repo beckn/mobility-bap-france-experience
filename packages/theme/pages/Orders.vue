@@ -113,7 +113,7 @@ export default {
         return '₹'
 
       }
-      return '₹'
+      return 'D'
     }
 
     const goBack = () => context.root.$router.back();

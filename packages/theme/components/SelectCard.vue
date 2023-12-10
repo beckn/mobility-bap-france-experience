@@ -561,7 +561,7 @@ export default {
         return '₹'
 
       }
-      return '₹'
+      return 'D'
     }
 
     return {

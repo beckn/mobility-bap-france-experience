@@ -542,7 +542,7 @@ export default {
         return '₹'
 
       }
-      return '₹'
+      return 'D'
     }
     onBeforeMount(async () => {
       const orders = JSON.parse(localStorage.getItem('orderHistory')) ?? [];
